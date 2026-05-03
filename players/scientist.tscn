@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://c5dcs8qeqqj54"]
+
+[ext_resource type="Script" uid="uid://dc7tqqptg7uod" path="res://players/scientist.gd" id="1_dkah4"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_dkah4"]
+radius = 0.2
+
+[sub_resource type="Environment" id="Environment_i3pqv"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_dkah4"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_dkah4"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dkah4"]
+albedo_color = Color(0.14901961, 1, 1, 1)
+
+[node name="Player" type="CharacterBody3D" unique_id=559825491]
+script = ExtResource("1_dkah4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=871925756]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1.25, 0)
+shape = SubResource("SphereShape3D_dkah4")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=510091450]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+environment = SubResource("Environment_i3pqv")
+current = true
+
+[node name="Interaction" type="RayCast3D" parent="Camera3D" unique_id=8048244]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.0745115)
+target_position = Vector3(0, 0, -2)
+collide_with_areas = true
+
+[node name="Hand" type="Marker3D" parent="Camera3D" unique_id=1351194563]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.90786123)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=737097363]
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=1680704935]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.5
+offset_top = -11.5
+offset_right = 75.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press [E] to Interact"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=2105880230]
+replication_config = SubResource("SceneReplicationConfig_dkah4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=947083914]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9011422, 0)
+mesh = SubResource("BoxMesh_dkah4")
+surface_material_override/0 = SubResource("StandardMaterial3D_dkah4")

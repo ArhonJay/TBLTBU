@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://qb6oaxa88bij"]
+
+[ext_resource type="Script" uid="uid://r3nrq6xuu3un" path="res://lobby/lobby.gd" id="1_gv8if"]
+
+[node name="Control" type="Control" unique_id=850249255]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 164.0
+offset_bottom = 145.0
+script = ExtResource("1_gv8if")
+
+[node name="HostButton" type="Button" parent="." unique_id=2070125899]
+layout_mode = 0
+offset_left = 284.0
+offset_top = 118.0
+offset_right = 378.0
+offset_bottom = 149.0
+text = "Host Game"
+
+[node name="JoinButton" type="Button" parent="." unique_id=477173456]
+layout_mode = 0
+offset_left = 285.0
+offset_top = 152.0
+offset_right = 378.0
+offset_bottom = 183.0
+text = "Join Game"
+
+[node name="RoleSelect" type="OptionButton" parent="." unique_id=1080447453]
+layout_mode = 0
+offset_left = 285.0
+offset_top = 190.0
+offset_right = 383.0
+offset_bottom = 221.0
+item_count = 2
+popup/item_0/text = "explorer"
+popup/item_0/id = 0
+popup/item_1/text = "scientist"
+popup/item_1/id = 1
