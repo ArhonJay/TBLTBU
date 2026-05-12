@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://ct3pblp8w3x61"
+path="res://.godot/imported/rock05.obj-587fac64fc4dbea611c16f58b9ebbc78.mesh"
+
+[deps]
+
+files=["res://.godot/imported/rock05.obj-587fac64fc4dbea611c16f58b9ebbc78.mesh"]
+
+source_file="res://Mesh_asset/PolyDesertFree_v 1.1_by_RunemarkStudio/Update 1.1/OBJ/rock05.obj"
+dest_files=["res://.godot/imported/rock05.obj-587fac64fc4dbea611c16f58b9ebbc78.mesh", "res://.godot/imported/rock05.obj-587fac64fc4dbea611c16f58b9ebbc78.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

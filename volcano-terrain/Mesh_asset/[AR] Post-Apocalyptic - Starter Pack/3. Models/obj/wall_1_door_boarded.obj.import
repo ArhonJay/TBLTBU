@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://ddg8niv7x6p5n"
+path="res://.godot/imported/wall_1_door_boarded.obj-35a228958661317003174c03843f0261.mesh"
+
+[deps]
+
+files=["res://.godot/imported/wall_1_door_boarded.obj-35a228958661317003174c03843f0261.mesh"]
+
+source_file="res://Mesh_asset/[AR] Post-Apocalyptic - Starter Pack/3. Models/obj/wall_1_door_boarded.obj"
+dest_files=["res://.godot/imported/wall_1_door_boarded.obj-35a228958661317003174c03843f0261.mesh", "res://.godot/imported/wall_1_door_boarded.obj-35a228958661317003174c03843f0261.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

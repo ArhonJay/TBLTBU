@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://u5bqjr83gflj"
+path="res://.godot/imported/drafting_compass.obj-7a894d5567f0207ac861b53598c2b87f.mesh"
+
+[deps]
+
+files=["res://.godot/imported/drafting_compass.obj-7a894d5567f0207ac861b53598c2b87f.mesh"]
+
+source_file="res://Mesh_asset/KayKit_RPGToolsBits_1.0_FREE/Assets/obj/drafting_compass.obj"
+dest_files=["res://.godot/imported/drafting_compass.obj-7a894d5567f0207ac861b53598c2b87f.mesh", "res://.godot/imported/drafting_compass.obj-7a894d5567f0207ac861b53598c2b87f.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

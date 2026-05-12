@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://cv4u5ktpiabsu"]
+
+[ext_resource type="ArrayMesh" uid="uid://b22lq73x6ftjc" path="res://Mesh_asset/Stylized Nature MegaKit[Standard](1)/OBJ/Plant_1.obj" id="1_kqgl7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0c8g4"]
+albedo_color = Color(0.38247713, 0.72238195, 0.3526723, 1)
+
+[node name="MeshList" type="Node3D" unique_id=123945333]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1545269267]
+mesh = ExtResource("1_kqgl7")
+surface_material_override/0 = SubResource("StandardMaterial3D_0c8g4")

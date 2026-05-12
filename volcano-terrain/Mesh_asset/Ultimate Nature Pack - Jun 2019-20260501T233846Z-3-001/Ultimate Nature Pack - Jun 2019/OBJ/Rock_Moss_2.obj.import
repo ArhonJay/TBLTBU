@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://d553gmht6maf"
+path="res://.godot/imported/Rock_Moss_2.obj-0aa5a398fbd5834eed33d3ffbbde2800.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Rock_Moss_2.obj-0aa5a398fbd5834eed33d3ffbbde2800.mesh"]
+
+source_file="res://Mesh_asset/Ultimate Nature Pack - Jun 2019-20260501T233846Z-3-001/Ultimate Nature Pack - Jun 2019/OBJ/Rock_Moss_2.obj"
+dest_files=["res://.godot/imported/Rock_Moss_2.obj-0aa5a398fbd5834eed33d3ffbbde2800.mesh", "res://.godot/imported/Rock_Moss_2.obj-0aa5a398fbd5834eed33d3ffbbde2800.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://c7ukc5bm0jgcl"
+path="res://.godot/imported/wheel.obj-b83db7163f658a78724c638325c5c76d.mesh"
+
+[deps]
+
+files=["res://.godot/imported/wheel.obj-b83db7163f658a78724c638325c5c76d.mesh"]
+
+source_file="res://Mesh_asset/[AR] Post-Apocalyptic - Starter Pack/3. Models/obj/wheel.obj"
+dest_files=["res://.godot/imported/wheel.obj-b83db7163f658a78724c638325c5c76d.mesh", "res://.godot/imported/wheel.obj-b83db7163f658a78724c638325c5c76d.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

@@ -1,0 +1,124 @@
+[gd_scene format=3 uid="uid://dpyry2el5j1co"]
+
+[ext_resource type="Terrain3DAssets" uid="uid://dal3jhw6241qg" path="res://demo/data/assets.tres" id="2_bcbcq"]
+[ext_resource type="Shader" uid="uid://ch541amfub7f5" path="res://World.gdshader" id="3_bcbcq"]
+[ext_resource type="PackedScene" uid="uid://cvtfe7h5elp34" path="res://volcano.tscn" id="4_js7pq"]
+[ext_resource type="Script" uid="uid://cnde70yp2wuof" path="res://character_body_3d.gd" id="6_p1v5b"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_p1v5b"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_wygdx"]
+sky_material = SubResource("ProceduralSkyMaterial_p1v5b")
+
+[sub_resource type="Environment" id="Environment_bah7m"]
+background_mode = 2
+sky = SubResource("Sky_wygdx")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_vr1m7"]
+offsets = PackedFloat32Array(0.2, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_d8lcj"]
+noise_type = 2
+frequency = 0.03
+cellular_jitter = 3.0
+cellular_return_type = 0
+domain_warp_enabled = true
+domain_warp_type = 1
+domain_warp_amplitude = 50.0
+domain_warp_fractal_type = 2
+domain_warp_fractal_lacunarity = 1.5
+domain_warp_fractal_gain = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_bov7h"]
+noise = SubResource("FastNoiseLite_d8lcj")
+color_ramp = SubResource("Gradient_vr1m7")
+seamless = true
+
+[sub_resource type="Terrain3DMaterial" id="Terrain3DMaterial_eu7l1"]
+_shader_parameters = {
+"_mouse_layer": 2147483648,
+"auto_base_texture": 0,
+"auto_height_reduction": 0.05,
+"auto_overlay_texture": 1,
+"auto_slope": 0.45,
+"bias_distance": 512.0,
+"blend_sharpness": 0.10000000475,
+"depth_blur": 0.0,
+"dual_scale_far": 170.0,
+"dual_scale_near": 100.0,
+"dual_scale_reduction": 0.3,
+"dual_scale_texture": 0,
+"enable_macro_variation": true,
+"enable_projection": true,
+&"flat_terrain_normals": false,
+"macro_variation1": Color(0.855, 0.8625, 0.9, 1),
+"macro_variation2": Color(0.9, 0.885, 0.81, 1),
+"macro_variation_slope": 0.10000000475,
+"mipmap_bias": 0.5,
+"noise1_angle": 0.1,
+"noise1_offset": Vector2(0.5, 0.5),
+"noise1_scale": 0.04,
+"noise2_scale": 0.076,
+"noise_texture": SubResource("NoiseTexture2D_bov7h"),
+"projection_threshold": 0.87,
+"tri_scale_reduction": 0.3
+}
+world_background = 0
+auto_shader = true
+dual_scaling = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_js7pq"]
+render_priority = 0
+shader = ExtResource("3_bcbcq")
+shader_parameter/out_color = Color(0.34776816, 0.7382327, 1.0392157, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_eu7l1"]
+material = SubResource("ShaderMaterial_js7pq")
+size = Vector2(3000, 3000)
+subdivide_width = 1500
+subdivide_depth = 1500
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wygdx"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_bah7m"]
+
+[node name="Node3D" type="Node3D" unique_id=1400788818]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1160623352]
+environment = SubResource("Environment_bah7m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1662304402]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Terrain3D" type="Terrain3D" parent="." unique_id=2031280403]
+data_directory = "res://terrain.tres"
+material = SubResource("Terrain3DMaterial_eu7l1")
+assets = ExtResource("2_bcbcq")
+top_level = true
+metadata/_edit_lock_ = true
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=922438108]
+mesh = SubResource("PlaneMesh_eu7l1")
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=626546242]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82.46852, 79.8193, 384.55493)
+collision_mask = 7
+script = ExtResource("6_p1v5b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=1726748517]
+shape = SubResource("CapsuleShape3D_wygdx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player" unique_id=2019657547]
+mesh = SubResource("CapsuleMesh_bah7m")
+
+[node name="Camera3D" type="Camera3D" parent="Player" unique_id=995654212]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2461948, 2.833229)
+
+[node name="Volcano" parent="." unique_id=1532163416 instance=ExtResource("4_js7pq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -63.482864, -104.11844, 56.762177)
