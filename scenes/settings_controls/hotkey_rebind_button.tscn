@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://cu7gv65p8qejr"]
+
+[ext_resource type="Script" uid="uid://druy7tng4lrxu" path="res://scenes/settings_controls/hotkey_rebind_button.gd" id="1_574xw"]
+
+[sub_resource type="SystemFont" id="SystemFont_574xw"]
+font_names = PackedStringArray("Montserrat")
+font_weight = 500
+
+[sub_resource type="SystemFont" id="SystemFont_vl7vs"]
+font_names = PackedStringArray("Montserrat")
+font_weight = 500
+
+[node name="HotkeyRebindButton" type="Control" unique_id=1392640948 groups=["hotkey_button"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_574xw")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=338419794]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="HBoxContainer" unique_id=278850282]
+custom_minimum_size = Vector2(400, 30)
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_574xw")
+theme_override_font_sizes/font_size = 32
+text = "Action"
+vertical_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer" unique_id=1507749123]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 200
+
+[node name="Button" type="Button" parent="HBoxContainer" unique_id=1627978928]
+custom_minimum_size = Vector2(164, 0)
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_vl7vs")
+toggle_mode = true
+text = "Action_Key"
+
+[connection signal="toggled" from="HBoxContainer/Button" to="." method="_on_button_toggled"]

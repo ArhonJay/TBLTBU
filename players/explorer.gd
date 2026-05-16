@@ -35,7 +35,6 @@ func _ready():
 	$MeshInstance3D.hide() 
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	
 	var spawn_point = get_tree().current_scene.get_node("SpawnPoints/ExplorerSpawn")
 	if spawn_point != null:

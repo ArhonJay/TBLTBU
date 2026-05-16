@@ -1,7 +1,7 @@
 extends Node3D
 
-var explorer_scene = preload("res://explorer.tscn")
-var scientist_scene = preload("res://scientist.tscn")
+var explorer_scene = preload("res://players/explorer.tscn")
+var scientist_scene = preload("res://players/scientist.tscn")
 
 func _ready():
 	if multiplayer.is_server():

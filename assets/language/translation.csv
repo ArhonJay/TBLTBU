@@ -1,0 +1,72 @@
+﻿keys,en,es,ja
+GAME_TITLE,My Game,Mi Juego,私のゲーム
+START_GAME,Start Game,Iniciar Juego,ゲーム開始
+JOIN_GAME,Join Game,Unirse al Juego,ゲーム参加
+SETTINGS,Settings,Configuración,設定
+CREDITS,Credits,Créditos,クレジット
+QUIT,Quit,Salir,終了
+BACK,Back,Volver,戻る
+SETTINGS_TITLE,Settings,Configuración,設定
+AUDIO_SETTINGS,Audio Settings,Configuración de Audio,オーディオ設定
+VIDEO_SETTINGS,Video Settings,Configuración de Video,ビデオ設定
+CONTROLS_SETTINGS,Controls Settings,Configuración de Controles,操作設定
+LANGUAGE_SETTINGS,Language,Idioma,言語
+MASTER_VOLUME,Master Volume,Volumen Maestro,マスター音量
+MUSIC_VOLUME,Music Volume,Volumen de Música,音楽音量
+SFX_VOLUME,SFX Volume,Volumen de Efectos,効果音音量
+WINDOW_MODE,Window Mode,Modo de Ventana,ウィンドウモード
+FULLSCREEN,Fullscreen,Pantalla Completa,フルスクリーン
+WINDOWED,Windowed,Ventana,ウィンドウ
+BORDERLESS_WINDOW,Borderless Window,Ventana Sin Bordes,ボーダーレスウィンドウ
+BORDERLESS_FULLSCREEN,Borderless Fullscreen,Pantalla Completa Sin Bordes,ボーダーレスフルスクリーン
+RESOLUTION,Resolution,Resolución,解像度
+VSYNC,VSync,VSync,VSync
+MOVE_LEFT,Move Left,Mover Izquierda,左へ移動
+MOVE_RIGHT,Move Right,Mover Derecha,右へ移動
+MOVE_UP,Move Up,Mover Arriba,上へ移動
+MOVE_DOWN,Move Down,Mover Abajo,下へ移動
+JUMP,Jump,Saltar,ジャンプ
+SPRINT,Sprint,Correr,ダッシュ
+CROUCH,Crouch,Agacharse,しゃがむ
+INTERACT,Interact,Interactuar,インタラクト
+ATTACK,Attack,Atacar,攻撃
+PAUSE,Pause,Pausa,一時停止
+PRESS_ANY_KEY,Press any key...,Presiona cualquier tecla...,何かキーを押してください...
+UNASSIGNED,Unassigned,Sin Asignar,未割り当て
+HEALTH,Health,Salud,体力
+STAMINA,Stamina,Resistencia,スタミナ
+MANA,Mana,Maná,マナ
+LEVEL,Level,Nivel,レベル
+EXP,Experience,Experiencia,経験値
+INVENTORY,Inventory,Inventario,インベントリ
+QUESTS,Quests,Misiones,クエスト
+MAP,Map,Mapa,マップ
+RESUME,Resume,Continuar,再開
+RESTART,Restart,Reiniciar,リスタート
+MAIN_MENU,Main Menu,Menú Principal,メインメニュー
+YES,Yes,Sí,はい
+NO,No,No,いいえ
+OK,OK,OK,OK
+CANCEL,Cancel,Cancelar,キャンセル
+CONFIRM,Confirm,Confirmar,確認
+SAVE_GAME,Save Game,Guardar Juego,ゲームを保存
+LOAD_GAME,Load Game,Cargar Juego,ゲームをロード
+NEW_GAME,New Game,Nuevo Juego,新しいゲーム
+DELETE_SAVE,Delete Save,Eliminar Guardado,セーブ削除
+GAME_SAVED,Game Saved,Juego Guardado,ゲームを保存しました
+GAME_LOADED,Game Loaded,Juego Cargado,ゲームをロードしました
+SETTINGS_SAVED,Settings Saved,Configuración Guardada,設定を保存しました
+ERROR,Error,Error,エラー
+WARNING,Warning,Advertencia,警告
+CONNECTION_LOST,Connection Lost,Conexión Perdida,接続が切れました
+FAILED_TO_LOAD,Failed to Load,Error al Cargar,ロード失敗
+HOST_GAME,Host Game,Crear Partida,ゲームをホスト
+JOIN_SERVER,Join Server,Unirse al Servidor,サーバーに参加
+SERVER_IP,Server IP,IP del Servidor,サーバーIP
+PLAYER_NAME,Player Name,Nombre del Jugador,プレイヤー名
+CONNECTED,Connected,Conectado,接続済み
+DISCONNECTED,Disconnected,Desconectado,切断済み
+PROGRAMMING,Programming,Programación,プログラミング
+ART,Art,Arte,アート
+MUSIC,Music,Música,音楽
+SPECIAL_THANKS,Special Thanks,Agradecimientos Especiales,スペシャルサンクス

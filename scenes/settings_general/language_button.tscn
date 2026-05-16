@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://bfyss8ifcc7fi"]
+
+[ext_resource type="Script" uid="uid://duosds4yc2gxd" path="res://scenes/settings_general/language_button.gd" id="1_j0tbk"]
+
+[sub_resource type="SystemFont" id="SystemFont_1m2df"]
+font_names = PackedStringArray("Montserrat")
+
+[node name="LanguageButton" type="Control" unique_id=457190529 node_paths=PackedStringArray("language_option")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_j0tbk")
+language_option = NodePath("HBoxContainer/OptionButton")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1560007286]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/separation = 180
+
+[node name="Label" type="Label" parent="HBoxContainer" unique_id=602140815]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_1m2df")
+theme_override_font_sizes/font_size = 32
+text = "LANGUAGE_SETTINGS"
+
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer" unique_id=546260147]
+layout_mode = 2
+
+[node name="OptionButton" type="OptionButton" parent="HBoxContainer" unique_id=824611362]
+custom_minimum_size = Vector2(265, 64)
+layout_mode = 2
