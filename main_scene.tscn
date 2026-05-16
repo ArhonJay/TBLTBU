@@ -2,20 +2,49 @@
 
 [ext_resource type="Script" uid="uid://bapwt44eajmry" path="res://main_scene.gd" id="1_gyfs4"]
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0f027"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_2c62f"]
+sky_material = SubResource("ProceduralSkyMaterial_0f027")
+
+[sub_resource type="Environment" id="Environment_gyfs4"]
+background_mode = 2
+sky = SubResource("Sky_2c62f")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_0f027"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_2c62f"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
 [node name="MainScene" type="Node3D" unique_id=356298371]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6340351, 0)
 script = ExtResource("1_gyfs4")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2078961857]
+environment = SubResource("Environment_gyfs4")
 
 [node name="SpawnPoints" type="Node3D" parent="." unique_id=476886260]
 
 [node name="ExplorerSpawn" type="Marker3D" parent="SpawnPoints" unique_id=50010483]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.699528, 8.395145, 8.027757)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.23751545, 10.915802, -1.1321784)
 
 [node name="ScientistSpawn" type="Marker3D" parent="SpawnPoints" unique_id=1918894866]
-transform = Transform3D(0.9999422, 0.010751021, 0, -0.010751021, 0.9999422, 0, 0, 0, 1, 6.157203, 11.898684, 2.405695)
+transform = Transform3D(0.9999422, 0.010751021, 0, -0.010751021, 0.9999422, 0, 0, 0, 1, 0.76998425, 10.923489, 0.65801096)
 
 [node name="Players" type="Node3D" parent="." unique_id=1068550589]
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1471507092]
-_spawnable_scenes = PackedStringArray("res://explorer.tscn", "res://scientist.tscn")
+_spawnable_scenes = PackedStringArray("uid://8d3mawhgs388", "uid://c5dcs8qeqqj54")
 spawn_path = NodePath("../Players")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=3005049]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 8.089219, 0)
+mesh = SubResource("BoxMesh_0f027")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=685254373]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1211412909]
+shape = SubResource("ConcavePolygonShape3D_2c62f")

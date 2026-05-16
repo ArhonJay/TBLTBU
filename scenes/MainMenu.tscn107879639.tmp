@@ -1,0 +1,155 @@
+[gd_scene format=3 uid="uid://cxpauxtrc08ns"]
+
+[ext_resource type="Script" uid="uid://dvx226bd6bdw7" path="res://final-proj-ui/scripts/MainMenu.gd" id="1_yqorp"]
+[ext_resource type="Texture2D" uid="uid://f8bvl5itlsqt" path="res://final-proj-ui/assets/c_assets/main_menu/Start_2.svg" id="2_0ykhv"]
+[ext_resource type="Texture2D" uid="uid://b8e4dfos3gkqa" path="res://final-proj-ui/assets/c_assets/main_menu/Start_3.svg" id="2_2wh52"]
+[ext_resource type="Texture2D" uid="uid://jumjiy83l6d5" path="res://final-proj-ui/assets/background/bg_volcano_final.svg" id="2_hubol"]
+[ext_resource type="Texture2D" uid="uid://b1echngeelvts" path="res://final-proj-ui/assets/c_assets/main_menu/Start_1.svg" id="2_l4mxc"]
+[ext_resource type="Texture2D" uid="uid://mgdyw5ekw2ra" path="res://final-proj-ui/assets/c_assets/main_menu/Settings_1.svg" id="4_826wr"]
+[ext_resource type="Texture2D" uid="uid://dtro4vjssovkx" path="res://final-proj-ui/assets/c_assets/main_menu/Settings_3.svg" id="5_ucygd"]
+[ext_resource type="Texture2D" uid="uid://dp0iq7bd3t2gf" path="res://final-proj-ui/assets/c_assets/main_menu/Inventory_1.svg" id="7_bky6r"]
+[ext_resource type="Texture2D" uid="uid://bfyeo2fprhssk" path="res://final-proj-ui/assets/c_assets/main_menu/Inventory_3.svg" id="8_l4mxc"]
+[ext_resource type="Texture2D" uid="uid://crh4e4dl3foml" path="res://final-proj-ui/assets/c_assets/main_menu/Inventory_2.svg" id="9_5faoh"]
+[ext_resource type="Texture2D" uid="uid://dt2263jid3n2a" path="res://final-proj-ui/assets/c_assets/main_menu/Quit_1.svg" id="10_ptake"]
+[ext_resource type="Texture2D" uid="uid://w05obg7c853w" path="res://final-proj-ui/assets/c_assets/main_menu/Quit_3.svg" id="11_hubol"]
+[ext_resource type="Texture2D" uid="uid://b2wdv8tc4o07i" path="res://final-proj-ui/assets/c_assets/main_menu/Quit_2.svg" id="12_8vx4p"]
+[ext_resource type="Texture2D" uid="uid://b08pkq1tfowgt" path="res://final-proj-ui/assets/c_assets/main_menu/Credits_1.svg" id="13_5faoh"]
+[ext_resource type="Texture2D" uid="uid://ctjfx61xqdl4w" path="res://final-proj-ui/assets/c_assets/main_menu/Credits_2.svg" id="14_ptake"]
+[ext_resource type="Texture2D" uid="uid://ds44fcj7qi8dp" path="res://final-proj-ui/assets/background/Logo_3.svg" id="16_8vx4p"]
+[ext_resource type="PackedScene" uid="uid://cf4kq5bp6w6mt" path="res://final-proj-ui/scenes/settings_menu.tscn" id="17_8vx4p"]
+[ext_resource type="AudioStream" uid="uid://c64ml8nell1sj" path="res://final-proj-ui/assets/music/Kashia - Follow The Light (freetouse.com).mp3" id="18_tdapf"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bky6r"]
+
+[node name="MainMenu" type="Node2D" unique_id=126134171]
+script = ExtResource("1_yqorp")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=2023302309]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -20.999998
+offset_top = -10.0
+offset_right = 2731.0
+offset_bottom = 1526.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.43364465, 0.43364465)
+texture = ExtResource("2_hubol")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1674011177]
+offset_right = 1150.0
+offset_bottom = 650.0
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=655402494]
+layout_mode = 2
+theme_override_constants/separation = 60
+
+[node name="Separator" type="Control" parent="MarginContainer/VBoxContainer" unique_id=681408178]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1811814900]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=1681064830]
+layout_mode = 2
+
+[node name="ButtonManager" type="Control" parent="." unique_id=1522332010]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 1138.0
+offset_bottom = 638.0
+
+[node name="Start" type="TextureButton" parent="ButtonManager" unique_id=1610570333]
+layout_mode = 0
+offset_left = 148.0
+offset_top = 253.0
+offset_right = 874.8334
+offset_bottom = 449.0
+scale = Vector2(0.5, 0.5)
+texture_normal = ExtResource("2_l4mxc")
+texture_pressed = ExtResource("2_2wh52")
+texture_hover = ExtResource("2_0ykhv")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Join" type="TextureButton" parent="ButtonManager" unique_id=689433541]
+layout_mode = 0
+offset_left = 200.99997
+offset_top = 359.99997
+offset_right = 463.8326
+offset_bottom = 437.30365
+rotation = 0.015186821
+texture_normal = ExtResource("7_bky6r")
+texture_pressed = ExtResource("8_l4mxc")
+texture_hover = ExtResource("9_5faoh")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Settings" type="TextureButton" parent="ButtonManager" unique_id=1224351090]
+layout_mode = 0
+offset_left = 215.00003
+offset_top = 460.00003
+offset_right = 454.99713
+offset_bottom = 530.5874
+rotation = -0.045785856
+texture_normal = ExtResource("4_826wr")
+texture_pressed = ExtResource("5_ucygd")
+texture_hover = SubResource("CompressedTexture2D_bky6r")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Quit" type="TextureButton" parent="ButtonManager" unique_id=718923819]
+layout_mode = 0
+offset_left = 256.00006
+offset_top = 537.0
+offset_right = 427.13455
+offset_bottom = 587.33374
+rotation = 0.013472442
+texture_normal = ExtResource("10_ptake")
+texture_pressed = ExtResource("11_hubol")
+texture_hover = ExtResource("12_8vx4p")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Credits" type="TextureButton" parent="ButtonManager" unique_id=1986447715]
+layout_mode = 0
+offset_left = 956.00006
+offset_top = 564.00006
+offset_right = 1096.0
+offset_bottom = 601.00006
+rotation = -0.107272446
+texture_normal = ExtResource("13_5faoh")
+texture_pressed = ExtResource("13_5faoh")
+texture_hover = ExtResource("14_ptake")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Logo3" type="Sprite2D" parent="ButtonManager" unique_id=312915135]
+position = Vector2(318, 134)
+scale = Vector2(0.45753592, 0.45753586)
+texture = ExtResource("16_8vx4p")
+
+[node name="SettingsMenu" parent="." unique_id=306094793 instance=ExtResource("17_8vx4p")]
+visible = false
+offset_left = -702.0
+offset_top = -121.0
+offset_right = -702.0
+offset_bottom = -121.0
+
+[node name="MusicStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=965747171]
+stream = ExtResource("18_tdapf")
+volume_db = -14.0
+autoplay = true
+
+[connection signal="pressed" from="ButtonManager/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="ButtonManager/Join" to="." method="_on_inventory_pressed"]
+[connection signal="pressed" from="ButtonManager/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="ButtonManager/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="ButtonManager/Credits" to="." method="_on_credits_pressed"]

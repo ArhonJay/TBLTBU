@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://cfee88hk8pa53"]
+
+[ext_resource type="Script" uid="uid://5mptk624hu84" path="res://scripts/back_button.gd" id="1_ajove"]
+[ext_resource type="Texture2D" uid="uid://dw5w0eshblyd2" path="res://assets/c_assets/main_menu/Back_1.svg" id="1_sws7j"]
+[ext_resource type="Texture2D" uid="uid://vjau0dgtjtpf" path="res://assets/c_assets/main_menu/Back_2.svg" id="2_1f7gl"]
+[ext_resource type="Texture2D" uid="uid://ds4uhvto0p0nt" path="res://assets/c_assets/main_menu/Back_3.svg" id="3_nxnxj"]
+
+[node name="BackButton" type="TextureButton" unique_id=852002303]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 61.0
+offset_top = 564.0
+offset_right = -963.32983
+offset_bottom = -41.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("1_sws7j")
+texture_pressed = ExtResource("2_1f7gl")
+texture_hover = ExtResource("3_nxnxj")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("1_ajove")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

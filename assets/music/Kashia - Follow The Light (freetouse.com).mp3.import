@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c64ml8nell1sj"
+path="res://.godot/imported/Kashia - Follow The Light (freetouse.com).mp3-0f9296f9345df5ab1e6f53a628ae198c.mp3str"
+
+[deps]
+
+source_file="res://assets/music/Kashia - Follow The Light (freetouse.com).mp3"
+dest_files=["res://.godot/imported/Kashia - Follow The Light (freetouse.com).mp3-0f9296f9345df5ab1e6f53a628ae198c.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4
