@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://b7iguspunbcpx"
+path="res://.godot/imported/bone_half.obj-0228afcc3ce2a5ce9e37ac3e4ed1c9ab.mesh"
+
+[deps]
+
+files=["res://.godot/imported/bone_half.obj-0228afcc3ce2a5ce9e37ac3e4ed1c9ab.mesh"]
+
+source_file="res://assets/items/bone_half.obj"
+dest_files=["res://.godot/imported/bone_half.obj-0228afcc3ce2a5ce9e37ac3e4ed1c9ab.mesh", "res://.godot/imported/bone_half.obj-0228afcc3ce2a5ce9e37ac3e4ed1c9ab.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false
