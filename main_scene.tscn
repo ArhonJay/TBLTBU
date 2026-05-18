@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://cn78jxgj8cw0m"]
 
 [ext_resource type="Script" uid="uid://bapwt44eajmry" path="res://main_scene.gd" id="1_gyfs4"]
+[ext_resource type="ArrayMesh" uid="uid://cki43eg0xvk8s" path="res://assets/Volcano/terrainto.obj" id="2_2c62f"]
+[ext_resource type="ArrayMesh" uid="uid://d2bouvnbho1dy" path="res://assets/Lab/laboratory.obj" id="3_gyfs4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0f027"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -29,10 +31,10 @@ environment = SubResource("Environment_gyfs4")
 [node name="SpawnPoints" type="Node3D" parent="." unique_id=476886260]
 
 [node name="ExplorerSpawn" type="Marker3D" parent="SpawnPoints" unique_id=50010483]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.23751545, 10.915802, -1.1321784)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.00141, 115.989426, -5.322113)
 
 [node name="ScientistSpawn" type="Marker3D" parent="SpawnPoints" unique_id=1918894866]
-transform = Transform3D(0.9999422, 0.010751021, 0, -0.010751021, 0.9999422, 0, 0, 0, 1, 0.76998425, 10.923489, 0.65801096)
+transform = Transform3D(0.9999422, 0.010751021, 0, -0.010751021, 0.9999422, 0, 0, 0, 1, -158.1106, -6.042574, 304.16617)
 
 [node name="Players" type="Node3D" parent="." unique_id=1068550589]
 
@@ -48,3 +50,11 @@ mesh = SubResource("BoxMesh_0f027")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1211412909]
 shape = SubResource("ConcavePolygonShape3D_2c62f")
+
+[node name="Terrainto" type="MeshInstance3D" parent="." unique_id=1289697231]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.009678, -33.83882, 13.564485)
+mesh = ExtResource("2_2c62f")
+
+[node name="Laboratory" type="MeshInstance3D" parent="." unique_id=1039956254]
+transform = Transform3D(-0.99964625, 0, 0.026595706, 0, 1, 0, -0.026595706, 0, -0.99964625, -158.59795, -5.34449, 312.22784)
+mesh = ExtResource("3_gyfs4")
