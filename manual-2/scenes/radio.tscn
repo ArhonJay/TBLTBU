@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bywjbtqoxqdhy"]
 
-[ext_resource type="Script" uid="uid://cog2vrdvr5ila" path="res://radio.gd" id="1_543sh"]
+[ext_resource type="Script" uid="uid://cog2vrdvr5ila" path="res://scripts/radio.gd" id="1_543sh"]
 [ext_resource type="ArrayMesh" uid="uid://dkx1fg6ld4xj8" path="res://models/radio.obj" id="1_flxc7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_543sh"]

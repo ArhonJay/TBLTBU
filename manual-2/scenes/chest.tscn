@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://pybt3sfmkw53"]
 
-[ext_resource type="Script" uid="uid://6hhitlqgsf1s" path="res://chest.gd" id="1_8uwsg"]
+[ext_resource type="Script" uid="uid://6hhitlqgsf1s" path="res://scripts/chest.gd" id="1_8uwsg"]
 [ext_resource type="ArrayMesh" uid="uid://b15rhc616aox7" path="res://models/treasurechest.obj" id="1_twpm2"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8uwsg"]

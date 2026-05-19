@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c07rynlstb0cl"]
 
-[ext_resource type="Script" uid="uid://chc2gh0wcmkuh" path="res://simon_says.gd" id="1_kfw04"]
+[ext_resource type="Script" uid="uid://chc2gh0wcmkuh" path="res://scripts/simon_says.gd" id="1_kfw04"]
 [ext_resource type="ArrayMesh" uid="uid://368gqnr87lj6" path="res://models/simonsay.obj" id="2_tssl7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_76v6r"]

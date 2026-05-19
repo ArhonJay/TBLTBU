@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c1uw8rrikq4nc"]
 
-[ext_resource type="Script" uid="uid://dn7x8ksf0yllj" path="res://keypad_interaction.gd" id="1_4swqm"]
+[ext_resource type="Script" uid="uid://dn7x8ksf0yllj" path="res://scripts/keypad_interaction.gd" id="1_4swqm"]
 [ext_resource type="ArrayMesh" uid="uid://ctryqaf8hbyqe" path="res://models/keypad.obj" id="2_w41gr"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4swqm"]
