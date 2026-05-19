@@ -1,0 +1,123 @@
+[gd_scene format=3 uid="uid://dwvff2oj4bqqj"]
+
+[node name="RadioUI" type="CanvasLayer" unique_id=1885248193]
+visible = false
+
+[node name="Control" type="Control" parent="." unique_id=1058434175]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=1703036428]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.7058824)
+
+[node name="PanelContainer" type="PanelContainer" parent="Control" unique_id=1063687730]
+custom_minimum_size = Vector2(500, 400)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -129.0
+offset_top = -20.0
+offset_right = 129.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer" unique_id=1653191528]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="Control/PanelContainer/VBoxContainer" unique_id=1208551759]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "FACILITY OVERRIDE SIRENS"
+horizontal_alignment = 1
+
+[node name="StatusLabel" type="Label" parent="Control/PanelContainer/VBoxContainer" unique_id=428441313]
+layout_mode = 2
+text = "Press PLAY to broadcast tones"
+horizontal_alignment = 1
+
+[node name="ToneDisplay" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer" unique_id=575705434]
+layout_mode = 2
+
+[node name="Tone1" type="Label" parent="Control/PanelContainer/VBoxContainer/ToneDisplay" unique_id=1921025788]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 28
+text = "[ ? ]"
+horizontal_alignment = 1
+
+[node name="Tone2" type="Label" parent="Control/PanelContainer/VBoxContainer/ToneDisplay" unique_id=114727783]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 28
+text = "[ ? ]"
+horizontal_alignment = 1
+
+[node name="Tone3" type="Label" parent="Control/PanelContainer/VBoxContainer/ToneDisplay" unique_id=1679498638]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 28
+text = "[ ? ]"
+horizontal_alignment = 1
+
+[node name="Tone4" type="Label" parent="Control/PanelContainer/VBoxContainer/ToneDisplay" unique_id=242624289]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 28
+text = "[ ? ]"
+horizontal_alignment = 1
+
+[node name="PlayButton" type="Button" parent="Control/PanelContainer/VBoxContainer" unique_id=1185489966]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "▶ PLAY TONES"
+
+[node name="CodeRow" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer" unique_id=1014854432]
+layout_mode = 2
+
+[node name="CodeLabel" type="Label" parent="Control/PanelContainer/VBoxContainer/CodeRow" unique_id=115328286]
+layout_mode = 2
+text = "Enter Code:"
+
+[node name="CodeInput" type="LineEdit" parent="Control/PanelContainer/VBoxContainer/CodeRow" unique_id=151433290]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "0000"
+max_length = 4
+
+[node name="SubmitButton" type="Button" parent="Control/PanelContainer/VBoxContainer" unique_id=379172847]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "✓ SUBMIT CODE
+"
+
+[node name="ResultLabel" type="Label" parent="Control/PanelContainer/VBoxContainer" unique_id=2001897132]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+
+[node name="CloseButton" type="Button" parent="Control" unique_id=1318651032]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -82.0
+offset_top = 10.0
+offset_right = -15.0
+offset_bottom = 41.0
+grow_horizontal = 0
+text = "✕ Close"

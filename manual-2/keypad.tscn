@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://c1uw8rrikq4nc"]
+
+[ext_resource type="Script" uid="uid://dn7x8ksf0yllj" path="res://keypad_interaction.gd" id="1_4swqm"]
+[ext_resource type="ArrayMesh" uid="uid://ctryqaf8hbyqe" path="res://models/keypad.obj" id="2_w41gr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4swqm"]
+albedo_color = Color(1, 1, 0.7490196, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w41gr"]
+albedo_color = Color(0.22670749, 0.22670749, 0.22670746, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8rcbr"]
+albedo_color = Color(1, 1, 0.7490196, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3c3sr"]
+albedo_color = Color(1, 1, 0.7490196, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_updv8"]
+albedo_color = Color(1, 1, 0.7490196, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wey0v"]
+albedo_color = Color(1, 1, 0.7490196, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mqjo7"]
+albedo_color = Color(1, 1, 0.7490196, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ucpnh"]
+albedo_color = Color(1, 1, 0.7490196, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bx1ow"]
+albedo_color = Color(1, 1, 0.7490196, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lj8oe"]
+albedo_color = Color(1, 1, 0.7490196, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ssiye"]
+albedo_color = Color(1, 1, 0.7490196, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6dq37"]
+albedo_color = Color(1, 1, 0.7490196, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gcv1m"]
+albedo_color = Color(0, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bepvq"]
+albedo_color = Color(1, 1, 0.7490196, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8rcbr"]
+size = Vector3(0.2, 0.6, 0.4)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_3c3sr"]
+radius = 2.0
+
+[node name="Keypad" type="StaticBody3D" unique_id=552948608]
+transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 0, 0, 0)
+script = ExtResource("1_4swqm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1351499759]
+mesh = ExtResource("2_w41gr")
+surface_material_override/0 = SubResource("StandardMaterial3D_4swqm")
+surface_material_override/1 = SubResource("StandardMaterial3D_w41gr")
+surface_material_override/2 = SubResource("StandardMaterial3D_8rcbr")
+surface_material_override/3 = SubResource("StandardMaterial3D_3c3sr")
+surface_material_override/4 = SubResource("StandardMaterial3D_updv8")
+surface_material_override/5 = SubResource("StandardMaterial3D_wey0v")
+surface_material_override/6 = SubResource("StandardMaterial3D_mqjo7")
+surface_material_override/7 = SubResource("StandardMaterial3D_ucpnh")
+surface_material_override/8 = SubResource("StandardMaterial3D_bx1ow")
+surface_material_override/9 = SubResource("StandardMaterial3D_lj8oe")
+surface_material_override/10 = SubResource("StandardMaterial3D_ssiye")
+surface_material_override/11 = SubResource("StandardMaterial3D_6dq37")
+surface_material_override/12 = SubResource("StandardMaterial3D_gcv1m")
+surface_material_override/13 = SubResource("StandardMaterial3D_bepvq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1445512824]
+transform = Transform3D(0.7071068, 0, -0.7071068, 0, 1, 0, 0.7071068, 0, 0.7071068, 0, 0, 0)
+shape = SubResource("BoxShape3D_8rcbr")
+
+[node name="InteractionZone" type="Area3D" parent="." unique_id=1074206870]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionZone" unique_id=1752608384]
+shape = SubResource("SphereShape3D_3c3sr")

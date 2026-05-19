@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://c07rynlstb0cl"]
+
+[ext_resource type="Script" uid="uid://chc2gh0wcmkuh" path="res://simon_says.gd" id="1_kfw04"]
+[ext_resource type="ArrayMesh" uid="uid://368gqnr87lj6" path="res://models/simonsay.obj" id="2_tssl7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_76v6r"]
+albedo_color = Color(0.17254902, 0.02745098, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tssl7"]
+albedo_color = Color(0.17254902, 0.02745098, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w47fg"]
+albedo_color = Color(0.17254902, 0.02745098, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_amv67"]
+albedo_color = Color(0.17254902, 0.02745098, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_povj6"]
+albedo_color = Color(0.17254902, 0.02745098, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6cpmq"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_04man"]
+albedo_color = Color(0, 0, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iujm3"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ab22o"]
+albedo_color = Color(1, 1, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w47fg"]
+size = Vector3(1.5, 1.5, 1.5)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_amv67"]
+radius = 2.0
+
+[node name="SimonSays" type="StaticBody3D" unique_id=968797320]
+script = ExtResource("1_kfw04")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1663837731]
+transform = Transform3D(0.99999917, -0.00127409, 0, 0.00127409, 0.99999917, 0, 0, 0, 1, 0, 0, 0)
+mesh = ExtResource("2_tssl7")
+surface_material_override/0 = SubResource("StandardMaterial3D_76v6r")
+surface_material_override/1 = SubResource("StandardMaterial3D_tssl7")
+surface_material_override/2 = SubResource("StandardMaterial3D_w47fg")
+surface_material_override/3 = SubResource("StandardMaterial3D_amv67")
+surface_material_override/4 = SubResource("StandardMaterial3D_povj6")
+surface_material_override/5 = SubResource("StandardMaterial3D_6cpmq")
+surface_material_override/6 = SubResource("StandardMaterial3D_04man")
+surface_material_override/7 = SubResource("StandardMaterial3D_iujm3")
+surface_material_override/8 = SubResource("StandardMaterial3D_ab22o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2041179826]
+shape = SubResource("BoxShape3D_w47fg")
+
+[node name="InteractionZone" type="Area3D" parent="." unique_id=1471282981]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionZone" unique_id=275571266]
+shape = SubResource("SphereShape3D_amv67")
+
+[node name="VoicePlayer" type="AudioStreamPlayer" parent="." unique_id=165730152]

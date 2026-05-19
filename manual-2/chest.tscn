@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://pybt3sfmkw53"]
+
+[ext_resource type="Script" uid="uid://6hhitlqgsf1s" path="res://chest.gd" id="1_8uwsg"]
+[ext_resource type="ArrayMesh" uid="uid://b15rhc616aox7" path="res://models/treasurechest.obj" id="1_twpm2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8uwsg"]
+albedo_color = Color(0.9055806, 0.8185789, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bp1or"]
+albedo_color = Color(0.79804623, 0.41743425, 5.7756904e-07, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_trlyu"]
+albedo_color = Color(7.70092e-07, 0.51069653, 0.8195681, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x7mpe"]
+albedo_color = Color(0, 0.5372549, 0.9254902, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bv3sb"]
+albedo_color = Color(0.08813343, 0.31576213, 0.63584924, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bp1or"]
+size = Vector3(2.9262428, 0.7434082, 1.480957)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_trlyu"]
+radius = 2.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_x7mpe"]
+size = Vector3(0.3, 0.3, 0.3)
+
+[node name="Chest" type="StaticBody3D" unique_id=296176913]
+script = ExtResource("1_8uwsg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=8443052]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+mesh = ExtResource("1_twpm2")
+surface_material_override/0 = SubResource("StandardMaterial3D_8uwsg")
+surface_material_override/1 = SubResource("StandardMaterial3D_bp1or")
+surface_material_override/2 = SubResource("StandardMaterial3D_trlyu")
+surface_material_override/3 = SubResource("StandardMaterial3D_x7mpe")
+surface_material_override/4 = SubResource("StandardMaterial3D_bv3sb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1348931976]
+transform = Transform3D(0.70294815, 0, 0, 0, 2.0249014, 0, 0, 0, 1, -0.0010839277, 0.25978655, 0.025634766)
+shape = SubResource("BoxShape3D_bp1or")
+
+[node name="InteractionZone" type="Area3D" parent="." unique_id=1135792410]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionZone" unique_id=2013335947]
+shape = SubResource("SphereShape3D_trlyu")
+
+[node name="Label3D" type="Label3D" parent="." unique_id=146794777]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+billboard = 1
+font_size = 64
+
+[node name="ColorIndicator" type="MeshInstance3D" parent="." unique_id=1968609479]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+mesh = SubResource("BoxMesh_x7mpe")

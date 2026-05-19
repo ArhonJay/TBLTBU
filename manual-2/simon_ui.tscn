@@ -1,0 +1,106 @@
+[gd_scene format=3 uid="uid://60a03pxp2q8h"]
+
+[node name="SimonUI" type="CanvasLayer" unique_id=2092726446]
+visible = false
+
+[node name="Control" type="Control" parent="." unique_id=685023450]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=1729379179]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.7058824)
+
+[node name="PanelContainer" type="PanelContainer" parent="Control" unique_id=206582374]
+custom_minimum_size = Vector2(520, 520)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer" unique_id=1492876081]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="TitleLabel" type="Label" parent="Control/PanelContainer/VBoxContainer" unique_id=1121593481]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "SIMON SAYS"
+horizontal_alignment = 1
+
+[node name="StatusLabel" type="Label" parent="Control/PanelContainer/VBoxContainer" unique_id=548211073]
+layout_mode = 2
+text = "Press PLAY to hear the sequence"
+horizontal_alignment = 1
+
+[node name="StrikeLabel" type="Label" parent="Control/PanelContainer/VBoxContainer" unique_id=1833955068]
+layout_mode = 2
+text = "Strikes: 0 | Round: 1"
+horizontal_alignment = 1
+
+[node name="Row1" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer" unique_id=964952257]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BtnRed" type="Button" parent="Control/PanelContainer/VBoxContainer/Row1" unique_id=1274504762]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BtnBlue" type="Button" parent="Control/PanelContainer/VBoxContainer/Row1" unique_id=116010656]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Row2" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer" unique_id=708988047]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BtnGreen" type="Button" parent="Control/PanelContainer/VBoxContainer/Row2" unique_id=1405023593]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BtnYellow" type="Button" parent="Control/PanelContainer/VBoxContainer/Row2" unique_id=173713604]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PlayButton" type="Button" parent="Control/PanelContainer/VBoxContainer" unique_id=299284190]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "▶ PLAY SEQUENCE"
+
+[node name="ResultLabel" type="Label" parent="Control/PanelContainer/VBoxContainer" unique_id=53138439]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
+
+[node name="CloseButton" type="Button" parent="Control" unique_id=1721674283]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -82.0
+offset_top = 10.0
+offset_right = -15.0
+offset_bottom = 41.0
+grow_horizontal = 0
+text = "✕ Close"
