@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dt0akfxk35khf"
+path="res://.godot/imported/Rock_2_D_Color1.obj-d0c6c24c9e661bbea2e32dba794d62b6.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Rock_2_D_Color1.obj-d0c6c24c9e661bbea2e32dba794d62b6.mesh"]
+
+source_file="res://assets/terrain/forest/Rock_2_D_Color1.obj"
+dest_files=["res://.godot/imported/Rock_2_D_Color1.obj-d0c6c24c9e661bbea2e32dba794d62b6.mesh", "res://.godot/imported/Rock_2_D_Color1.obj-d0c6c24c9e661bbea2e32dba794d62b6.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false
