@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://djf5dwc0uydo2"
+path="res://.godot/imported/rock06.obj-26a63aae8b29a2ac4dd238e20c3f7d90.mesh"
+
+[deps]
+
+files=["res://.godot/imported/rock06.obj-26a63aae8b29a2ac4dd238e20c3f7d90.mesh"]
+
+source_file="res://assets/terrain/desert/rock06.obj"
+dest_files=["res://.godot/imported/rock06.obj-26a63aae8b29a2ac4dd238e20c3f7d90.mesh", "res://.godot/imported/rock06.obj-26a63aae8b29a2ac4dd238e20c3f7d90.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

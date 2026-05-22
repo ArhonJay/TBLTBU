@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cse23uvhue2r6"
+path="res://.godot/imported/Alien.obj-1936f8868caa830add6d8f297bbd8690.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Alien.obj-1936f8868caa830add6d8f297bbd8690.mesh"]
+
+source_file="res://assets/Enemies/monsters/OBJ/Alien.obj"
+dest_files=["res://.godot/imported/Alien.obj-1936f8868caa830add6d8f297bbd8690.mesh", "res://.godot/imported/Alien.obj-1936f8868caa830add6d8f297bbd8690.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

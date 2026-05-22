@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bsom37tx0t7g5"
+path="res://.godot/imported/Armabee_Evolved.obj-9838b00b06565dc7f690e7709437ebe0.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Armabee_Evolved.obj-9838b00b06565dc7f690e7709437ebe0.mesh"]
+
+source_file="res://assets/Enemies/flying/OBJ/Armabee_Evolved.obj"
+dest_files=["res://.godot/imported/Armabee_Evolved.obj-9838b00b06565dc7f690e7709437ebe0.mesh", "res://.godot/imported/Armabee_Evolved.obj-9838b00b06565dc7f690e7709437ebe0.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

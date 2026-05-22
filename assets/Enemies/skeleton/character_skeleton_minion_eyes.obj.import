@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://booy8ksgy7q5y"
+path="res://.godot/imported/character_skeleton_minion_eyes.obj-f078171f3b441744f7ad09e90687d54d.mesh"
+
+[deps]
+
+files=["res://.godot/imported/character_skeleton_minion_eyes.obj-f078171f3b441744f7ad09e90687d54d.mesh"]
+
+source_file="res://assets/Enemies/skeleton/character_skeleton_minion_eyes.obj"
+dest_files=["res://.godot/imported/character_skeleton_minion_eyes.obj-f078171f3b441744f7ad09e90687d54d.mesh", "res://.godot/imported/character_skeleton_minion_eyes.obj-f078171f3b441744f7ad09e90687d54d.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false
