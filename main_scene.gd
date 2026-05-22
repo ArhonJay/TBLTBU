@@ -16,17 +16,24 @@ func _ready():
 
 func spawn_player(peer_id):
 	var role = NetworkManager.players[peer_id]["role"]
+	
+	# HARDCODE FOR TESTING: Force host to be explorer, clients to be scientist
+	if peer_id == 1:
+		role = "explorer"
+	else:
+		role = "scientist"
+		
 	var current_player_node
 	
+	# 2. Instantiate and set position based on our forced test roles
 	if role == "explorer":
 		current_player_node = explorer_scene.instantiate()
-		current_player_node.position = $SpawnPoints/ExplorerSpawn.global_position
+		current_player_node.position = $SpawnPoints/ExplorerSpawn.position
 	else:
 		current_player_node = scientist_scene.instantiate()
-		current_player_node.position = $SpawnPoints/ScientistSpawn.global_position
+		current_player_node.position = $SpawnPoints/ScientistSpawn.position
 		
+	# 3. Set authority, name, and add to tree
 	current_player_node.name = str(peer_id)
 	current_player_node.set_multiplayer_authority(peer_id)
-	
-	# THE FIX: Drop them into the dedicated folder!
 	$Players.add_child(current_player_node)
