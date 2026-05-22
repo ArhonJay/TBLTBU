@@ -24,7 +24,9 @@ func _get_bus_name_by_index() -> void:
 	bus_index = AudioServer.get_bus_index(bus_name)
 	
 func _set_slider_value() -> void:
+	# Ask the AudioServer for the current volume, convert it back to 0-100, and update the slider
 	h_slider.value = db_to_linear(AudioServer.get_bus_volume_db(bus_index)) * 100
+	
 	_set_audio_num_label_text()
 	
 func _on_value_changed(value : float) -> void:

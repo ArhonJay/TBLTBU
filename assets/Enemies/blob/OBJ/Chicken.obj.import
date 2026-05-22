@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dxkw87c8ev2sy"
+path="res://.godot/imported/Chicken.obj-79c84cf3229834ecb77e7f6386f2cd35.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Chicken.obj-79c84cf3229834ecb77e7f6386f2cd35.mesh"]
+
+source_file="res://assets/Enemies/blob/OBJ/Chicken.obj"
+dest_files=["res://.godot/imported/Chicken.obj-79c84cf3229834ecb77e7f6386f2cd35.mesh", "res://.godot/imported/Chicken.obj-79c84cf3229834ecb77e7f6386f2cd35.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

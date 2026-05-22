@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dt3bxj4ij6wc2"
+path="res://.godot/imported/Bush_4_C_Color1.obj-810aef1fb0fda370ccc0e82b74ddd54d.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Bush_4_C_Color1.obj-810aef1fb0fda370ccc0e82b74ddd54d.mesh"]
+
+source_file="res://assets/terrain/forest/Bush_4_C_Color1.obj"
+dest_files=["res://.godot/imported/Bush_4_C_Color1.obj-810aef1fb0fda370ccc0e82b74ddd54d.mesh", "res://.godot/imported/Bush_4_C_Color1.obj-810aef1fb0fda370ccc0e82b74ddd54d.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

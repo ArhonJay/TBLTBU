@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://c85k04k7cgr2l"
+path="res://.godot/imported/Frog.obj-aac68ec6edd19dfe7c0f532dcf5711e0.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Frog.obj-aac68ec6edd19dfe7c0f532dcf5711e0.mesh"]
+
+source_file="res://assets/Enemies/monsters/OBJ/Frog.obj"
+dest_files=["res://.godot/imported/Frog.obj-aac68ec6edd19dfe7c0f532dcf5711e0.mesh", "res://.godot/imported/Frog.obj-aac68ec6edd19dfe7c0f532dcf5711e0.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

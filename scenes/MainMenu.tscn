@@ -17,7 +17,6 @@
 [ext_resource type="Texture2D" uid="uid://ctjfx61xqdl4w" path="res://assets/c_assets/main_menu/Credits_2.svg" id="15_d3xvo"]
 [ext_resource type="Texture2D" uid="uid://ds44fcj7qi8dp" path="res://assets/background/Logo_3.svg" id="16_ynb5t"]
 [ext_resource type="PackedScene" uid="uid://cf4kq5bp6w6mt" path="res://scenes/settings_menu.tscn" id="17_ejntt"]
-[ext_resource type="AudioStream" uid="uid://c64ml8nell1sj" path="res://assets/music/Kashia - Follow The Light (freetouse.com).mp3" id="18_c3y1w"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bky6r"]
 load_path = "res://.godot/imported/Settings_2.svg-afe8127cd5db4f94495581f15e741eda.ctex"
@@ -143,12 +142,6 @@ offset_left = -702.0
 offset_top = -121.0
 offset_right = -702.0
 offset_bottom = -121.0
-
-[node name="MusicStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=965747171]
-stream = ExtResource("18_c3y1w")
-volume_db = -14.0
-autoplay = true
-bus = &"Music"
 
 [connection signal="pressed" from="ButtonManager/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="ButtonManager/Join" to="." method="_on_inventory_pressed"]

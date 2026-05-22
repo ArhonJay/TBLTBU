@@ -11,7 +11,7 @@ extends Node2D
 @onready var margin_container: MarginContainer = $MarginContainer as MarginContainer
 
 func _ready():
-	MusicManager.play_music(preload("res://assets/music/Kashia - Follow The Light (freetouse.com).mp3"))
+	MusicManager.play_music(preload("res://assets/music/Time Flows Ever Onward.mp3"))
 	multiplayer.connected_to_server.connect(load_main_scene)
 
 func _on_start_pressed() -> void:
