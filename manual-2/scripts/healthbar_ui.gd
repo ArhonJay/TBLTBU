@@ -40,12 +40,25 @@ func damage(amount: float):
 	if current_health <= 0:
 		_on_dead()
 
+var _popup_timer: SceneTreeTimer = null
+
 func _show_popup(text: String, color: Color):
+	# Cancel any existing popup timer so they don't overlap
+	if _popup_timer != null:
+		_popup_timer.timeout.disconnect(_hide_popup)
+		_popup_timer = null
+
 	status_popup.text = text
 	status_popup.add_theme_color_override("font_color", color)
 	status_popup.visible = true
-	await get_tree().create_timer(2.0).timeout
+
+	_popup_timer = get_tree().create_timer(2.0)
+	_popup_timer.timeout.connect(_hide_popup)
+	await _popup_timer.timeout
+
+func _hide_popup():
 	status_popup.visible = false
+	_popup_timer = null
 
 func _on_dead():
 	_show_popup("YOU DIED", Color.RED)
