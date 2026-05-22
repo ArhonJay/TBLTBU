@@ -4,14 +4,14 @@ importer="wavefront_obj"
 importer_version=1
 type="Mesh"
 uid="uid://dbs1vg3mm2gks"
-path="res://.godot/imported/PSX Radio Receiver.obj-78ebdbc31d4cb3ef56e35a54ac9d2bd0.mesh"
+path="res://.godot/imported/PSX Radio Receiver.obj-46a4b15689c9466558b9dfcb0593bcf6.mesh"
 
 [deps]
 
-files=["res://.godot/imported/PSX Radio Receiver.obj-78ebdbc31d4cb3ef56e35a54ac9d2bd0.mesh"]
+files=["res://.godot/imported/PSX Radio Receiver.obj-46a4b15689c9466558b9dfcb0593bcf6.mesh"]
 
-source_file="res://models/PSX Radio Receiver.obj"
-dest_files=["res://.godot/imported/PSX Radio Receiver.obj-78ebdbc31d4cb3ef56e35a54ac9d2bd0.mesh", "res://.godot/imported/PSX Radio Receiver.obj-78ebdbc31d4cb3ef56e35a54ac9d2bd0.mesh"]
+source_file="res://manual-2/models/PSX Radio Receiver.obj"
+dest_files=["res://.godot/imported/PSX Radio Receiver.obj-46a4b15689c9466558b9dfcb0593bcf6.mesh", "res://.godot/imported/PSX Radio Receiver.obj-46a4b15689c9466558b9dfcb0593bcf6.mesh"]
 
 [params]
 

@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://cq51p6x5lfxo"
-path="res://.godot/imported/Potion_1.fbx-feeedd4a1584a5f94160b6e57b7d2826.scn"
+path="res://.godot/imported/Potion_1.fbx-267b9e765199a6f06bf4528b263af7dd.scn"
 
 [deps]
 
-source_file="res://models/Potion_1.fbx"
-dest_files=["res://.godot/imported/Potion_1.fbx-feeedd4a1584a5f94160b6e57b7d2826.scn"]
+source_file="res://manual-2/models/Potion_1.fbx"
+dest_files=["res://.godot/imported/Potion_1.fbx-267b9e765199a6f06bf4528b263af7dd.scn"]
 
 [params]
 

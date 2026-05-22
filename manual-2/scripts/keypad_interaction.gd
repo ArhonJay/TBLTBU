@@ -6,6 +6,7 @@ const CORRECT_CODE = "1234"  # change this to your code later
 var current_input := ""
 var player_nearby := false
 var ui_open := false
+var is_solved := false
 
 var display: Label
 var result_label: Label
@@ -27,7 +28,6 @@ func _ready():
 	display = keypad_ui.get_node("Control/PanelContainer/VBoxContainer/Display")
 	result_label = keypad_ui.get_node("Control/PanelContainer/VBoxContainer/ResultLabel")
 	
-	# connect each button directly, no lambda loop
 	keypad_ui.get_node("Control/PanelContainer/VBoxContainer/HBoxContainer/Btn1").pressed.connect(func(): _on_number_pressed("1"))
 	keypad_ui.get_node("Control/PanelContainer/VBoxContainer/HBoxContainer/Btn2").pressed.connect(func(): _on_number_pressed("2"))
 	keypad_ui.get_node("Control/PanelContainer/VBoxContainer/HBoxContainer/Btn3").pressed.connect(func(): _on_number_pressed("3"))
@@ -44,6 +44,17 @@ func _ready():
 	
 	keypad_ui.visible = false
 
+
+# Called by chest.gd when the chest is unlocked
+func disable():
+	is_solved = true
+	set_process_unhandled_input(false)
+	$InteractionZone.monitoring = false
+	prompt_label.visible = false
+	if ui_open:
+		_close_keypad()
+
+
 func _on_body_entered(body: Node3D):
 	if body.is_in_group("player"):
 		player_nearby = true
@@ -56,7 +67,7 @@ func _on_body_exited(body: Node3D):
 
 func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed("interact"):
-		if player_nearby and not ui_open:
+		if player_nearby and not ui_open and not is_solved:
 			_open_keypad()
 		elif ui_open:
 			_close_keypad()
@@ -92,12 +103,10 @@ func _open_keypad():
 	result_label.text = ""
 	keypad_ui.visible = true
 	prompt_label.visible = true
-
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func _close_keypad():
 	ui_open = false
 	keypad_ui.visible = false
 	prompt_label.visible = false
-
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)

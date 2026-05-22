@@ -4,14 +4,14 @@ importer="wavefront_obj"
 importer_version=1
 type="Mesh"
 uid="uid://368gqnr87lj6"
-path="res://.godot/imported/simonsay.obj-b97e9c45d5958cf74b72b211a4c5d3e7.mesh"
+path="res://.godot/imported/simonsay.obj-c69b8265ef88b445af5929d830c06a6b.mesh"
 
 [deps]
 
-files=["res://.godot/imported/simonsay.obj-b97e9c45d5958cf74b72b211a4c5d3e7.mesh"]
+files=["res://.godot/imported/simonsay.obj-c69b8265ef88b445af5929d830c06a6b.mesh"]
 
-source_file="res://models/simonsay.obj"
-dest_files=["res://.godot/imported/simonsay.obj-b97e9c45d5958cf74b72b211a4c5d3e7.mesh", "res://.godot/imported/simonsay.obj-b97e9c45d5958cf74b72b211a4c5d3e7.mesh"]
+source_file="res://manual-2/models/simonsay.obj"
+dest_files=["res://.godot/imported/simonsay.obj-c69b8265ef88b445af5929d830c06a6b.mesh", "res://.godot/imported/simonsay.obj-c69b8265ef88b445af5929d830c06a6b.mesh"]
 
 [params]
 

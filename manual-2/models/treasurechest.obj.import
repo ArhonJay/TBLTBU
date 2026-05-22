@@ -4,14 +4,14 @@ importer="wavefront_obj"
 importer_version=1
 type="Mesh"
 uid="uid://b15rhc616aox7"
-path="res://.godot/imported/treasurechest.obj-e394b01e42fb7f88b2357d1660e8d4bc.mesh"
+path="res://.godot/imported/treasurechest.obj-61df251d4e6d6795a2ffaeca5f973e33.mesh"
 
 [deps]
 
-files=["res://.godot/imported/treasurechest.obj-e394b01e42fb7f88b2357d1660e8d4bc.mesh"]
+files=["res://.godot/imported/treasurechest.obj-61df251d4e6d6795a2ffaeca5f973e33.mesh"]
 
-source_file="res://models/treasurechest.obj"
-dest_files=["res://.godot/imported/treasurechest.obj-e394b01e42fb7f88b2357d1660e8d4bc.mesh", "res://.godot/imported/treasurechest.obj-e394b01e42fb7f88b2357d1660e8d4bc.mesh"]
+source_file="res://manual-2/models/treasurechest.obj"
+dest_files=["res://.godot/imported/treasurechest.obj-61df251d4e6d6795a2ffaeca5f973e33.mesh", "res://.godot/imported/treasurechest.obj-61df251d4e6d6795a2ffaeca5f973e33.mesh"]
 
 [params]
 

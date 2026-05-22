@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cw1nk3rvoejfp"
-path="res://.godot/imported/manual-totem.png-37c0a2ea8649ea2fe862b578135f95b7.ctex"
+path="res://.godot/imported/manual-totem.png-a33bbcc427a6bcb20ca00894037adef5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/manual-totem.png"
-dest_files=["res://.godot/imported/manual-totem.png-37c0a2ea8649ea2fe862b578135f95b7.ctex"]
+source_file="res://manual-2/images/manual-totem.png"
+dest_files=["res://.godot/imported/manual-totem.png-a33bbcc427a6bcb20ca00894037adef5.ctex"]
 
 [params]
 

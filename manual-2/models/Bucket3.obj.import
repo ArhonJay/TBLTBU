@@ -4,14 +4,14 @@ importer="wavefront_obj"
 importer_version=1
 type="Mesh"
 uid="uid://c25hqpfhlb482"
-path="res://.godot/imported/Bucket3.obj-2926fe33b7c9e12d4576537f8a91ed43.mesh"
+path="res://.godot/imported/Bucket3.obj-d0990a44c266f5f52f8e99947c3c1878.mesh"
 
 [deps]
 
-files=["res://.godot/imported/Bucket3.obj-2926fe33b7c9e12d4576537f8a91ed43.mesh"]
+files=["res://.godot/imported/Bucket3.obj-d0990a44c266f5f52f8e99947c3c1878.mesh"]
 
-source_file="res://models/Bucket3.obj"
-dest_files=["res://.godot/imported/Bucket3.obj-2926fe33b7c9e12d4576537f8a91ed43.mesh", "res://.godot/imported/Bucket3.obj-2926fe33b7c9e12d4576537f8a91ed43.mesh"]
+source_file="res://manual-2/models/Bucket3.obj"
+dest_files=["res://.godot/imported/Bucket3.obj-d0990a44c266f5f52f8e99947c3c1878.mesh", "res://.godot/imported/Bucket3.obj-d0990a44c266f5f52f8e99947c3c1878.mesh"]
 
 [params]
 

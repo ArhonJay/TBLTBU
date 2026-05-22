@@ -4,14 +4,14 @@ importer="wavefront_obj"
 importer_version=1
 type="Mesh"
 uid="uid://dkx1fg6ld4xj8"
-path="res://.godot/imported/radio.obj-44761d3ee35ca8695911dc0912acf763.mesh"
+path="res://.godot/imported/radio.obj-d62b0b8312333936a56aad31d46be6e7.mesh"
 
 [deps]
 
-files=["res://.godot/imported/radio.obj-44761d3ee35ca8695911dc0912acf763.mesh"]
+files=["res://.godot/imported/radio.obj-d62b0b8312333936a56aad31d46be6e7.mesh"]
 
-source_file="res://models/radio.obj"
-dest_files=["res://.godot/imported/radio.obj-44761d3ee35ca8695911dc0912acf763.mesh", "res://.godot/imported/radio.obj-44761d3ee35ca8695911dc0912acf763.mesh"]
+source_file="res://manual-2/models/radio.obj"
+dest_files=["res://.godot/imported/radio.obj-d62b0b8312333936a56aad31d46be6e7.mesh", "res://.godot/imported/radio.obj-d62b0b8312333936a56aad31d46be6e7.mesh"]
 
 [params]
 

@@ -1,18 +1,20 @@
 [gd_scene format=3 uid="uid://b1x263cd3e0rh"]
 
-[ext_resource type="PackedScene" uid="uid://c0q3agd1ptt0m" path="res://scenes/player.tscn" id="1_h2yge"]
-[ext_resource type="PackedScene" uid="uid://kecqe5he5y5q" path="res://scenes/manual_paper.tscn" id="2_1bvp3"]
-[ext_resource type="PackedScene" uid="uid://ckxcuqj1txwqg" path="res://scenes/manual_ui.tscn" id="3_lquwl"]
-[ext_resource type="PackedScene" uid="uid://c1uw8rrikq4nc" path="res://scenes/keypad.tscn" id="5_7mycd"]
-[ext_resource type="PackedScene" uid="uid://6yb2gkqur8k3" path="res://scenes/keypad_ui.tscn" id="5_lquwl"]
-[ext_resource type="PackedScene" uid="uid://pybt3sfmkw53" path="res://scenes/chest.tscn" id="6_7mycd"]
-[ext_resource type="Script" uid="uid://16kovxm0gm7x" path="res://scripts/potion_puzzle.gd" id="7_272bh"]
-[ext_resource type="PackedScene" uid="uid://cnlfdxe52u60m" path="res://scenes/bucket.tscn" id="8_kek77"]
-[ext_resource type="PackedScene" uid="uid://do7kho3mo51lr" path="res://scenes/potion_ui.tscn" id="9_4c57u"]
-[ext_resource type="PackedScene" uid="uid://dwvff2oj4bqqj" path="res://scenes/radio_ui.tscn" id="10_efxa6"]
-[ext_resource type="PackedScene" uid="uid://bywjbtqoxqdhy" path="res://scenes/radio.tscn" id="11_dg77c"]
-[ext_resource type="PackedScene" uid="uid://c07rynlstb0cl" path="res://scenes/simon_says.tscn" id="12_ycdy4"]
-[ext_resource type="PackedScene" uid="uid://60a03pxp2q8h" path="res://scenes/simon_ui.tscn" id="13_w48qg"]
+[ext_resource type="PackedScene" uid="uid://c0q3agd1ptt0m" path="res://manual-2/scenes/player.tscn" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://kecqe5he5y5q" path="res://manual-2/scenes/manual_paper.tscn" id="2_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://ckxcuqj1txwqg" path="res://manual-2/scenes/manual_ui.tscn" id="3_lquwl"]
+[ext_resource type="PackedScene" uid="uid://c1uw8rrikq4nc" path="res://manual-2/scenes/keypad.tscn" id="5_7mycd"]
+[ext_resource type="PackedScene" uid="uid://6yb2gkqur8k3" path="res://manual-2/scenes/keypad_ui.tscn" id="5_lquwl"]
+[ext_resource type="PackedScene" uid="uid://pybt3sfmkw53" path="res://manual-2/scenes/chest.tscn" id="6_7mycd"]
+[ext_resource type="Script" uid="uid://16kovxm0gm7x" path="res://manual-2/scripts/potion_puzzle.gd" id="7_272bh"]
+[ext_resource type="PackedScene" uid="uid://cnlfdxe52u60m" path="res://manual-2/scenes/bucket.tscn" id="8_kek77"]
+[ext_resource type="PackedScene" uid="uid://do7kho3mo51lr" path="res://manual-2/scenes/potion_ui.tscn" id="9_4c57u"]
+[ext_resource type="PackedScene" uid="uid://dwvff2oj4bqqj" path="res://manual-2/scenes/radio_ui.tscn" id="10_efxa6"]
+[ext_resource type="PackedScene" uid="uid://bywjbtqoxqdhy" path="res://manual-2/scenes/radio.tscn" id="11_dg77c"]
+[ext_resource type="PackedScene" uid="uid://c07rynlstb0cl" path="res://manual-2/scenes/simon_says.tscn" id="12_ycdy4"]
+[ext_resource type="PackedScene" uid="uid://60a03pxp2q8h" path="res://manual-2/scenes/simon_ui.tscn" id="13_w48qg"]
+[ext_resource type="PackedScene" uid="uid://cpe1a448ffinv" path="res://manual-2/scenes/locker.tscn" id="14_6o45r"]
+[ext_resource type="PackedScene" uid="uid://bmiucdr8jkok8" path="res://manual-2/scenes/locker_keypad_ui.tscn" id="15_dpyht"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_7mycd"]
 size = Vector3(20, 0.2, 20)
@@ -47,14 +49,13 @@ manual_ui = NodePath("../ManualUI")
 [node name="ManualUI" parent="." unique_id=969187938 instance=ExtResource("3_lquwl")]
 
 [node name="Keypad" parent="." unique_id=552948608 node_paths=PackedStringArray("keypad_ui") instance=ExtResource("5_7mycd")]
-transform = Transform3D(-0.5687629, 0, 0.82250166, 0, 1, 0, -0.82250166, 0, -0.5687629, 0.18975687, 1.96837, 10.062167)
+transform = Transform3D(-0.5687629, 0, 0.82250166, 0, 1, 0, -0.82250166, 0, -0.5687629, -3.9931436, 1.96837, 10.062167)
 keypad_ui = NodePath("../KeypadUI")
 
 [node name="KeypadUI" parent="." unique_id=2059832498 instance=ExtResource("5_lquwl")]
 
-[node name="Chest" parent="." unique_id=296176913 node_paths=PackedStringArray("keypad_ui") instance=ExtResource("6_7mycd")]
+[node name="Chest" parent="." unique_id=296176913 instance=ExtResource("6_7mycd")]
 transform = Transform3D(-0.49999997, 0, -4.3711385e-08, 0, 0.5, 0, 4.3711385e-08, 0, -0.49999997, 1.458714, 0.3937601, 9.485326)
-keypad_ui = NodePath("../KeypadUI")
 
 [node name="PotionPuzzle" type="Node3D" parent="." unique_id=1240182408 node_paths=PackedStringArray("potion_ui")]
 script = ExtResource("7_272bh")
@@ -85,3 +86,8 @@ transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 8.163076, 0.9950986, 0)
 simon_ui = NodePath("../SimonUI")
 
 [node name="SimonUI" parent="." unique_id=2092726446 instance=ExtResource("13_w48qg")]
+
+[node name="Locker" parent="." unique_id=316070413 instance=ExtResource("14_6o45r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.416242, 0.033400416, -8.013522)
+
+[node name="LockerKeypadUI" parent="." unique_id=1422441996 instance=ExtResource("15_dpyht")]
