@@ -12,7 +12,7 @@ config_version=5
 
 config/name="TBLTBU"
 config/version="1.0.0"
-run/main_scene="uid://b1x263cd3e0rh"
+run/main_scene="uid://cxpauxtrc08ns"
 config/features=PackedStringArray("4.6", "Forward Plus")
 
 [autoload]
