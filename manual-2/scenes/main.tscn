@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://b1x263cd3e0rh"]
 
+<<<<<<< Updated upstream
 [ext_resource type="PackedScene" uid="uid://c0q3agd1ptt0m" path="res://scenes/player.tscn" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://kecqe5he5y5q" path="res://scenes/manual_paper.tscn" id="2_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://ckxcuqj1txwqg" path="res://scenes/manual_ui.tscn" id="3_lquwl"]
@@ -13,6 +14,26 @@
 [ext_resource type="PackedScene" uid="uid://bywjbtqoxqdhy" path="res://scenes/radio.tscn" id="11_dg77c"]
 [ext_resource type="PackedScene" uid="uid://c07rynlstb0cl" path="res://scenes/simon_says.tscn" id="12_ycdy4"]
 [ext_resource type="PackedScene" uid="uid://60a03pxp2q8h" path="res://scenes/simon_ui.tscn" id="13_w48qg"]
+=======
+[ext_resource type="PackedScene" uid="uid://c0q3agd1ptt0m" path="res://manual-2/scenes/player.tscn" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://kecqe5he5y5q" path="res://manual-2/scenes/manual_paper.tscn" id="2_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://ckxcuqj1txwqg" path="res://manual-2/scenes/manual_ui.tscn" id="3_lquwl"]
+[ext_resource type="PackedScene" uid="uid://c1uw8rrikq4nc" path="res://manual-2/scenes/keypad.tscn" id="5_7mycd"]
+[ext_resource type="PackedScene" uid="uid://6yb2gkqur8k3" path="res://manual-2/scenes/keypad_ui.tscn" id="5_lquwl"]
+[ext_resource type="PackedScene" uid="uid://pybt3sfmkw53" path="res://manual-2/scenes/chest.tscn" id="6_7mycd"]
+[ext_resource type="Script" uid="uid://16kovxm0gm7x" path="res://manual-2/scripts/potion_puzzle.gd" id="7_272bh"]
+[ext_resource type="PackedScene" uid="uid://cnlfdxe52u60m" path="res://manual-2/scenes/bucket.tscn" id="8_kek77"]
+[ext_resource type="PackedScene" uid="uid://do7kho3mo51lr" path="res://manual-2/scenes/potion_ui.tscn" id="9_4c57u"]
+[ext_resource type="PackedScene" uid="uid://dwvff2oj4bqqj" path="res://manual-2/scenes/radio_ui.tscn" id="10_efxa6"]
+[ext_resource type="PackedScene" uid="uid://bywjbtqoxqdhy" path="res://manual-2/scenes/radio.tscn" id="11_dg77c"]
+[ext_resource type="PackedScene" uid="uid://c07rynlstb0cl" path="res://manual-2/scenes/simon_says.tscn" id="12_ycdy4"]
+[ext_resource type="PackedScene" uid="uid://60a03pxp2q8h" path="res://manual-2/scenes/simon_ui.tscn" id="13_w48qg"]
+[ext_resource type="PackedScene" uid="uid://cpe1a448ffinv" path="res://manual-2/scenes/locker.tscn" id="14_6o45r"]
+[ext_resource type="PackedScene" uid="uid://bmiucdr8jkok8" path="res://manual-2/scenes/locker_keypad_ui.tscn" id="15_dpyht"]
+[ext_resource type="PackedScene" uid="uid://bekf3v85w5hv1" path="res://manual-2/scenes/healthbar_ui.tscn" id="16_865ls"]
+[ext_resource type="PackedScene" uid="uid://cegxhhxka6qpr" path="res://manual-2/scenes/mushroom_ui.tscn" id="17_sa8l3"]
+[ext_resource type="PackedScene" uid="uid://bxh8k4vpj6opk" path="res://manual-2/scenes/mushroom_patch.tscn" id="18_ufowk"]
+>>>>>>> Stashed changes
 
 [sub_resource type="BoxMesh" id="BoxMesh_7mycd"]
 size = Vector3(20, 0.2, 20)
@@ -85,3 +106,30 @@ transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 8.163076, 0.9950986, 0)
 simon_ui = NodePath("../SimonUI")
 
 [node name="SimonUI" parent="." unique_id=2092726446 instance=ExtResource("13_w48qg")]
+<<<<<<< Updated upstream
+=======
+
+[node name="Locker" parent="." unique_id=316070413 instance=ExtResource("14_6o45r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.416242, 0.033400416, -8.013522)
+
+[node name="LockerKeypadUI" parent="." unique_id=1422441996 instance=ExtResource("15_dpyht")]
+
+[node name="HealthbarUI" parent="." unique_id=954062678 instance=ExtResource("16_865ls")]
+
+[node name="MushroomUI" parent="." unique_id=1821172814 instance=ExtResource("17_sa8l3")]
+
+[node name="MushroomPatch" parent="." unique_id=436300937 node_paths=PackedStringArray("mushroom_ui", "healthbar") instance=ExtResource("18_ufowk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.919875, 0.65430975, 0)
+mushroom_ui = NodePath("../MushroomUI")
+healthbar = NodePath("../HealthbarUI")
+
+[node name="MushroomPatch2" parent="." unique_id=1542207017 node_paths=PackedStringArray("mushroom_ui", "healthbar") instance=ExtResource("18_ufowk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.919875, 0.65430975, 7.53697)
+mushroom_ui = NodePath("../MushroomUI")
+healthbar = NodePath("../HealthbarUI")
+
+[node name="MushroomPatch3" parent="." unique_id=389928926 node_paths=PackedStringArray("mushroom_ui", "healthbar") instance=ExtResource("18_ufowk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.919875, 0.65430975, -10.5623045)
+mushroom_ui = NodePath("../MushroomUI")
+healthbar = NodePath("../HealthbarUI")
+>>>>>>> Stashed changes
