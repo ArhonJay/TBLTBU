@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://ckxcuqj1txwqg"]
+
+[ext_resource type="Texture2D" uid="uid://cw1nk3rvoejfp" path="res://images/manual-totem.png" id="1_x3tll"]
+
+[node name="ManualUI" type="CanvasLayer" unique_id=969187938]
+
+[node name="Control" type="Control" parent="." unique_id=1673867589]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=1698235389]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5882353)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control" unique_id=835602741]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 230.0
+offset_top = 50.0
+offset_right = -222.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/ScrollContainer" unique_id=1561778608]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="Control/ScrollContainer/VBoxContainer" unique_id=705349417]
+custom_minimum_size = Vector2(600, 1600)
+layout_mode = 2
+texture = ExtResource("1_x3tll")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="CloseButton" type="Button" parent="Control" unique_id=438544383]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -92.0
+offset_top = 10.0
+offset_right = -28.0
+offset_bottom = 41.0
+grow_horizontal = 0
+text = "X Close"

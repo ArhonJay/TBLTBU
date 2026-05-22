@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bxh8k4vpj6opk"]
+
+[ext_resource type="Script" uid="uid://bal4kuphnqoxv" path="res://manual-2/scripts/mushroom_patch.gd" id="1_iulia"]
+[ext_resource type="PackedScene" uid="uid://cbsyusq4hokya" path="res://manual-2/models/Mushroom.glb" id="2_mmik1"]
+[ext_resource type="PackedScene" uid="uid://cegxhhxka6qpr" path="res://manual-2/scenes/mushroom_ui.tscn" id="3_vhccx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vhccx"]
+size = Vector3(0.545105, 0.51123047, 0.5402832)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_wi5ln"]
+radius = 2.0
+
+[node name="MushroomPatch" type="StaticBody3D" unique_id=436300937 node_paths=PackedStringArray("mushroom_ui", "healthbar")]
+script = ExtResource("1_iulia")
+mushroom_ui = NodePath("MushroomUI")
+healthbar = NodePath("")
+
+[node name="Mushroom" parent="." unique_id=2012890856 instance=ExtResource("2_mmik1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.14491028, 0.11153996, 1.0251368)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=128563837]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.14909118, 0.38045263, 0.2212969)
+shape = SubResource("BoxShape3D_vhccx")
+
+[node name="InteractionZone" type="Area3D" parent="." unique_id=1396733341]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3448226, 0.14381886)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionZone" unique_id=946889285]
+shape = SubResource("SphereShape3D_wi5ln")
+
+[node name="MushroomUI" parent="." unique_id=1821172814 instance=ExtResource("3_vhccx")]
+visible = true

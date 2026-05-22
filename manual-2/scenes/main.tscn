@@ -1,0 +1,103 @@
+[gd_scene format=3 uid="uid://b1x263cd3e0rh"]
+
+[ext_resource type="PackedScene" uid="uid://c0q3agd1ptt0m" path="res://manual-2/scenes/player.tscn" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://kecqe5he5y5q" path="res://manual-2/scenes/manual_paper.tscn" id="2_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://ckxcuqj1txwqg" path="res://manual-2/scenes/manual_ui.tscn" id="3_lquwl"]
+[ext_resource type="PackedScene" uid="uid://c1uw8rrikq4nc" path="res://manual-2/scenes/keypad.tscn" id="5_7mycd"]
+[ext_resource type="PackedScene" uid="uid://6yb2gkqur8k3" path="res://manual-2/scenes/keypad_ui.tscn" id="5_lquwl"]
+[ext_resource type="PackedScene" uid="uid://pybt3sfmkw53" path="res://manual-2/scenes/chest.tscn" id="6_7mycd"]
+[ext_resource type="Script" uid="uid://16kovxm0gm7x" path="res://manual-2/scripts/potion_puzzle.gd" id="7_272bh"]
+[ext_resource type="PackedScene" uid="uid://cnlfdxe52u60m" path="res://manual-2/scenes/bucket.tscn" id="8_kek77"]
+[ext_resource type="PackedScene" uid="uid://do7kho3mo51lr" path="res://manual-2/scenes/potion_ui.tscn" id="9_4c57u"]
+[ext_resource type="PackedScene" uid="uid://dwvff2oj4bqqj" path="res://manual-2/scenes/radio_ui.tscn" id="10_efxa6"]
+[ext_resource type="PackedScene" uid="uid://bywjbtqoxqdhy" path="res://manual-2/scenes/radio.tscn" id="11_dg77c"]
+[ext_resource type="PackedScene" uid="uid://c07rynlstb0cl" path="res://manual-2/scenes/simon_says.tscn" id="12_ycdy4"]
+[ext_resource type="PackedScene" uid="uid://60a03pxp2q8h" path="res://manual-2/scenes/simon_ui.tscn" id="13_w48qg"]
+[ext_resource type="PackedScene" uid="uid://cpe1a448ffinv" path="res://manual-2/scenes/locker.tscn" id="14_6o45r"]
+[ext_resource type="PackedScene" uid="uid://bxh8k4vpj6opk" path="res://manual-2/scenes/mushroom_patch.tscn" id="16_f3x2q"]
+[ext_resource type="PackedScene" uid="uid://bekf3v85w5hv1" path="res://manual-2/scenes/healthbar_ui.tscn" id="18_865ls"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_7mycd"]
+size = Vector3(20, 0.2, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ycdy4"]
+albedo_color = Color(0.46229059, 0.46229059, 0.46229059, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_272bh"]
+size = Vector3(40, 0.1, 40)
+
+[node name="Main" type="Node3D" unique_id=235885860]
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=221791036]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=554523686]
+mesh = SubResource("BoxMesh_7mycd")
+surface_material_override/0 = SubResource("StandardMaterial3D_ycdy4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=1220369486]
+shape = SubResource("BoxShape3D_272bh")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1883117633]
+transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 0, 0)
+
+[node name="Player" parent="." unique_id=487868643 instance=ExtResource("1_h2yge")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="HealthbarUI" parent="Player" unique_id=954062678 instance=ExtResource("18_865ls")]
+
+[node name="ManualPaper" parent="." unique_id=270353332 node_paths=PackedStringArray("manual_ui") instance=ExtResource("2_1bvp3")]
+transform = Transform3D(-0.91639763, 0, 0.40026918, 0, 1, 0, -0.40026918, 0, -0.91639763, 0, 1.9391956, -3)
+manual_ui = NodePath("../ManualUI")
+
+[node name="ManualUI" parent="." unique_id=969187938 instance=ExtResource("3_lquwl")]
+
+[node name="Keypad" parent="." unique_id=552948608 node_paths=PackedStringArray("keypad_ui") instance=ExtResource("5_7mycd")]
+transform = Transform3D(-0.5687629, 0, 0.82250166, 0, 1, 0, -0.82250166, 0, -0.5687629, -3.9931436, 1.96837, 10.062167)
+keypad_ui = NodePath("../KeypadUI")
+
+[node name="KeypadUI" parent="." unique_id=2059832498 instance=ExtResource("5_lquwl")]
+
+[node name="Chest" parent="." unique_id=296176913 instance=ExtResource("6_7mycd")]
+transform = Transform3D(-0.49999997, 0, -4.3711385e-08, 0, 0.5, 0, 4.3711385e-08, 0, -0.49999997, 1.458714, 0.3937601, 9.485326)
+
+[node name="PotionPuzzle" type="Node3D" parent="." unique_id=1240182408 node_paths=PackedStringArray("potion_ui")]
+script = ExtResource("7_272bh")
+potion_ui = NodePath("../PotionUI")
+
+[node name="Bucket" parent="PotionPuzzle" unique_id=991382151 instance=ExtResource("8_kek77")]
+transform = Transform3D(0.009396933, 0, 0.09955751, 0, 0.1, 0, -0.09955751, 0, 0.009396933, -11.210076, 1, 0.2986727)
+
+[node name="Bucket2" parent="PotionPuzzle" unique_id=1834840210 instance=ExtResource("8_kek77")]
+transform = Transform3D(0.009396933, 0, 0.09955751, 0, 0.1, 0, -0.09955751, 0, 0.009396933, -11.191282, 1, 0.099557884)
+
+[node name="Bucket3" parent="PotionPuzzle" unique_id=968179224 instance=ExtResource("8_kek77")]
+transform = Transform3D(0.009396933, 0, 0.09955751, 0, 0.1, 0, -0.09955751, 0, 0.009396933, -11.172489, 1, -0.12531711)
+
+[node name="Bucket4" parent="PotionPuzzle" unique_id=779145823 instance=ExtResource("8_kek77")]
+transform = Transform3D(0.009396933, 0, 0.09955751, 0, 0.1, 0, -0.09955751, 0, 0.009396933, -11.153695, 1, -0.2986727)
+
+[node name="PotionUI" parent="." unique_id=1510413657 instance=ExtResource("9_4c57u")]
+
+[node name="RadioUI" parent="." unique_id=1885248193 instance=ExtResource("10_efxa6")]
+
+[node name="Radio" parent="." unique_id=2001360338 node_paths=PackedStringArray("radio_ui") instance=ExtResource("11_dg77c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.179907, 1.7776308, 7.877405)
+radio_ui = NodePath("../RadioUI")
+
+[node name="SimonSays" parent="." unique_id=968797320 node_paths=PackedStringArray("simon_ui") instance=ExtResource("12_ycdy4")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 8.163076, 0.9950986, 0)
+simon_ui = NodePath("../SimonUI")
+
+[node name="SimonUI" parent="." unique_id=2092726446 instance=ExtResource("13_w48qg")]
+
+[node name="Locker" parent="." unique_id=316070413 instance=ExtResource("14_6o45r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.416242, 0.033400416, -8.013522)
+
+[node name="MushroomPatch" parent="." unique_id=436300937 instance=ExtResource("16_f3x2q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.030752, 0.05000019, 5.1328936)
+
+[node name="MushroomPatch2" parent="." unique_id=1795765440 instance=ExtResource("16_f3x2q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.030752, 0.05000019, 6.69145)
+
+[node name="MushroomPatch3" parent="." unique_id=595693445 instance=ExtResource("16_f3x2q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.493903, 0.10000038, 6.471325)

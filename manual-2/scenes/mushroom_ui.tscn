@@ -1,0 +1,89 @@
+[gd_scene format=3 uid="uid://cegxhhxka6qpr"]
+
+[node name="MushroomUI" type="CanvasLayer" unique_id=1821172814]
+visible = false
+
+[node name="Control" type="Control" parent="." unique_id=1512979464]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=667498401]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.627451)
+
+[node name="PanelContainer" type="PanelContainer" parent="Control" unique_id=450405130]
+custom_minimum_size = Vector2(480, 320)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer" unique_id=2020362805]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TitleLabel" type="Label" parent="Control/PanelContainer/VBoxContainer" unique_id=1571649650]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "MUSHROOM PATCH"
+horizontal_alignment = 1
+
+[node name="AppearanceLabel" type="Label" parent="Control/PanelContainer/VBoxContainer" unique_id=981188936]
+layout_mode = 2
+text = "Appearance: ???"
+horizontal_alignment = 1
+
+[node name="SmellLabel" type="Label" parent="Control/PanelContainer/VBoxContainer" unique_id=2024359248]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Smells like..."
+horizontal_alignment = 1
+
+[node name="ButtonRow" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer" unique_id=470208883]
+layout_mode = 2
+
+[node name="BtnEat" type="Button" parent="Control/PanelContainer/VBoxContainer/ButtonRow" unique_id=1720008417]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "🍄 EAT IT"
+
+[node name="BtnLeave" type="Button" parent="Control/PanelContainer/VBoxContainer/ButtonRow" unique_id=2027534844]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "🚫 LEAVE IT"
+
+[node name="ResultLabel" type="Label" parent="Control/PanelContainer/VBoxContainer" unique_id=1842898731]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+
+[node name="CloseButton" type="Button" parent="Control" unique_id=705447526]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -90.0
+offset_top = 22.0
+offset_right = -23.0
+offset_bottom = 53.0
+grow_horizontal = 0
+text = "✕ Close"

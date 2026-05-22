@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://biv2hrdjj52xa"]
+
+[ext_resource type="PackedScene" uid="uid://cq51p6x5lfxo" path="res://models/Potion_1.fbx" id="1_1evmn"]
+
+[node name="Node3D" type="Node3D" unique_id=42462936]
+
+[node name="Potion_1" parent="." unique_id=1796286414 instance=ExtResource("1_1evmn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.60967743, -1.1920929e-07, -1.3421874)

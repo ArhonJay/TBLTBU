@@ -1,0 +1,205 @@
+[gd_scene format=3 uid="uid://do7kho3mo51lr"]
+
+[node name="PotionUI" type="CanvasLayer" unique_id=1510413657]
+visible = false
+
+[node name="Control" type="Control" parent="." unique_id=693857939]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=508965241]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.7058824)
+
+[node name="PanelContainer" type="PanelContainer" parent="Control" unique_id=100564923]
+custom_minimum_size = Vector2(700, 500)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer" unique_id=1484768240]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="Control/PanelContainer/VBoxContainer" unique_id=1579872028]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "CHEMICAL FUEL STABILIZATION"
+horizontal_alignment = 1
+
+[node name="BucketRow" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer" unique_id=324797712]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="BucketPanel1" type="PanelContainer" parent="Control/PanelContainer/VBoxContainer/BucketRow" unique_id=1518747791]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/VBoxContainer/BucketRow/BucketPanel1" unique_id=1215154226]
+layout_mode = 2
+
+[node name="PosLabel" type="Label" parent="Control/PanelContainer/VBoxContainer/BucketRow/BucketPanel1/VBoxContainer" unique_id=1761980003]
+layout_mode = 2
+text = "Pos 1"
+horizontal_alignment = 1
+
+[node name="ColorLabel" type="Label" parent="Control/PanelContainer/VBoxContainer/BucketRow/BucketPanel1/VBoxContainer" unique_id=1075075827]
+layout_mode = 2
+text = "Color"
+horizontal_alignment = 1
+
+[node name="StateLabel" type="Label" parent="Control/PanelContainer/VBoxContainer/BucketRow/BucketPanel1/VBoxContainer" unique_id=850911056]
+layout_mode = 2
+text = "Calm"
+horizontal_alignment = 1
+
+[node name="CrackLabel" type="Label" parent="Control/PanelContainer/VBoxContainer/BucketRow/BucketPanel1/VBoxContainer" unique_id=404015144]
+layout_mode = 2
+text = "Intact"
+horizontal_alignment = 1
+
+[node name="BucketPanel2" type="PanelContainer" parent="Control/PanelContainer/VBoxContainer/BucketRow" unique_id=380714738]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/VBoxContainer/BucketRow/BucketPanel2" unique_id=448493955]
+layout_mode = 2
+
+[node name="PosLabel" type="Label" parent="Control/PanelContainer/VBoxContainer/BucketRow/BucketPanel2/VBoxContainer" unique_id=651323284]
+layout_mode = 2
+text = "Pos 1"
+horizontal_alignment = 1
+
+[node name="ColorLabel" type="Label" parent="Control/PanelContainer/VBoxContainer/BucketRow/BucketPanel2/VBoxContainer" unique_id=949132117]
+layout_mode = 2
+text = "Color"
+horizontal_alignment = 1
+
+[node name="StateLabel" type="Label" parent="Control/PanelContainer/VBoxContainer/BucketRow/BucketPanel2/VBoxContainer" unique_id=618101352]
+layout_mode = 2
+text = "Calm"
+horizontal_alignment = 1
+
+[node name="CrackLabel" type="Label" parent="Control/PanelContainer/VBoxContainer/BucketRow/BucketPanel2/VBoxContainer" unique_id=924621094]
+layout_mode = 2
+text = "Intact"
+horizontal_alignment = 1
+
+[node name="BucketPanel3" type="PanelContainer" parent="Control/PanelContainer/VBoxContainer/BucketRow" unique_id=165657297]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/VBoxContainer/BucketRow/BucketPanel3" unique_id=374544773]
+layout_mode = 2
+
+[node name="PosLabel" type="Label" parent="Control/PanelContainer/VBoxContainer/BucketRow/BucketPanel3/VBoxContainer" unique_id=1033759425]
+layout_mode = 2
+text = "Pos 1"
+horizontal_alignment = 1
+
+[node name="ColorLabel" type="Label" parent="Control/PanelContainer/VBoxContainer/BucketRow/BucketPanel3/VBoxContainer" unique_id=1673310626]
+layout_mode = 2
+text = "Color"
+horizontal_alignment = 1
+
+[node name="StateLabel" type="Label" parent="Control/PanelContainer/VBoxContainer/BucketRow/BucketPanel3/VBoxContainer" unique_id=842550887]
+layout_mode = 2
+text = "Calm"
+horizontal_alignment = 1
+
+[node name="CrackLabel" type="Label" parent="Control/PanelContainer/VBoxContainer/BucketRow/BucketPanel3/VBoxContainer" unique_id=698476166]
+layout_mode = 2
+text = "Intact"
+horizontal_alignment = 1
+
+[node name="BucketPanel4" type="PanelContainer" parent="Control/PanelContainer/VBoxContainer/BucketRow" unique_id=1525227956]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/VBoxContainer/BucketRow/BucketPanel4" unique_id=357211946]
+layout_mode = 2
+
+[node name="PosLabel" type="Label" parent="Control/PanelContainer/VBoxContainer/BucketRow/BucketPanel4/VBoxContainer" unique_id=634237479]
+layout_mode = 2
+text = "Pos 1"
+horizontal_alignment = 1
+
+[node name="ColorLabel" type="Label" parent="Control/PanelContainer/VBoxContainer/BucketRow/BucketPanel4/VBoxContainer" unique_id=279052060]
+layout_mode = 2
+text = "Color"
+horizontal_alignment = 1
+
+[node name="StateLabel" type="Label" parent="Control/PanelContainer/VBoxContainer/BucketRow/BucketPanel4/VBoxContainer" unique_id=1900186853]
+layout_mode = 2
+text = "Calm"
+horizontal_alignment = 1
+
+[node name="CrackLabel" type="Label" parent="Control/PanelContainer/VBoxContainer/BucketRow/BucketPanel4/VBoxContainer" unique_id=1454516290]
+layout_mode = 2
+text = "Intact"
+horizontal_alignment = 1
+
+[node name="InstructionLabel" type="Label" parent="Control/PanelContainer/VBoxContainer" unique_id=657343411]
+layout_mode = 2
+text = "Select the BASE COMPOUND pour:"
+horizontal_alignment = 1
+
+[node name="PourButtonsRow" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer" unique_id=1451558171]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BtnHalfGreen" type="Button" parent="Control/PanelContainer/VBoxContainer/PourButtonsRow" unique_id=1704366459]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1/2 GREEN"
+
+[node name="BtnAllRed" type="Button" parent="Control/PanelContainer/VBoxContainer/PourButtonsRow" unique_id=454484731]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ALL RED"
+
+[node name="BtnQuarterClear" type="Button" parent="Control/PanelContainer/VBoxContainer/PourButtonsRow" unique_id=2010564536]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1/4 CLEAR"
+
+[node name="BtnHalfYellow" type="Button" parent="Control/PanelContainer/VBoxContainer/PourButtonsRow" unique_id=933681872]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1/2 YELLOW"
+
+[node name="ResultLabel" type="Label" parent="Control/PanelContainer/VBoxContainer" unique_id=743572542]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+
+[node name="CloseButton" type="Button" parent="Control" unique_id=276032623]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -202.0
+offset_top = 60.0
+offset_right = -135.0
+offset_bottom = 91.0
+grow_horizontal = 0
+text = "✕ Close"

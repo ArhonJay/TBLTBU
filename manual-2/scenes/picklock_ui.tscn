@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://curss1kf6jnk4"]
+
+[ext_resource type="Script" uid="uid://c7aardigawh0t" path="res://manual-2/scripts/picklock_ui.gd" id="1_5b3i8"]
+
+[node name="PicklockUI" type="CanvasLayer" unique_id=1675810807]
+layer = 10
+script = ExtResource("1_5b3i8")
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=389883989]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.65)
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=2145272311]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -240.0
+offset_right = 200.0
+offset_bottom = 240.0
+
+[node name="VBox" type="VBoxContainer" parent="Panel" unique_id=1496036864]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="Panel/VBox" unique_id=887553670]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_font_sizes/font_size = 22
+text = "PICK LOCK"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="Panel/VBox" unique_id=610537042]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.75, 0.75, 1)
+theme_override_font_sizes/font_size = 13
+text = "Stop the needle in the highlighted zone"
+horizontal_alignment = 1
+
+[node name="LockViewport" type="SubViewportContainer" parent="Panel/VBox" unique_id=1325249068]
+custom_minimum_size = Vector2(340, 340)
+layout_mode = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Panel/VBox/LockViewport" unique_id=592740568]
+handle_input_locally = false
+size = Vector2i(400, 340)
+render_target_update_mode = 4
+
+[node name="LockDraw" type="Node2D" parent="Panel/VBox/LockViewport/SubViewport" unique_id=153701060]
+
+[node name="StatusLabel" type="Label" parent="Panel/VBox" unique_id=1808763156]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_font_sizes/font_size = 14
+text = "Press  SPACE  or  E  to stop"
+horizontal_alignment = 1
+
+[node name="ResultLabel" type="Label" parent="Panel/VBox" unique_id=443980116]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 1
+
+[node name="AttemptsLabel" type="Label" parent="Panel/VBox" unique_id=2040986962]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.75, 0.75, 1)
+theme_override_font_sizes/font_size = 13
+text = "Picks remaining: 3"
+horizontal_alignment = 1
+
+[node name="CloseButton" type="Button" parent="Panel/VBox" unique_id=2058096736]
+layout_mode = 2
+text = "Give Up  [Esc]"
