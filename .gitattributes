@@ -1,6 +1,10 @@
 # Normalize EOL for all files that Git considers text files.
+# Godot-specific git attributes
+# Treat scenes and resources as binary for merges to prevent inline markers
 * text=auto eol=lf
 *.uasset filter=lfs diff=lfs merge=lfs -text
 *.umap filter=lfs diff=lfs merge=lfs -text
 *.glb filter=lfs diff=lfs merge=lfs -text
 *.tres filter=lfs diff=lfs merge=lfs -text
+*.tscn merge=binary
+*.tres merge=binary

@@ -1,9 +1,9 @@
 extends CharacterBody3D
 
-@export var move_speed: float = 5.0
+@export var move_speed: float = 50.0
 @export var jump_force: float = 5.0
 @export var gravity: float = 12.0
-@export var look_sensitivity: float = 0.5
+@export var look_sensitivity: float = 2.0
 var min_look_angle: float = -90.0
 var max_look_angle: float = 90.0
 var mouse_delta: Vector2 = Vector2()
