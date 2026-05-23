@@ -1,5 +1,8 @@
 extends CharacterBody3D
 
+@export var safe_fall_speed: float = 100.0 # Any speed below this deals no damage
+@export var fall_damage_multiplier: float = 2.0 # How much damage per extra unit of speed
+var _max_downward_speed: float = 0.0
 @export var move_speed: float = 20.0
 @export var climb_speed: float = 10.0
 @export var run_speed: float = 50.0
@@ -74,6 +77,7 @@ func take_damage(amount: int):
 	_trigger_hurt_flash()
 	print("Explorer took %d damage! HP: %d/%d" % [amount, current_health, max_health])
 	if current_health <= 0:
+		$AnimationPlayer.play("death")
 		_die()
 
 func _trigger_hurt_flash():
@@ -88,10 +92,17 @@ func _update_health_ui():
 
 func _die():
 	is_dead = true
-	set_physics_process(false)
 	set_process_input(false)
+	# We DO NOT set_physics_process(false) here anymore so gravity still works!
+	
+	print("Explorer died! Playing animation...")
+
+	# Wait for the "death" animation to fully finish before moving on
+	await $AnimationPlayer.animation_finished
+	
+	# Stop physics only AFTER the animation is done
+	set_physics_process(false) 
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	print("Explorer died!")
 
 	# Show Game Over on ALL peers via RPC
 	_show_game_over_all.rpc()
@@ -148,6 +159,14 @@ func _process(delta):
 	window_activity()
 
 func _physics_process(delta):
+	if is_dead:
+		if not is_on_floor():
+			velocity.y -= gravity * delta
+		velocity.x = move_toward(velocity.x, 0, move_speed * delta)
+		velocity.z = move_toward(velocity.z, 0, move_speed * delta)
+		move_and_slide()
+		return # Stop reading the rest of the movement code
+	
 	var height_boost = target_zoom * 0.3
 	$SpringArm3D.spring_length = lerp($SpringArm3D.spring_length, target_zoom, 10.0 * delta)
 	camera.position.y = lerp(camera.position.y, base_camera_y + height_boost, 10.0 * delta)
@@ -223,7 +242,26 @@ func _physics_process(delta):
 			$AnimationPlayer.play("walk")
 	else:
 		$AnimationPlayer.play("idle")
-
+		
+	# --- FALL DAMAGE TRACKING ---
+	if not is_on_floor():
+		# If the player is falling (negative Y velocity), track their highest speed
+		if velocity.y < 0 and abs(velocity.y) > _max_downward_speed:
+			_max_downward_speed = abs(velocity.y)
+	else:
+		# The player is on the floor. Did they just land from a fast fall?
+		if _max_downward_speed > safe_fall_speed:
+			# Calculate how much faster they were falling than the safe limit
+			var excess_speed = _max_downward_speed - safe_fall_speed
+			var damage = int(excess_speed * fall_damage_multiplier)
+			
+			if damage > 0:
+				take_damage(damage)
+				print("Player took fall damage: ", damage)
+				
+		# Always reset the downward speed once on the floor so they don't take damage again
+		_max_downward_speed = 0.0
+	# -----------------------------
 	move_and_slide()
 
 @rpc("call_local", "any_peer", "reliable")
