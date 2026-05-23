@@ -2,10 +2,63 @@
 
 [ext_resource type="Script" uid="uid://bl3kftr5qbrv6" path="res://puzzles/scripts/healthbar_ui.gd" id="1_fd5je"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v734y"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_healthbar_green"]
 bg_color = Color(0, 0.95823485, 0, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_healthbar_bg"]
+bg_color = Color(0.12, 0.12, 0.12, 0.85)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_left = 6
+corner_radius_bottom_right = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_bg"]
+bg_color = Color(0.06, 0.06, 0.10, 0.88)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_left = 10
+corner_radius_bottom_right = 10
+border_width_top = 1
+border_width_bottom = 1
+border_width_left = 1
+border_width_right = 1
+border_color = Color(0.3, 0.3, 0.4, 0.6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_modal_bg"]
+bg_color = Color(0.04, 0.04, 0.07, 0.97)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_left = 18
+corner_radius_bottom_right = 18
+border_width_top = 2
+border_width_bottom = 2
+border_width_left = 2
+border_width_right = 2
+border_color = Color(0.75, 0.1, 0.1, 1.0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
+bg_color = Color(0.55, 0.07, 0.07, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_left = 10
+corner_radius_bottom_right = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+bg_color = Color(0.85, 0.18, 0.18, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_left = 10
+corner_radius_bottom_right = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pressed"]
+bg_color = Color(0.4, 0.04, 0.04, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_left = 10
+corner_radius_bottom_right = 10
+
 [node name="HealthbarUI" type="CanvasLayer" unique_id=954062678]
+layer = 5
 script = ExtResource("1_fd5je")
 
 [node name="Control" type="Control" parent="." unique_id=1111125683]
@@ -24,26 +77,32 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -229.0
-offset_top = -75.0
-offset_right = -29.0
-offset_bottom = -25.0
+offset_left = -240.0
+offset_top = -80.0
+offset_right = -24.0
+offset_bottom = -24.0
 grow_horizontal = 0
 grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_bg")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer" unique_id=655443446]
 layout_mode = 2
+theme_override_constants/separation = 6
 
 [node name="HealthLabel" type="Label" parent="Control/PanelContainer/VBoxContainer" unique_id=354558697]
 layout_mode = 2
 text = "HP: 100"
 horizontal_alignment = 1
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
 
 [node name="HealthBar" type="ProgressBar" parent="Control/PanelContainer/VBoxContainer" unique_id=1190111242]
-custom_minimum_size = Vector2(0, 20)
+custom_minimum_size = Vector2(0, 18)
 layout_mode = 2
-theme_override_styles/fill = SubResource("StyleBoxFlat_v734y")
+theme_override_styles/fill = SubResource("StyleBoxFlat_healthbar_green")
+theme_override_styles/background = SubResource("StyleBoxFlat_healthbar_bg")
 value = 100.0
+show_percentage = false
 
 [node name="StatusPopup" type="Label" parent="Control" unique_id=90320637]
 visible = false
@@ -53,11 +112,85 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -25.0
-offset_right = 20.0
-offset_bottom = 25.0
+offset_left = -60.0
+offset_top = -30.0
+offset_right = 60.0
+offset_bottom = 30.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 36
 horizontal_alignment = 1
+
+[node name="HurtOverlay" type="ColorRect" parent="Control" unique_id=300000001]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.85, 0.05, 0.05, 0.55)
+mouse_filter = 2
+
+[node name="GameOverModal" type="PanelContainer" parent="Control" unique_id=200000001]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -230.0
+offset_top = -165.0
+offset_right = 230.0
+offset_bottom = 165.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal_bg")
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/GameOverModal" unique_id=200000010]
+layout_mode = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/GameOverModal/MarginContainer" unique_id=200000002]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="SkullLabel" type="Label" parent="Control/GameOverModal/MarginContainer/VBoxContainer" unique_id=200000005]
+layout_mode = 2
+text = "💀"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 50
+
+[node name="GameOverLabel" type="Label" parent="Control/GameOverModal/MarginContainer/VBoxContainer" unique_id=200000003]
+layout_mode = 2
+text = "GAME OVER"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 46
+theme_override_colors/font_color = Color(0.95, 0.15, 0.15, 1)
+
+[node name="SubtitleLabel" type="Label" parent="Control/GameOverModal/MarginContainer/VBoxContainer" unique_id=200000006]
+layout_mode = 2
+text = "The Explorer has fallen..."
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.65, 0.65, 0.65, 1)
+
+[node name="Separator" type="HSeparator" parent="Control/GameOverModal/MarginContainer/VBoxContainer" unique_id=200000007]
+layout_mode = 2
+theme_override_colors/separator_color = Color(0.5, 0.1, 0.1, 0.8)
+
+[node name="BackToMenuButton" type="Button" parent="Control/GameOverModal/MarginContainer/VBoxContainer" unique_id=200000004]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+text = "Back to Main Menu"
+theme_override_font_sizes/font_size = 19
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+
+[connection signal="pressed" from="Control/GameOverModal/MarginContainer/VBoxContainer/BackToMenuButton" to="." method="_on_back_to_menu_pressed"]
