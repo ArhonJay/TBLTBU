@@ -2,11 +2,13 @@ extends Node3D
 
 var explorer_scene = preload("res://players/explorer.tscn")
 var scientist_scene = preload("res://players/scientist.tscn")
+var enemy_scene = preload("res://enemy/enemy.tscn") # Change this path if needed!
 
 func _ready():
 	if multiplayer.is_server():
 		# 1. The Host spawns themselves immediately
 		spawn_player(1)
+		spawn_enemies()
 		# 2. The Host listens for any clients that arrive later
 		NetworkManager.player_registered.connect(spawn_player)
 	else:
@@ -37,3 +39,19 @@ func spawn_player(peer_id):
 	current_player_node.name = str(peer_id)
 	current_player_node.set_multiplayer_authority(peer_id)
 	$Players.add_child(current_player_node)
+
+func spawn_enemies():
+	# We loop 5 times to create 5 enemies
+	for i in range(10):
+		var enemy = enemy_scene.instantiate()
+
+		# Pick a random X and Z coordinate. 
+		# NOTE: Change the -50 and 50 to match the size of your Terrainto island!
+		var random_x = randf_range(-200.0, 200.0)
+		var random_z = randf_range(-100.0, 200.0)
+
+		# Spawn them at the random spot, but way up in the air (Y = 30)
+		enemy.position = Vector3(random_x, 150.0, random_z)
+
+		# Add them to the map
+		add_child(enemy)

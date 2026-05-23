@@ -1,66 +1,60 @@
 [gd_scene format=3 uid="uid://c5dcs8qeqqj54"]
 
 [ext_resource type="Script" uid="uid://dc7tqqptg7uod" path="res://players/scientist.gd" id="1_dkah4"]
+[ext_resource type="PackedScene" uid="uid://v577gu1t1mdy" path="res://assets/Char/main/Mage.glb" id="2_xuo6s"]
+[ext_resource type="Animation" uid="uid://cujijw2r4xug2" path="res://animation/idle.res" id="3_dudac"]
+[ext_resource type="Animation" uid="uid://bolwxs7j6i67t" path="res://animation/jump_idle.res" id="4_mmr2p"]
+[ext_resource type="Animation" uid="uid://cqe026axgfetc" path="res://animation/jump_land.res" id="5_xur1e"]
+[ext_resource type="Animation" uid="uid://drfntjfx6g246" path="res://animation/jump_start.res" id="6_4os2e"]
+[ext_resource type="Animation" uid="uid://b6cctiy0adq1o" path="res://animation/walk.res" id="7_4cje2"]
+[ext_resource type="Animation" uid="uid://fh6db7tmon7n" path="res://animation/running.res" id="7_mmr2p"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_mmr2p"]
+radius = 0.2
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_dkah4"]
 radius = 0.2
-
-[sub_resource type="Environment" id="Environment_i3pqv"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_dkah4"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
 
-[sub_resource type="BoxMesh" id="BoxMesh_dkah4"]
-size = Vector3(0.5, 0.5, 0.5)
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hes6r"]
+_data = {
+&"idle": ExtResource("3_dudac"),
+&"jump_idle": ExtResource("4_mmr2p"),
+&"jump_land": ExtResource("5_xur1e"),
+&"jump_start": ExtResource("6_4os2e"),
+&"running": ExtResource("7_mmr2p"),
+&"walk": ExtResource("7_4cje2")
+}
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dkah4"]
-albedo_color = Color(0.14901961, 1, 1, 1)
-
-[node name="Player" type="CharacterBody3D" unique_id=559825491]
+[node name="Player" type="CharacterBody3D" unique_id=559825491 groups=["scientist"]]
 script = ExtResource("1_dkah4")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=871925756]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1.25, 0)
-shape = SubResource("SphereShape3D_dkah4")
+[node name="Mage" parent="." unique_id=1274447443 instance=ExtResource("2_xuo6s")]
+transform = Transform3D(-0.4999627, 0, 0.006108446, 0, 0.5, 0, -0.006108446, 0, -0.4999627, 0, 1.105, 0.302)
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=510091450]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-environment = SubResource("Environment_i3pqv")
+[node name="SpringArm3D" type="SpringArm3D" parent="." unique_id=535001883]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+shape = SubResource("SphereShape3D_mmr2p")
+spring_length = 4.0
+
+[node name="Camera" type="Camera3D" parent="SpringArm3D" unique_id=510091450]
 current = true
+near = 0.01
 
-[node name="Interaction" type="RayCast3D" parent="Camera3D" unique_id=8048244]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.0745115)
-target_position = Vector3(0, 0, -2)
-collide_with_areas = true
-
-[node name="Hand" type="Marker3D" parent="Camera3D" unique_id=1351194563]
+[node name="Hand" type="Marker3D" parent="SpringArm3D/Camera" unique_id=1351194563]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.90786123)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=737097363]
-
-[node name="Label" type="Label" parent="CanvasLayer" unique_id=1680704935]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -75.5
-offset_top = -11.5
-offset_right = 75.5
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Press [E] to Interact"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=871925756]
+transform = Transform3D(3.5, 0, 0, 0, -1.5298986e-07, -3.5, 0, 3.5, -1.5298986e-07, 0, 1.7641307, 0.28119108)
+shape = SubResource("SphereShape3D_dkah4")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=2105880230]
 replication_config = SubResource("SceneReplicationConfig_dkah4")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=947083914]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9011422, 0)
-mesh = SubResource("BoxMesh_dkah4")
-surface_material_override/0 = SubResource("StandardMaterial3D_dkah4")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1270207229]
+root_node = NodePath("../Mage")
+libraries/ = SubResource("AnimationLibrary_hes6r")

@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://bywjbtqoxqdhy"]
+
+[ext_resource type="Script" uid="uid://cog2vrdvr5ila" path="res://puzzles/scripts/radio.gd" id="1_543sh"]
+[ext_resource type="ArrayMesh" uid="uid://dkx1fg6ld4xj8" path="res://puzzles/models/radio.obj" id="1_flxc7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_543sh"]
+albedo_color = Color(0.29210573, 0.23743963, 0.18282843, 1)
+metallic = 0.1
+roughness = 0.9
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qxe27"]
+size = Vector3(1, 0.4396515, 1.0476074)
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_kevmo"]
+buffer_length = 0.1
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_nwvhb"]
+radius = 2.0
+
+[node name="Radio" type="StaticBody3D" unique_id=1899054232]
+script = ExtResource("1_543sh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=407979873]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+mesh = ExtResource("1_flxc7")
+surface_material_override/0 = SubResource("StandardMaterial3D_543sh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=437576893]
+transform = Transform3D(1, 0, 0, 0, 1.5059066, 0, 0, 0, 1.2831514, 0, 0.3974214, -0.00234952)
+shape = SubResource("BoxShape3D_qxe27")
+
+[node name="TonePlayer" type="AudioStreamPlayer" parent="." unique_id=1458893452]
+stream = SubResource("AudioStreamGenerator_kevmo")
+
+[node name="InteractionZone" type="Area3D" parent="." unique_id=408706095]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionZone" unique_id=444211589]
+shape = SubResource("SphereShape3D_nwvhb")

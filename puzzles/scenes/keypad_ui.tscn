@@ -1,0 +1,148 @@
+[gd_scene format=3 uid="uid://6yb2gkqur8k3"]
+
+[node name="KeypadUI" type="CanvasLayer" unique_id=2059832498]
+visible = false
+
+[node name="Control" type="Control" parent="." unique_id=151611069]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=1914291212]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.78431374)
+
+[node name="PanelContainer" type="PanelContainer" parent="Control" unique_id=1192584758]
+custom_minimum_size = Vector2(300, 420)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer" unique_id=228092521]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Display" type="Label" parent="Control/PanelContainer/VBoxContainer" unique_id=693669831]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "----"
+horizontal_alignment = 1
+
+[node name="ResultLabel" type="Label" parent="Control/PanelContainer/VBoxContainer" unique_id=1349171068]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer" unique_id=1146577540]
+layout_mode = 2
+
+[node name="Btn1" type="Button" parent="Control/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1250011962]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1"
+
+[node name="Btn2" type="Button" parent="Control/PanelContainer/VBoxContainer/HBoxContainer" unique_id=283837009]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "2"
+
+[node name="Btn3" type="Button" parent="Control/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1593397128]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "3"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer" unique_id=588675594]
+layout_mode = 2
+
+[node name="Btn4" type="Button" parent="Control/PanelContainer/VBoxContainer/HBoxContainer2" unique_id=1082924686]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "4"
+
+[node name="Btn5" type="Button" parent="Control/PanelContainer/VBoxContainer/HBoxContainer2" unique_id=1584483283]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "5"
+
+[node name="Btn6" type="Button" parent="Control/PanelContainer/VBoxContainer/HBoxContainer2" unique_id=1088075228]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "6"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer" unique_id=1228497138]
+layout_mode = 2
+
+[node name="Btn7" type="Button" parent="Control/PanelContainer/VBoxContainer/HBoxContainer3" unique_id=923281751]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "7"
+
+[node name="Btn8" type="Button" parent="Control/PanelContainer/VBoxContainer/HBoxContainer3" unique_id=698559815]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "8"
+
+[node name="Btn9" type="Button" parent="Control/PanelContainer/VBoxContainer/HBoxContainer3" unique_id=694870355]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "9"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer" unique_id=432438654]
+layout_mode = 2
+
+[node name="BtnBackspace" type="Button" parent="Control/PanelContainer/VBoxContainer/HBoxContainer4" unique_id=1917544972]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "⌫"
+
+[node name="Btn0" type="Button" parent="Control/PanelContainer/VBoxContainer/HBoxContainer4" unique_id=1958914663]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+
+[node name="BtnEnter" type="Button" parent="Control/PanelContainer/VBoxContainer/HBoxContainer4" unique_id=513970886]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "✓"
+
+[node name="CloseButton" type="Button" parent="Control" unique_id=158005832]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -402.0
+offset_top = 120.0
+offset_right = -335.0
+offset_bottom = 151.0
+grow_horizontal = 0
+text = "✕ Close"

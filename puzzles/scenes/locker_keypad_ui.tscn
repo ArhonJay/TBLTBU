@@ -1,0 +1,186 @@
+[gd_scene format=3 uid="uid://bmiucdr8jkok8"]
+
+[node name="LockerKeypadUI" type="CanvasLayer" unique_id=366497981]
+visible = false
+
+[node name="Control" type="Control" parent="." unique_id=210940470]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=1752481029]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.78431374)
+
+[node name="MainPanel" type="PanelContainer" parent="Control" unique_id=1069195208]
+custom_minimum_size = Vector2(640, 420)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -210.0
+offset_right = 320.0
+offset_bottom = 210.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/MainPanel" unique_id=1854334744]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="EmployeePanel" type="PanelContainer" parent="Control/MainPanel/HBoxContainer" unique_id=150983574]
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="EmployeeVBox" type="VBoxContainer" parent="Control/MainPanel/HBoxContainer/EmployeePanel" unique_id=1290078765]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="EmployeePhoto" type="TextureRect" parent="Control/MainPanel/HBoxContainer/EmployeePanel/EmployeeVBox" unique_id=988573444]
+custom_minimum_size = Vector2(0, 220)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+expand_mode = 1
+stretch_mode = 6
+
+[node name="EmployeeName" type="Label" parent="Control/MainPanel/HBoxContainer/EmployeePanel/EmployeeVBox" unique_id=154973865]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "UNKNOWN"
+horizontal_alignment = 1
+
+[node name="EmployeeDescription" type="Label" parent="Control/MainPanel/HBoxContainer/EmployeePanel/EmployeeVBox" unique_id=1870816107]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+horizontal_alignment = 1
+
+[node name="KeypadPanel" type="PanelContainer" parent="Control/MainPanel/HBoxContainer" unique_id=1291319891]
+custom_minimum_size = Vector2(300, 420)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MainPanel/HBoxContainer/KeypadPanel" unique_id=410853755]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Display" type="Label" parent="Control/MainPanel/HBoxContainer/KeypadPanel/VBoxContainer" unique_id=782524698]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "----"
+horizontal_alignment = 1
+
+[node name="ResultLabel" type="Label" parent="Control/MainPanel/HBoxContainer/KeypadPanel/VBoxContainer" unique_id=222174474]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/MainPanel/HBoxContainer/KeypadPanel/VBoxContainer" unique_id=555759281]
+layout_mode = 2
+
+[node name="Btn1" type="Button" parent="Control/MainPanel/HBoxContainer/KeypadPanel/VBoxContainer/HBoxContainer" unique_id=263594011]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1"
+
+[node name="Btn2" type="Button" parent="Control/MainPanel/HBoxContainer/KeypadPanel/VBoxContainer/HBoxContainer" unique_id=44195658]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "2"
+
+[node name="Btn3" type="Button" parent="Control/MainPanel/HBoxContainer/KeypadPanel/VBoxContainer/HBoxContainer" unique_id=914141727]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "3"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/MainPanel/HBoxContainer/KeypadPanel/VBoxContainer" unique_id=599415053]
+layout_mode = 2
+
+[node name="Btn4" type="Button" parent="Control/MainPanel/HBoxContainer/KeypadPanel/VBoxContainer/HBoxContainer2" unique_id=1736749136]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "4"
+
+[node name="Btn5" type="Button" parent="Control/MainPanel/HBoxContainer/KeypadPanel/VBoxContainer/HBoxContainer2" unique_id=600237324]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "5"
+
+[node name="Btn6" type="Button" parent="Control/MainPanel/HBoxContainer/KeypadPanel/VBoxContainer/HBoxContainer2" unique_id=1188640228]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "6"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Control/MainPanel/HBoxContainer/KeypadPanel/VBoxContainer" unique_id=1367426988]
+layout_mode = 2
+
+[node name="Btn7" type="Button" parent="Control/MainPanel/HBoxContainer/KeypadPanel/VBoxContainer/HBoxContainer3" unique_id=1014156686]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "7"
+
+[node name="Btn8" type="Button" parent="Control/MainPanel/HBoxContainer/KeypadPanel/VBoxContainer/HBoxContainer3" unique_id=2034120616]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "8"
+
+[node name="Btn9" type="Button" parent="Control/MainPanel/HBoxContainer/KeypadPanel/VBoxContainer/HBoxContainer3" unique_id=1914515714]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "9"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="Control/MainPanel/HBoxContainer/KeypadPanel/VBoxContainer" unique_id=1541723523]
+layout_mode = 2
+
+[node name="BtnBackspace" type="Button" parent="Control/MainPanel/HBoxContainer/KeypadPanel/VBoxContainer/HBoxContainer4" unique_id=620909165]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "⌫"
+
+[node name="Btn0" type="Button" parent="Control/MainPanel/HBoxContainer/KeypadPanel/VBoxContainer/HBoxContainer4" unique_id=1821649726]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+
+[node name="BtnEnter" type="Button" parent="Control/MainPanel/HBoxContainer/KeypadPanel/VBoxContainer/HBoxContainer4" unique_id=1576886674]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "✓"
+
+[node name="CloseButton" type="Button" parent="Control" unique_id=142654181]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -357.0
+offset_top = 115.0
+offset_right = -257.0
+offset_bottom = 146.0
+grow_horizontal = 0
+text = "✕ Close"
