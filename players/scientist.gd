@@ -165,6 +165,9 @@ func _on_back_to_menu_pressed():
 
 @rpc("call_local", "any_peer", "reliable")
 func _go_to_main_menu():
+	# THE FIX: Give the network 0.2 seconds to actually send the RPC packet across the internet!
+	await get_tree().create_timer(0.2).timeout
+	
 	# Tear down the multiplayer peer on every machine before loading the menu
 	var nm = get_node_or_null("/root/NetworkManager")
 	if nm:

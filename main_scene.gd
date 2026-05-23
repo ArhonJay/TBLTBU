@@ -41,17 +41,19 @@ func spawn_player(peer_id):
 	$Players.add_child(current_player_node)
 
 func spawn_enemies():
-	# We loop 5 times to create 5 enemies
-	for i in range(10):
+	var my_spawn = get_node("SpawnPoints/ExplorerSpawn")
+	
+	for i in range(5):
 		var enemy = enemy_scene.instantiate()
-
-		# Pick a random X and Z coordinate. 
-		# NOTE: Change the -50 and 50 to match the size of your Terrainto island!
-		var random_x = randf_range(-200.0, 200.0)
-		var random_z = randf_range(-100.0, 200.0)
-
-		# Spawn them at the random spot, but way up in the air (Y = 30)
-		enemy.position = Vector3(random_x, 150.0, random_z)
-
-		# Add them to the map
-		add_child(enemy)
+		
+		# THE FIX: Force a unique name so Godot doesn't auto-generate one!
+		# Using the loop number 'i' and a random number ensures it is completely unique
+		enemy.name = "SkeletonMage_" + str(i)
+		
+		var random_offset_x = randf_range(-200.0, 100.0)
+		var random_offset_z = randf_range(-100.0, 200.0)
+		
+		enemy.position = my_spawn.global_position + Vector3(random_offset_x, 10.0, random_offset_z)
+		
+		# THE FIX: Add the enemy to the tracked folder, not the MainScene!
+		$Enemies.add_child(enemy)
