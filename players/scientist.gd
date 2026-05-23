@@ -13,6 +13,15 @@ var mouse_delta: Vector2 = Vector2()
 @onready var camera = $SpringArm3D/Camera
 @onready var hand = get_node("SpringArm3D/Camera/Hand")
 
+# --- STAMINA ---
+@export var max_stamina: float = 100.0
+@export var stamina_drain_rate: float = 25.0   # per second while sprinting
+@export var stamina_regen_rate: float = 12.0   # per second while not sprinting
+@export var stamina_regen_delay: float = 1.5   # seconds before regen starts after stopping
+var current_stamina: float = 100.0
+var _stamina_regen_timer: float = 0.0
+var _stamina_exhausted: bool = false           # true only when stamina hits exactly 0
+
 var target_zoom: float = 0.0
 var min_zoom: float = 0.0
 var max_zoom: float = 4.0
@@ -49,6 +58,14 @@ func _ready():
 		global_position = spawn_point.global_position
 
 	_build_game_over_overlay()
+
+	current_stamina = max_stamina
+	_update_stamina_ui()
+	
+func _update_stamina_ui():
+	var stamina_ui = get_node_or_null("StaminaUI")
+	if stamina_ui and stamina_ui.has_method("update_stamina"):
+		stamina_ui.update_stamina(current_stamina, max_stamina)
 
 # --- BUILD GAME OVER OVERLAY IN CODE ---
 func _build_game_over_overlay():
@@ -198,7 +215,28 @@ func _process(delta):
 	mouse_delta = Vector2()
 	window_activity()
 
+		
 func _physics_process(delta):
+	# --- STAMINA TICK ---
+	var wants_sprint = Input.is_action_pressed("sprint")
+	if wants_sprint and not _stamina_exhausted:
+		current_stamina -= stamina_drain_rate * delta
+		_stamina_regen_timer = stamina_regen_delay
+		if current_stamina <= 0.0:
+			current_stamina = 0.0
+			_stamina_exhausted = true
+		_update_stamina_ui()
+	else:
+		if _stamina_regen_timer > 0.0:
+			_stamina_regen_timer -= delta
+		elif current_stamina < max_stamina:
+			current_stamina += stamina_regen_rate * delta
+			if current_stamina >= max_stamina:
+				current_stamina = max_stamina
+			if _stamina_exhausted and current_stamina > 0.0:
+				_stamina_exhausted = false
+			_update_stamina_ui()
+
 	var height_boost = target_zoom * 0.3
 	$SpringArm3D.spring_length = lerp($SpringArm3D.spring_length, target_zoom, 10.0 * delta)
 	camera.position.y = lerp(camera.position.y, base_camera_y + height_boost, 10.0 * delta)
@@ -210,7 +248,7 @@ func _physics_process(delta):
 		velocity.y = jump_force
 
 	var current_speed = move_speed
-	if Input.is_action_pressed("sprint"):
+	if Input.is_action_pressed("sprint") and not _stamina_exhausted:
 		current_speed = run_speed
 
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
@@ -231,7 +269,7 @@ func _physics_process(delta):
 		else:
 			$AnimationPlayer.play("jump_idle")
 	elif direction:
-		if Input.is_action_pressed("sprint"):
+		if Input.is_action_pressed("sprint") and not _stamina_exhausted:
 			$AnimationPlayer.play("running")
 		else:
 			$AnimationPlayer.play("walk")

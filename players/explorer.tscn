@@ -5,12 +5,14 @@
 [ext_resource type="Animation" uid="uid://mpmm6e51ye35" path="res://animation/climb.res" id="3_83qqn"]
 [ext_resource type="Animation" uid="uid://b6cctiy0adq1o" path="res://animation/walk.res" id="3_dqnkt"]
 [ext_resource type="Animation" uid="uid://cujijw2r4xug2" path="res://animation/idle.res" id="3_o3kt3"]
-[ext_resource type="Animation" uid="uid://c27lxjjvq4w2t" path="res://animation/death.res" id="4_mq68u"]
+[ext_resource type="Animation" uid="uid://7s3gxobrxx68" path="res://animation/death.res" id="4_mq68u"]
 [ext_resource type="Animation" uid="uid://cqe026axgfetc" path="res://animation/jump_land.res" id="4_s5up7"]
 [ext_resource type="Animation" uid="uid://bolwxs7j6i67t" path="res://animation/jump_idle.res" id="4_svd62"]
 [ext_resource type="Animation" uid="uid://drfntjfx6g246" path="res://animation/jump_start.res" id="5_svd62"]
 [ext_resource type="Animation" uid="uid://fh6db7tmon7n" path="res://animation/running.res" id="7_sxsku"]
 [ext_resource type="PackedScene" uid="uid://bekf3v85w5hv1" path="res://puzzles/scenes/healthbar_ui.tscn" id="10_28q1p"]
+[ext_resource type="PackedScene" path="res://puzzles/scenes/stamina_ui.tscn" id="12_w2ps0"]
+[ext_resource type="PackedScene" uid="uid://bstlccajhyfv3" path="res://puzzles/scenes/inventory_ui.tscn" id="13_mue4t"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_83qqn"]
 radius = 0.2
@@ -70,3 +72,7 @@ root_node = NodePath("../Barbarian")
 libraries/ = SubResource("AnimationLibrary_o3kt3")
 
 [node name="HealthbarUI" parent="." unique_id=954062678 instance=ExtResource("10_28q1p")]
+
+[node name="StaminaUI" parent="." unique_id=1834635035 instance=ExtResource("12_w2ps0")]
+
+[node name="InventoryUI" parent="." unique_id=796086188 instance=ExtResource("13_mue4t")]
