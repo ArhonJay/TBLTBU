@@ -1,15 +1,18 @@
 extends CharacterBody3D
 
-@export var move_speed: float = 50.0
+@export var move_speed: float = 20.0
+@export var run_speed: float = 50.0
 @export var jump_force: float = 20.0 # NEW: Added jump force!
 @export var gravity: float = 50.0 # Adjusted gravity to match jump (12 is too floaty for a jump of 20!)
 @onready var interaction_ray: RayCast3D = $Camera3D/Interaction
 # --- CAMERA VARIABLES ---
+const MOUSE_SENSITIVITY = 0.002
 @export var look_sensitivity: float = 2.0
 var min_look_angle: float = -90.0
 var max_look_angle: float = 90.0
 var mouse_delta: Vector2 = Vector2()
-@onready var camera = $Camera3D # Matching your Scientist's node name
+@onready var camera = $SpringArm3D/Camera 
+@onready var hand = get_node("SpringArm3D/Camera/Hand")  
 
 # --- ZOOM VARIABLES ---
 var target_zoom: float = 0.0
@@ -24,13 +27,14 @@ func _enter_tree():
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	if not is_multiplayer_authority():
-		$Camera3D.current = false 
+		camera.current = false 
 		set_physics_process(false) 
 		set_process(false)       # Disable _process for network clones
 		set_process_input(false) # Disable input for network clones
 		return 
 		
-	$Camera3D.current = true
+	camera.current = true
+	$SpringArm3D.add_excluded_object(get_rid())
 	
 	# Save the camera's starting height and set initial target
 	base_camera_y = camera.position.y
@@ -65,22 +69,14 @@ func _input(event):
 	
 # --- APPLY CAMERA ROTATION AND ZOOM ---
 func _process(delta):
-	# Up and down (Pitch)
-	camera.rotation_degrees.x -= mouse_delta.y * look_sensitivity * delta
-	camera.rotation_degrees.x = clamp(camera.rotation_degrees.x, min_look_angle, max_look_angle)
+	# THE FIX: Rotate the SpringArm up and down, NOT the camera!
+	$SpringArm3D.rotation_degrees.x -= mouse_delta.y * look_sensitivity * delta
+	$SpringArm3D.rotation_degrees.x = clamp($SpringArm3D.rotation_degrees.x, min_look_angle, max_look_angle)
 	
-	# Left and right (Yaw)
+	# Left/Right still rotates the whole character body, which is correct
 	rotation_degrees.y -= mouse_delta.x * look_sensitivity * delta
 	
-	# Smoothly slide the camera backwards (Z axis)
-	camera.position.z = lerp(camera.position.z, target_zoom, 10.0 * delta)
-	
-	# Slightly lift the camera up as it zooms out
-	var height_boost = target_zoom * 0.3
-	camera.position.y = lerp(camera.position.y, base_camera_y + height_boost, 10.0 * delta)
-	
-	# Auto-hide the Scientist if the camera gets too close! (CHANGE NAME IF NEEDED)
-	if camera.position.z < 0.8:
+	if $SpringArm3D.spring_length < 0.8: # We check the arm length now!
 		$Mage.hide()
 	else:
 		$Mage.show()
@@ -90,36 +86,51 @@ func _process(delta):
 	window_activity()
 
 func _physics_process(delta):
-
+	# Optional: Slightly lift the camera up as it zooms out so it looks over the Barbarian's shoulder
+	var height_boost = target_zoom * 0.3
+	$SpringArm3D.spring_length = lerp($SpringArm3D.spring_length, target_zoom, 10.0 * delta)
+	camera.position.y = lerp(camera.position.y, base_camera_y + height_boost, 10.0 * delta)
+	
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 		
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = jump_force
+	# --- 1. CALCULATE CURRENT SPEED ---
+	var current_speed = move_speed
+	# If the player is holding down our new sprint button, use the faster speed!
+	if Input.is_action_pressed("sprint"):
+		current_speed = run_speed
 
+	# --- 2. APPLY MOVEMENT ---
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
 	if direction:
-		velocity.x = direction.x * move_speed
-		velocity.z = direction.z * move_speed
+		# Use current_speed instead of move_speed here!
+		velocity.x = direction.x * current_speed
+		velocity.z = direction.z * current_speed
 		
 		var target_angle = atan2(-input_dir.x, -input_dir.y) + PI
 		$Mage.rotation.y = lerp_angle($Mage.rotation.y, target_angle, 15.0 * delta)
 	else:
-		velocity.x = move_toward(velocity.x, 0, move_speed)
-		velocity.z = move_toward(velocity.z, 0, move_speed)
+		velocity.x = move_toward(velocity.x, 0, current_speed)
+		velocity.z = move_toward(velocity.z, 0, current_speed)
 	
+	# --- 3. THE ANIMATION PRIORITY BLOCK ---
 	if not is_on_floor():
 		# Priority 1: We are in the air
 		if velocity.y > 0:
-			$AnimationPlayer.play("jump_start") # Reaching up
+			$AnimationPlayer.play("jump_start") 
 		else:
-			$AnimationPlayer.play("jump_idle")  # Falling down
+			$AnimationPlayer.play("jump_idle")  
 			
 	elif direction:
 		# Priority 2: We are on the ground AND moving
-		$AnimationPlayer.play("walk")
+		if Input.is_action_pressed("sprint"):
+			$AnimationPlayer.play("running") # Make sure you have a "run" animation loaded!
+		else:
+			$AnimationPlayer.play("walk")
 		
 	else:
 		# Priority 3: We are on the ground AND standing still
