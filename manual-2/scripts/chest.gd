@@ -131,14 +131,14 @@ func _on_chest_unlocked() -> void:
 
 # ── Proximity ─────────────────────────────────────────────────────────────────
 func _on_body_entered(body: Node3D) -> void:
-	if body.is_in_group("player"):
+	if body.is_in_group("scientist"):
 		player_nearby = true
 		if not is_solved:
 			prompt_label.visible = true
 
 
 func _on_body_exited(body: Node3D) -> void:
-	if body.is_in_group("player"):
+	if body.is_in_group("scientist"):
 		player_nearby        = false
 		prompt_label.visible = false
 		if ui_open:
