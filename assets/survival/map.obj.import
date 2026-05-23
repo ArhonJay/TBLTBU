@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://b1a3n10l650qc"
+path="res://.godot/imported/map.obj-a2cef38d9cda39f0a9ecc5a8c17fe21f.mesh"
+
+[deps]
+
+files=["res://.godot/imported/map.obj-a2cef38d9cda39f0a9ecc5a8c17fe21f.mesh"]
+
+source_file="res://assets/survival/map.obj"
+dest_files=["res://.godot/imported/map.obj-a2cef38d9cda39f0a9ecc5a8c17fe21f.mesh", "res://.godot/imported/map.obj-a2cef38d9cda39f0a9ecc5a8c17fe21f.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

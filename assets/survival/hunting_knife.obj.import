@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dued8lx3c8p6y"
+path="res://.godot/imported/hunting_knife.obj-fe11fa2be18638dbd86d5b6b7c0c146a.mesh"
+
+[deps]
+
+files=["res://.godot/imported/hunting_knife.obj-fe11fa2be18638dbd86d5b6b7c0c146a.mesh"]
+
+source_file="res://assets/survival/hunting_knife.obj"
+dest_files=["res://.godot/imported/hunting_knife.obj-fe11fa2be18638dbd86d5b6b7c0c146a.mesh", "res://.godot/imported/hunting_knife.obj-fe11fa2be18638dbd86d5b6b7c0c146a.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false
