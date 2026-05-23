@@ -121,12 +121,6 @@ func _randomize_mushroom():
 
 	_apply_color(type_data.color)
 
-	print("=== MUSHROOM PATCH ===")
-	print("Type: ", mushroom_type)
-	print("Smell: ", current_smell)
-	print("Correct action: ", current_data.action)
-	print("It is a: ", current_data.name)
-
 func _apply_color(color: Color):
 	for child in get_children():
 		_tint_mesh(child, color)

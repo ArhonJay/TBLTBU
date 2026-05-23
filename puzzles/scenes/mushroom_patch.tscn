@@ -10,10 +10,9 @@ size = Vector3(0.545105, 0.51123047, 0.5402832)
 [sub_resource type="SphereShape3D" id="SphereShape3D_wi5ln"]
 radius = 2.0
 
-[node name="MushroomPatch" type="StaticBody3D" unique_id=436300937 node_paths=PackedStringArray("mushroom_ui", "healthbar")]
+[node name="MushroomPatch" type="StaticBody3D" unique_id=436300937 node_paths=PackedStringArray("mushroom_ui")]
 script = ExtResource("1_iulia")
 mushroom_ui = NodePath("MushroomUI")
-healthbar = NodePath("")
 
 [node name="Mushroom" parent="." unique_id=2012890856 instance=ExtResource("2_mmik1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.14491028, 0.11153996, 1.0251368)
