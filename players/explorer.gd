@@ -80,6 +80,14 @@ func take_damage(amount: int):
 		$AnimationPlayer.play("death")
 		_die()
 
+func heal(amount: int):
+	if is_dead:
+		return
+	current_health += amount
+	current_health = min(current_health, max_health) # Don't go over 100 max HP
+	_update_health_ui()
+	print("Explorer healed %d HP! HP: %d/%d" % [amount, current_health, max_health])
+
 func _trigger_hurt_flash():
 	_hurt_flash_timer = _hurt_flash_duration
 	hurt_overlay.visible = true

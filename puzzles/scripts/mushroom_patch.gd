@@ -1,7 +1,7 @@
 extends StaticBody3D
 
 @export var mushroom_ui: CanvasLayer
-var healthbar: CanvasLayer
+var current_player: Node3D = null
 
 # Mushroom data updated from Defusal Manual v.1 - Cavern Mycology
 const MUSHROOM_DATA = {
@@ -174,11 +174,17 @@ func _on_eat_pressed():
 	if current_data.action == "EAT":
 		result_label.text = "✓ CORRECT! " + current_data.name + "\n" + current_data.effect
 		result_label.add_theme_color_override("font_color", Color.GREEN)
-		healthbar.heal(current_data.heal)
+		
+		# Call heal on the Explorer
+		if current_player and current_player.has_method("heal"):
+			current_player.heal(int(current_data.heal))
 	else:
 		result_label.text = "✗ WRONG! " + current_data.name + "\n" + current_data.effect
 		result_label.add_theme_color_override("font_color", Color.RED)
-		healthbar.damage(current_data.damage)
+		
+		# Call damage on the Explorer
+		if current_player and current_player.has_method("take_damage"):
+			current_player.take_damage(int(current_data.damage))
 
 	btn_eat.disabled = true
 	btn_leave.disabled = true
@@ -194,7 +200,10 @@ func _on_leave_pressed():
 	else:
 		result_label.text = "✗ WRONG! You should have eaten it.\n" + current_data.name + " - " + current_data.effect
 		result_label.add_theme_color_override("font_color", Color.RED)
-		healthbar.damage(current_data.damage)
+		
+		# Call damage on the Explorer
+		if current_player and current_player.has_method("take_damage"):
+			current_player.take_damage(int(current_data.damage))
 
 	btn_eat.disabled = true
 	btn_leave.disabled = true
@@ -204,16 +213,16 @@ func _on_leave_pressed():
 	queue_free()
 
 func _on_body_entered(body: Node3D):
-	if body.is_in_group("player"):
+	# Using "explorer" since your explorer adds itself to this group in its _ready() function
+	if body.is_in_group("explorer"):
 		player_nearby = true
+		current_player = body
 		prompt_label.visible = not already_picked
-		# Auto-find the healthbar on the player so no manual export wiring is needed
-		if healthbar == null:
-			healthbar = body.find_child("HealthbarUI", true, false) as CanvasLayer
 
 func _on_body_exited(body: Node3D):
-	if body.is_in_group("player"):
+	if body == current_player:
 		player_nearby = false
+		current_player = null
 		prompt_label.visible = false
 		if ui_open:
 			_close_ui()
