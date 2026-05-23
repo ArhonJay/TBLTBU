@@ -15,6 +15,7 @@
 [ext_resource type="MeshLibrary" uid="uid://cvbghuqmup4ha" path="res://models/desert.res" id="11_671wp"]
 [ext_resource type="PlaneMesh" uid="uid://dgvpjhawsooi1" path="res://models/water.res" id="12_671wp"]
 [ext_resource type="Shape3D" uid="uid://csm1efdpiw0nr" path="res://models/labfacility_collision.res" id="12_m35m6"]
+[ext_resource type="PackedScene" uid="uid://pybt3sfmkw53" path="res://manual-2/scenes/chest.tscn" id="16_m35m6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0f027"]
 sky_top_color = Color(0.28081855, 0.47426385, 0.9034027, 1)
@@ -66,10 +67,10 @@ environment = SubResource("Environment_gyfs4")
 [node name="SpawnPoints" type="Node3D" parent="." unique_id=476886260]
 
 [node name="ExplorerSpawn" type="Marker3D" parent="SpawnPoints" unique_id=50010483]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.00141, 115.989426, -5.322113)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.00141, 132.06331, -16.749275)
 
 [node name="ScientistSpawn" type="Marker3D" parent="SpawnPoints" unique_id=1918894866]
-transform = Transform3D(0.9999422, 0.010751021, 0, -0.010751021, 0.9999422, 0, 0, 0, 1, -666, -8.98, 694.7)
+transform = Transform3D(0.9999422, 0.010751021, 0, -0.010751021, 0.9999422, 0, 0, 0, 1, -666, -3.8525906, 694.7)
 
 [node name="Players" type="Node3D" parent="." unique_id=1068550589]
 
@@ -104,7 +105,7 @@ mesh = ExtResource("3_gyfs4")
 shape = ExtResource("10_2jcla")
 
 [node name="Labfacility" type="MeshInstance3D" parent="." unique_id=1017310468]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -665.55005, -8.380557, 682.9423)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -665.55005, -6.2510824, 682.9423)
 mesh = ExtResource("4_d5x1h")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Labfacility" unique_id=925822843]
@@ -154,8 +155,11 @@ data = {
 metadata/_editor_floor_ = Vector3(0, -2, 0)
 
 [node name="Water" type="MeshInstance3D" parent="." unique_id=1968046596]
-transform = Transform3D(800, 0, 0, 0, 800, 0, 0, 0, 800, 0, -8.79071, 0)
+transform = Transform3D(800, 0, 0, 0, 800, 0, 0, 0, 800, 1.4459534, -7.508484, -0.64611816)
 mesh = ExtResource("12_671wp")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=985797916]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 283.13022, 0)
+
+[node name="Chest" parent="." unique_id=296176913 instance=ExtResource("16_m35m6")]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, -666.67694, -5.7095747, 694.66406)
