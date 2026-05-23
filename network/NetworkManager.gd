@@ -73,9 +73,16 @@ func _on_connected_fail():
 	multiplayer.multiplayer_peer = null
 
 func _on_server_disconnected():
-	multiplayer.multiplayer_peer = null
-	players.clear()
-	server_disconnected.emit()
+	print("Host disconnected. Returning to main menu...")
+	
+	# 1. Reset the multiplayer peer so it doesn't stay in a zombie state
+	reset() 
+	
+	# 2. Give the player their mouse back
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	
+	# 3. Load the main menu
+	get_tree().change_scene_to_file("res://menu/MainMenu.tscn")
 
 @rpc("any_peer", "reliable")
 func register_player(role):

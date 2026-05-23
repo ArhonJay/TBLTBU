@@ -42,6 +42,9 @@ func _ready():
 		set_physics_process(false)
 		set_process(false)
 		set_process_input(false)
+		var hud = get_node_or_null("HealthbarUI")
+		if hud:
+			hud.hide()
 		return
 
 	add_to_group("explorer")
@@ -95,15 +98,17 @@ func _die():
 
 @rpc("call_local", "any_peer", "reliable")
 func _show_game_over_all():
-	# Show on the explorer's own HUD
-	var hud = get_node_or_null("HealthbarUI")
-	if hud and hud.has_method("show_game_over"):
-		hud.show_game_over()
+	# 1. Show on the Explorer's HUD ONLY if this machine controls the Explorer
+	if is_multiplayer_authority():
+		var hud = get_node_or_null("HealthbarUI")
+		if hud and hud.has_method("show_game_over"):
+			hud.show_game_over()
 
-	# Show on the scientist (find by group or node path)
+	# 2. Show on the Scientist ONLY if this machine controls the Scientist
 	for player in get_tree().get_nodes_in_group("scientist"):
-		if player.has_method("show_game_over_local"):
-			player.show_game_over_local()
+		if player.is_multiplayer_authority():
+			if player.has_method("show_game_over_local"):
+				player.show_game_over_local()
 
 # --- INPUT ---
 func _input(event):
@@ -223,6 +228,9 @@ func _physics_process(delta):
 
 @rpc("call_local", "any_peer", "reliable")
 func _go_to_main_menu_from_explorer():
+	# THE FIX: Give the network 0.2 seconds to actually send the RPC packet across the internet!
+	await get_tree().create_timer(0.2).timeout
+	
 	# Tear down the multiplayer peer on every machine before loading the menu
 	var nm = get_node_or_null("/root/NetworkManager")
 	if nm:
