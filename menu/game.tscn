@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://byrkl807ak3uk"]
+
+[ext_resource type="Script" uid="uid://dlebr5ejkce3r" path="res://scripts/game.gd" id="1_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://cfee88hk8pa53" path="res://menu/BackButton.tscn" id="1_uwrxv"]
+[ext_resource type="Texture2D" uid="uid://ug2h478ipmu0" path="res://assets/background/bg_volcano_dark.svg" id="1_yqjtg"]
+
+[node name="GameSelect" type="Node2D" unique_id=1304741175]
+script = ExtResource("1_lnu2h")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1212250365]
+offset_left = -13.0
+offset_top = -10.0
+offset_right = 1172.6875
+offset_bottom = 652.0
+texture = ExtResource("1_yqjtg")
+
+[node name="ButtonManager" type="Control" parent="." unique_id=1795158485]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1154.0
+offset_bottom = 646.0
+
+[node name="BackButton" parent="ButtonManager" unique_id=852002303 instance=ExtResource("1_uwrxv")]
+layout_mode = 1
+offset_left = 26.0
+offset_top = 578.0
+offset_right = -998.32983
+offset_bottom = -27.0

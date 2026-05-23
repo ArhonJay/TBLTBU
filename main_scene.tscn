@@ -15,7 +15,6 @@
 [ext_resource type="MeshLibrary" uid="uid://cvbghuqmup4ha" path="res://models/desert.res" id="11_671wp"]
 [ext_resource type="PlaneMesh" uid="uid://dgvpjhawsooi1" path="res://models/water.res" id="12_671wp"]
 [ext_resource type="Shape3D" uid="uid://csm1efdpiw0nr" path="res://models/labfacility_collision.res" id="12_m35m6"]
-[ext_resource type="PackedScene" uid="uid://pybt3sfmkw53" path="res://manual-2/scenes/chest.tscn" id="16_m35m6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0f027"]
 sky_top_color = Color(0.28081855, 0.47426385, 0.9034027, 1)
@@ -75,7 +74,7 @@ transform = Transform3D(0.9999422, 0.010751021, 0, -0.010751021, 0.9999422, 0, 0
 [node name="Players" type="Node3D" parent="." unique_id=1068550589]
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1471507092]
-_spawnable_scenes = PackedStringArray("uid://8d3mawhgs388", "uid://c5dcs8qeqqj54")
+_spawnable_scenes = PackedStringArray("uid://8d3mawhgs388", "uid://c5dcs8qeqqj54", "uid://dfyh38sgdm7jx")
 spawn_path = NodePath("../Players")
 
 [node name="Terrainto" type="MeshInstance3D" parent="." unique_id=1289697231]
@@ -160,6 +159,3 @@ mesh = ExtResource("12_671wp")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=985797916]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 283.13022, 0)
-
-[node name="Chest" parent="." unique_id=296176913 instance=ExtResource("16_m35m6")]
-transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, -666.67694, -5.7095747, 694.66406)

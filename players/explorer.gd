@@ -37,6 +37,7 @@ func _ready():
 		set_process_input(false) 
 		return 
 		
+	add_to_group("explorer")
 	# I AM THE OWNER! Activate my stuff.
 	camera.current = true
 	$SpringArm3D.add_excluded_object(get_rid())
@@ -115,10 +116,17 @@ func _physics_process(delta):
 	
 	# ONLY allow climbing if the cooldown is at zero!
 	if $Barbarian/ClimbCheck.is_colliding() and wall_jump_cooldown <= 0.0:
-		var hit_normal = $Barbarian/ClimbCheck.get_collision_normal()
-		if hit_normal.y < 0.6 and hit_normal.y > -0.6:
-			if Input.is_action_pressed("move_forward") or not is_on_floor():
-				is_climbing = true
+		
+		# THE FIX: Get the object the RayCast is actually hitting
+		var hit_object = $Barbarian/ClimbCheck.get_collider()
+		
+		# If it is part of the map (StaticBody3D)...
+		if hit_object is StaticBody3D:
+			
+			var hit_normal = $Barbarian/ClimbCheck.get_collision_normal()
+			if hit_normal.y < 0.6 and hit_normal.y > -0.6:
+				if Input.is_action_pressed("move_forward") or not is_on_floor():
+					is_climbing = true
 
 	# --- 3. APPLY PHYSICS ---
 	if is_climbing:

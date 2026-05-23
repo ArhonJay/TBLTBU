@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" uid="uid://b5bxhi078idso" path="res://players/explorer.gd" id="1_4flbx"]
 [ext_resource type="PackedScene" uid="uid://p8h6mnyij3se" path="res://assets/Char/other/Barbarian.glb" id="2_fp526"]
-[ext_resource type="Animation" uid="uid://cso8yvv3en05p" path="res://animation/climb.res" id="3_83qqn"]
+[ext_resource type="Animation" uid="uid://mpmm6e51ye35" path="res://animation/climb.res" id="3_83qqn"]
 [ext_resource type="Animation" uid="uid://b6cctiy0adq1o" path="res://animation/walk.res" id="3_dqnkt"]
 [ext_resource type="Animation" uid="uid://cujijw2r4xug2" path="res://animation/idle.res" id="3_o3kt3"]
 [ext_resource type="Animation" uid="uid://cqe026axgfetc" path="res://animation/jump_land.res" id="4_s5up7"]
 [ext_resource type="Animation" uid="uid://bolwxs7j6i67t" path="res://animation/jump_idle.res" id="4_svd62"]
 [ext_resource type="Animation" uid="uid://drfntjfx6g246" path="res://animation/jump_start.res" id="5_svd62"]
-[ext_resource type="Animation" uid="uid://c0a5ym4rjlxc2" path="res://animation/running.res" id="7_sxsku"]
+[ext_resource type="Animation" uid="uid://fh6db7tmon7n" path="res://animation/running.res" id="7_sxsku"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_83qqn"]
 radius = 0.2
@@ -33,7 +33,7 @@ _data = {
 &"walk": ExtResource("3_dqnkt")
 }
 
-[node name="Player" type="CharacterBody3D" unique_id=559825491]
+[node name="Player" type="CharacterBody3D" unique_id=559825491 groups=["explorer"]]
 script = ExtResource("1_4flbx")
 
 [node name="Barbarian" parent="." unique_id=627308010 instance=ExtResource("2_fp526")]
@@ -42,7 +42,6 @@ transform = Transform3D(-0.49996763, 0, 0.005689636, 0, 0.5, 0, -0.005689636, 0,
 [node name="ClimbCheck" type="RayCast3D" parent="Barbarian" unique_id=8048244]
 transform = Transform3D(-1.9998705, 0, -0.022758543, 0, 2, 0, 0.022758543, 0, -1.9998705, 0.0042680223, 0.6738665, 0.37504593)
 target_position = Vector3(0, 0, -1.5)
-collide_with_areas = true
 
 [node name="SpringArm3D" type="SpringArm3D" parent="." unique_id=2053548321]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)

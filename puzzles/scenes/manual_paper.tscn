@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://kecqe5he5y5q"]
+
+[ext_resource type="Script" uid="uid://6gg76pffr4ck" path="res://puzzles/scripts/manual_paper.gd" id="1_acdum"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_acdum"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_iwg13"]
+size = Vector3(1, 1.5119629, 0.05)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_yxyx1"]
+radius = 2.0
+
+[node name="ManualPaper" type="StaticBody3D" unique_id=270353332]
+script = ExtResource("1_acdum")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1167141922]
+transform = Transform3D(-6.802067e-08, 0, 1.0016564, 0, 0.019355845, 0, -1.5561315, 0, -4.378379e-08, 0, 0, 0)
+mesh = SubResource("BoxMesh_acdum")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=85101039]
+transform = Transform3D(1, 0, 0, 0, -4.5623455e-08, -2.2014277, 0, 1.043743, -9.622746e-08, 0, 2.3321506e-10, -0.0053353384)
+shape = SubResource("BoxShape3D_iwg13")
+
+[node name="InteractionZone" type="Area3D" parent="." unique_id=1708352391]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionZone" unique_id=1777959205]
+shape = SubResource("SphereShape3D_yxyx1")
