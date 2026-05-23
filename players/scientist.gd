@@ -2,23 +2,25 @@ extends CharacterBody3D
 
 @export var move_speed: float = 20.0
 @export var run_speed: float = 50.0
-@export var jump_force: float = 20.0 # NEW: Added jump force!
-@export var gravity: float = 50.0 # Adjusted gravity to match jump (12 is too floaty for a jump of 20!)
-# --- CAMERA VARIABLES ---
+@export var jump_force: float = 20.0
+@export var gravity: float = 50.0
+
 const MOUSE_SENSITIVITY = 0.002
 @export var look_sensitivity: float = 2.0
 var min_look_angle: float = -90.0
 var max_look_angle: float = 90.0
 var mouse_delta: Vector2 = Vector2()
-@onready var camera = $SpringArm3D/Camera 
-@onready var hand = get_node("SpringArm3D/Camera/Hand")  
+@onready var camera = $SpringArm3D/Camera
+@onready var hand = get_node("SpringArm3D/Camera/Hand")
 
-# --- ZOOM VARIABLES ---
 var target_zoom: float = 0.0
-var min_zoom: float = 0.0 # First-person distance
-var max_zoom: float = 4.0 # Furthest third-person distance
-var zoom_step: float = 0.4 # How much one scroll wheel click moves the camera
-var base_camera_y: float # To remember the original height
+var min_zoom: float = 0.0
+var max_zoom: float = 4.0
+var zoom_step: float = 0.4
+var base_camera_y: float
+
+# --- GAME OVER OVERLAY (built in code, no extra scene needed) ---
+var _game_over_overlay: CanvasLayer = null
 
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
@@ -26,118 +28,215 @@ func _enter_tree():
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	if not is_multiplayer_authority():
-		camera.current = false 
-		set_physics_process(false) 
-		set_process(false)       # Disable _process for network clones
-		set_process_input(false) # Disable input for network clones
-		return 
-		
+		camera.current = false
+		set_physics_process(false)
+		set_process(false)
+		set_process_input(false)
+		return
+
+	add_to_group("scientist")
 	camera.current = true
 	$SpringArm3D.add_excluded_object(get_rid())
-	
-	# Save the camera's starting height and set initial target
+
 	base_camera_y = camera.position.y
 	target_zoom = camera.position.z
-	
-	# Hide the scientist's body initially (CHANGE THIS NAME IF NEEDED!)
-	$Mage.hide() 
-	
-	# Capture the mouse pointer so it doesn't leave the game window
+
+	$Mage.hide()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	
+
 	var spawn_point = get_tree().current_scene.get_node_or_null("SpawnPoints/ScientistSpawn")
 	if spawn_point != null:
 		global_position = spawn_point.global_position
 
-# --- CATCH MOUSE MOVEMENTS AND SCROLLING ---
+	_build_game_over_overlay()
+
+# --- BUILD GAME OVER OVERLAY IN CODE ---
+func _build_game_over_overlay():
+	_game_over_overlay = CanvasLayer.new()
+	_game_over_overlay.layer = 10
+	add_child(_game_over_overlay)
+
+	# Dark full-screen dimmer
+	var dimmer = ColorRect.new()
+	dimmer.color = Color(0.0, 0.0, 0.0, 0.0)
+	dimmer.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_game_over_overlay.add_child(dimmer)
+
+	# Centered panel
+	var panel = PanelContainer.new()
+	var panel_style = StyleBoxFlat.new()
+	panel_style.bg_color = Color(0.04, 0.04, 0.06, 0.95)
+	panel_style.corner_radius_top_left = 16
+	panel_style.corner_radius_top_right = 16
+	panel_style.corner_radius_bottom_left = 16
+	panel_style.corner_radius_bottom_right = 16
+	panel_style.border_width_top = 2
+	panel_style.border_width_bottom = 2
+	panel_style.border_width_left = 2
+	panel_style.border_width_right = 2
+	panel_style.border_color = Color(0.7, 0.1, 0.1, 1.0)
+	panel.add_theme_stylebox_override("panel", panel_style)
+	panel.set_anchors_preset(Control.PRESET_CENTER)
+	panel.offset_left = -220.0
+	panel.offset_right = 220.0
+	panel.offset_top = -150.0
+	panel.offset_bottom = 150.0
+	_game_over_overlay.add_child(panel)
+
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 20)
+	panel.add_child(vbox)
+
+	# Spacer top
+	var spacer_top = Control.new()
+	spacer_top.custom_minimum_size = Vector2(0, 10)
+	vbox.add_child(spacer_top)
+
+	# Skull icon label
+	var skull = Label.new()
+	skull.text = "💀"
+	skull.add_theme_font_size_override("font_size", 52)
+	skull.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(skull)
+
+	# GAME OVER title
+	var title = Label.new()
+	title.text = "GAME OVER"
+	title.add_theme_font_size_override("font_size", 44)
+	title.add_theme_color_override("font_color", Color(0.95, 0.18, 0.18, 1.0))
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(title)
+
+	# Subtitle
+	var subtitle = Label.new()
+	subtitle.text = "The Explorer has fallen..."
+	subtitle.add_theme_font_size_override("font_size", 16)
+	subtitle.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7, 1.0))
+	subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(subtitle)
+
+	# Spacer mid
+	var spacer_mid = Control.new()
+	spacer_mid.custom_minimum_size = Vector2(0, 8)
+	vbox.add_child(spacer_mid)
+
+	# Back to Main Menu button
+	var btn = Button.new()
+	btn.text = "  Back to Main Menu  "
+	btn.add_theme_font_size_override("font_size", 18)
+	btn.custom_minimum_size = Vector2(0, 50)
+	var btn_normal = StyleBoxFlat.new()
+	btn_normal.bg_color = Color(0.6, 0.08, 0.08, 1.0)
+	btn_normal.corner_radius_top_left = 8
+	btn_normal.corner_radius_top_right = 8
+	btn_normal.corner_radius_bottom_left = 8
+	btn_normal.corner_radius_bottom_right = 8
+	btn.add_theme_stylebox_override("normal", btn_normal)
+	var btn_hover = StyleBoxFlat.new()
+	btn_hover.bg_color = Color(0.85, 0.15, 0.15, 1.0)
+	btn_hover.corner_radius_top_left = 8
+	btn_hover.corner_radius_top_right = 8
+	btn_hover.corner_radius_bottom_left = 8
+	btn_hover.corner_radius_bottom_right = 8
+	btn.add_theme_stylebox_override("hover", btn_hover)
+	btn.pressed.connect(_on_back_to_menu_pressed)
+	vbox.add_child(btn)
+
+	# Spacer bottom
+	var spacer_bot = Control.new()
+	spacer_bot.custom_minimum_size = Vector2(0, 10)
+	vbox.add_child(spacer_bot)
+
+	_game_over_overlay.visible = false
+
+# Called by explorer.gd's RPC when explorer dies
+func show_game_over_local():
+	if not is_multiplayer_authority():
+		return
+	set_physics_process(false)
+	set_process_input(false)
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	if _game_over_overlay:
+		_game_over_overlay.visible = true
+
+func _on_back_to_menu_pressed():
+	# Send ALL players back to main menu via RPC
+	_go_to_main_menu.rpc()
+
+@rpc("call_local", "any_peer", "reliable")
+func _go_to_main_menu():
+	# Tear down the multiplayer peer on every machine before loading the menu
+	var nm = get_node_or_null("/root/NetworkManager")
+	if nm:
+		nm.reset()
+	get_tree().change_scene_to_file("res://menu/MainMenu.tscn")
+
 func _input(event):
-	# 1. Look around
 	if event is InputEventMouseMotion:
 		mouse_delta = event.relative
 
-	# 2. Scroll Zoom
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-			target_zoom -= zoom_step # Zoom IN
+			target_zoom -= zoom_step
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			target_zoom += zoom_step # Zoom OUT
-			
-		# Keep the zoom within our limits
+			target_zoom += zoom_step
 		target_zoom = clamp(target_zoom, min_zoom, max_zoom)
 
-	
-# --- APPLY CAMERA ROTATION AND ZOOM ---
 func _process(delta):
-	# THE FIX: Rotate the SpringArm up and down, NOT the camera!
 	$SpringArm3D.rotation_degrees.x -= mouse_delta.y * look_sensitivity * delta
 	$SpringArm3D.rotation_degrees.x = clamp($SpringArm3D.rotation_degrees.x, min_look_angle, max_look_angle)
-	
-	# Left/Right still rotates the whole character body, which is correct
 	rotation_degrees.y -= mouse_delta.x * look_sensitivity * delta
-	
-	if $SpringArm3D.spring_length < 0.8: # We check the arm length now!
+
+	if $SpringArm3D.spring_length < 0.8:
 		$Mage.hide()
 	else:
 		$Mage.show()
-	
-	# Reset the delta so it doesn't spin infinitely
+
 	mouse_delta = Vector2()
 	window_activity()
 
 func _physics_process(delta):
-	# Optional: Slightly lift the camera up as it zooms out so it looks over the Barbarian's shoulder
 	var height_boost = target_zoom * 0.3
 	$SpringArm3D.spring_length = lerp($SpringArm3D.spring_length, target_zoom, 10.0 * delta)
 	camera.position.y = lerp(camera.position.y, base_camera_y + height_boost, 10.0 * delta)
-	
+
 	if not is_on_floor():
 		velocity.y -= gravity * delta
-		
+
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = jump_force
-	# --- 1. CALCULATE CURRENT SPEED ---
+
 	var current_speed = move_speed
-	# If the player is holding down our new sprint button, use the faster speed!
 	if Input.is_action_pressed("sprint"):
 		current_speed = run_speed
 
-	# --- 2. APPLY MOVEMENT ---
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	
+
 	if direction:
-		# Use current_speed instead of move_speed here!
 		velocity.x = direction.x * current_speed
 		velocity.z = direction.z * current_speed
-		
 		var target_angle = atan2(-input_dir.x, -input_dir.y) + PI
 		$Mage.rotation.y = lerp_angle($Mage.rotation.y, target_angle, 15.0 * delta)
 	else:
 		velocity.x = move_toward(velocity.x, 0, current_speed)
 		velocity.z = move_toward(velocity.z, 0, current_speed)
-	
-	# --- 3. THE ANIMATION PRIORITY BLOCK ---
+
 	if not is_on_floor():
-		# Priority 1: We are in the air
 		if velocity.y > 0:
-			$AnimationPlayer.play("jump_start") 
+			$AnimationPlayer.play("jump_start")
 		else:
-			$AnimationPlayer.play("jump_idle")  
-			
+			$AnimationPlayer.play("jump_idle")
 	elif direction:
-		# Priority 2: We are on the ground AND moving
 		if Input.is_action_pressed("sprint"):
-			$AnimationPlayer.play("running") # Make sure you have a "run" animation loaded!
+			$AnimationPlayer.play("running")
 		else:
 			$AnimationPlayer.play("walk")
-		
 	else:
-		# Priority 3: We are on the ground AND standing still
 		$AnimationPlayer.play("idle")
 
 	move_and_slide()
 
-# Added this so your Scientist can also press Escape to get their mouse cursor back!
 func window_activity():
 	if Input.is_action_just_pressed("ui_cancel"):
 		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
