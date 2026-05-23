@@ -11,6 +11,7 @@
 [ext_resource type="Animation" uid="uid://drfntjfx6g246" path="res://animation/jump_start.res" id="5_svd62"]
 [ext_resource type="Animation" uid="uid://fh6db7tmon7n" path="res://animation/running.res" id="7_sxsku"]
 [ext_resource type="PackedScene" uid="uid://bekf3v85w5hv1" path="res://puzzles/scenes/healthbar_ui.tscn" id="10_28q1p"]
+[ext_resource type="PackedScene" uid="uid://b28dmj24drca1" path="res://voice/voice_chat.tscn" id="12_w2ps0"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_83qqn"]
 radius = 0.2
@@ -70,3 +71,5 @@ root_node = NodePath("../Barbarian")
 libraries/ = SubResource("AnimationLibrary_o3kt3")
 
 [node name="HealthbarUI" parent="." unique_id=954062678 instance=ExtResource("10_28q1p")]
+
+[node name="VoiceChat" parent="." unique_id=986979701 instance=ExtResource("12_w2ps0")]
