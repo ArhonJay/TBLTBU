@@ -104,7 +104,7 @@ func _process(delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not _active or not visible:
 		return
-	if event.is_action_pressed("ui_accept") or event.is_action_pressed("interact"):
+	if event.is_action_pressed("interact"):
 		if _accepting:
 			_on_player_press()
 		get_viewport().set_input_as_handled()
@@ -149,7 +149,7 @@ func _apply_speed() -> void:
 
 func _refresh_ui() -> void:
 	_attempts_lbl.text = "Picks remaining: %d" % _attempts_left
-	_status_label.text = "Press  SPACE  or  E  to stop"
+	_status_label.text = "Press E  to stop"
 
 func _needle_in_zone() -> bool:
 	var a   : float = _needle_angle   # already 0-360

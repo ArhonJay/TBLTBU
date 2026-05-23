@@ -4,7 +4,7 @@ extends CharacterBody3D
 @export var run_speed: float = 50.0
 @export var jump_force: float = 20.0 # NEW: Added jump force!
 @export var gravity: float = 50.0 # Adjusted gravity to match jump (12 is too floaty for a jump of 20!)
-
+@onready var interaction_ray: RayCast3D = $Camera3D/Interaction
 # --- CAMERA VARIABLES ---
 const MOUSE_SENSITIVITY = 0.002
 @export var look_sensitivity: float = 2.0
@@ -25,6 +25,7 @@ func _enter_tree():
 	set_multiplayer_authority(name.to_int())
 
 func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	if not is_multiplayer_authority():
 		camera.current = false 
 		set_physics_process(false) 
@@ -65,6 +66,7 @@ func _input(event):
 		# Keep the zoom within our limits
 		target_zoom = clamp(target_zoom, min_zoom, max_zoom)
 
+	
 # --- APPLY CAMERA ROTATION AND ZOOM ---
 func _process(delta):
 	# THE FIX: Rotate the SpringArm up and down, NOT the camera!
