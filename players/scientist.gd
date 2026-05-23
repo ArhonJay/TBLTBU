@@ -4,7 +4,6 @@ extends CharacterBody3D
 @export var run_speed: float = 50.0
 @export var jump_force: float = 20.0 # NEW: Added jump force!
 @export var gravity: float = 50.0 # Adjusted gravity to match jump (12 is too floaty for a jump of 20!)
-@onready var interaction_ray: RayCast3D = $Camera3D/Interaction
 # --- CAMERA VARIABLES ---
 const MOUSE_SENSITIVITY = 0.002
 @export var look_sensitivity: float = 2.0

@@ -12,8 +12,9 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_mmr2p"]
 radius = 0.2
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_dkah4"]
-radius = 0.2
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mmr2p"]
+radius = 0.10644531
+height = 0.34713745
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_dkah4"]
 properties/0/path = NodePath(".:position")
@@ -30,7 +31,7 @@ _data = {
 &"walk": ExtResource("7_4cje2")
 }
 
-[node name="Player" type="CharacterBody3D" unique_id=559825491 groups=["scientist"]]
+[node name="Player" type="CharacterBody3D" unique_id=559825491 groups=["player"]]
 script = ExtResource("1_dkah4")
 
 [node name="Mage" parent="." unique_id=1274447443 instance=ExtResource("2_xuo6s")]
@@ -48,9 +49,9 @@ near = 0.01
 [node name="Hand" type="Marker3D" parent="SpringArm3D/Camera" unique_id=1351194563]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.90786123)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=871925756]
-transform = Transform3D(3.5, 0, 0, 0, -1.5298986e-07, -3.5, 0, 3.5, -1.5298986e-07, 0, 1.7641307, 0.28119108)
-shape = SubResource("SphereShape3D_dkah4")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=871925756 groups=["player"]]
+transform = Transform3D(3.5, 0, 0, 0, 3.5, 0, 0, 0, 3.5, 0, 1.6900418, 0.26759923)
+shape = SubResource("CapsuleShape3D_mmr2p")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=2105880230]
 replication_config = SubResource("SceneReplicationConfig_dkah4")

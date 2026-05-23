@@ -13,9 +13,7 @@
 [ext_resource type="MeshLibrary" uid="uid://cq3pw5ithnetj" path="res://models/forest.res" id="10_qwutr"]
 [ext_resource type="MeshLibrary" uid="uid://cvbghuqmup4ha" path="res://models/desert.res" id="11_671wp"]
 [ext_resource type="PlaneMesh" uid="uid://dgvpjhawsooi1" path="res://models/water.res" id="12_671wp"]
-[ext_resource type="Script" uid="uid://16kovxm0gm7x" path="res://manual-2/scripts/potion_puzzle.gd" id="15_u0ygc"]
-[ext_resource type="PackedScene" uid="uid://cnlfdxe52u60m" path="res://manual-2/scenes/bucket.tscn" id="16_7th4q"]
-[ext_resource type="PackedScene" uid="uid://do7kho3mo51lr" path="res://manual-2/scenes/potion_ui.tscn" id="17_6jybn"]
+[ext_resource type="PackedScene" uid="uid://biv2hrdjj52xa" path="res://puzzles/scenes/Potion_1.tscn" id="15_2jcla"]
 [ext_resource type="PackedScene" uid="uid://cs6de2v245p8m" path="res://assets/Lab/labfacility.glb" id="17_u0ygc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0f027"]
@@ -2559,9 +2557,6 @@ data = PackedVector3Array(2.825, 0, -7.25, 2.825, 2.1499999, -7.35, 2.825, 2.149
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_axn6d"]
 data = PackedVector3Array(3.1625, 0.9167, -7.24, 3.1625, 1.6333, -7.3599997, 3.1625, 1.6333, -7.24, 3.1625, 0.9167, -7.24, 3.1625, 0.9167, -7.3599997, 3.1625, 1.6333, -7.3599997, 3.1625, 0.9167, -7.3599997, 3.8374999, 1.6333, -7.3599997, 3.1625, 1.6333, -7.3599997, 3.1625, 0.9167, -7.3599997, 3.8374999, 0.9167, -7.3599997, 3.8374999, 1.6333, -7.3599997, 3.8374999, 0.9167, -7.3599997, 3.8374999, 1.6333, -7.24, 3.8374999, 1.6333, -7.3599997, 3.8374999, 0.9167, -7.3599997, 3.8374999, 0.9167, -7.24, 3.8374999, 1.6333, -7.24, 3.8374999, 0.9167, -7.24, 3.1625, 1.6333, -7.24, 3.8374999, 1.6333, -7.24, 3.8374999, 0.9167, -7.24, 3.1625, 0.9167, -7.24, 3.1625, 1.6333, -7.24, 3.1625, 0.9167, -7.3599997, 3.8374999, 0.9167, -7.24, 3.8374999, 0.9167, -7.3599997, 3.1625, 0.9167, -7.3599997, 3.1625, 0.9167, -7.24, 3.8374999, 0.9167, -7.24, 3.8374999, 1.6333, -7.3599997, 3.1625, 1.6333, -7.24, 3.1625, 1.6333, -7.3599997, 3.8374999, 1.6333, -7.3599997, 3.8374999, 1.6333, -7.24, 3.1625, 1.6333, -7.24)
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_u0ygc"]
-radius = 2.0
-
 [node name="MainScene" type="Node3D" unique_id=356298371]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
 script = ExtResource("1_gyfs4")
@@ -2580,7 +2575,7 @@ transform = Transform3D(0.9999422, 0.010751021, 0, -0.010751021, 0.9999422, 0, 0
 [node name="Players" type="Node3D" parent="." unique_id=1068550589]
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1471507092]
-_spawnable_scenes = PackedStringArray("uid://8d3mawhgs388", "uid://c5dcs8qeqqj54")
+_spawnable_scenes = PackedStringArray("uid://8d3mawhgs388", "uid://c5dcs8qeqqj54", "uid://dfyh38sgdm7jx")
 spawn_path = NodePath("../Players")
 
 [node name="Terrainto" type="MeshInstance3D" parent="." unique_id=1289697231]
@@ -2658,7 +2653,7 @@ mesh = ExtResource("12_671wp")
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 283.13022, 0)
 
 [node name="labfacility" parent="." unique_id=1000856271 instance=ExtResource("17_u0ygc")]
-transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -612.32385, -8.073456, 637.0382)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -612.32385, -8.073456, 637.0382)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="labfacility/ServerRack_-5_8" parent_id_path=PackedInt32Array(1000856271, 1748980173) index="0" unique_id=543550427]
 
@@ -4426,7 +4421,7 @@ shape = SubResource("ConcavePolygonShape3D_teo28")
 shape = SubResource("ConcavePolygonShape3D_27i3g")
 
 [node name="Plane_001" parent="labfacility" index="353" unique_id=551399068]
-transform = Transform3D(5.2000003, 0, 0, 0, 1, 0, 0, 0, 5.2000003, 11.99054, 3.350705, -0.017791748)
+transform = Transform3D(5.2000003, 0, 0, 0, 1, 0, 0, 0, 5.2000003, 11.99054, 3.4097214, -0.017822266)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="labfacility/Plane_001" index="0" unique_id=1079936770]
 
@@ -6597,9 +6592,6 @@ shape = SubResource("ConcavePolygonShape3D_1tpqq")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.030518, 0, 0)
 mesh = SubResource("ArrayMesh_eot78")
 
-[node name="CollisionShape3D" parent="labfacility/Door_CA_FL/Door_CA_FL/StaticBody3D" index="0"]
-shape = SubResource("ConcavePolygonShape3D_1tpqq")
-
 [node name="Door_CA_FR" parent="labfacility" index="786" unique_id=225587663]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.06329346)
 
@@ -6616,9 +6608,6 @@ shape = SubResource("ConcavePolygonShape3D_inx6j")
 [node name="Door_CA_FT" type="MeshInstance3D" parent="labfacility/Door_CA_FT" parent_id_path=PackedInt32Array(1000856271, 679251960) index="1" unique_id=429589283]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.023682, 0, 0)
 mesh = SubResource("ArrayMesh_ch6ao")
-
-[node name="CollisionShape3D" parent="labfacility/Door_CA_FT/Door_CA_FT/StaticBody3D" index="0"]
-shape = SubResource("ConcavePolygonShape3D_inx6j")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="labfacility/Door_CA_Panel" parent_id_path=PackedInt32Array(1000856271, 1569373212) index="0" unique_id=1056263687]
 
@@ -6733,29 +6722,7 @@ shape = SubResource("ConcavePolygonShape3D_rsp6p")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="labfacility/Fake_Central_N2_Win/StaticBody3D" unique_id=1957813893]
 shape = SubResource("ConcavePolygonShape3D_axn6d")
 
-[node name="PotionPuzzle" type="Node3D" parent="." unique_id=1646865904 node_paths=PackedStringArray("potion_ui")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -598.9174, -7.9953184, 628.00745)
-script = ExtResource("15_u0ygc")
-potion_ui = NodePath("../PotionUI")
-
-[node name="Bucket" parent="PotionPuzzle" unique_id=991382151 instance=ExtResource("16_7th4q")]
-transform = Transform3D(0.0140954, 0, 0.14933626, 0, 0.15, 0, -0.14933626, 0, 0.0140954, -11.380615, 1, 0.2131958)
-
-[node name="Bucket2" parent="PotionPuzzle" unique_id=17593492 instance=ExtResource("16_7th4q")]
-transform = Transform3D(0.0140954, 0, 0.14933626, 0, 0.15, 0, -0.14933626, 0, 0.0140954, -11.361816, 1, -0.12890625)
-
-[node name="Bucket3" parent="PotionPuzzle" unique_id=383917747 instance=ExtResource("16_7th4q")]
-transform = Transform3D(0.0140954, 0, 0.14933626, 0, 0.15, 0, -0.14933626, 0, 0.0140954, -11.343018, 1, -0.47473145)
-
-[node name="Bucket4" parent="PotionPuzzle" unique_id=1529093920 instance=ExtResource("16_7th4q")]
-transform = Transform3D(0.014097225, -4.885481e-06, 0.14933607, -1.42910285e-05, 0.15000002, 6.256436e-06, -0.14933608, -1.4815771e-05, 0.014097226, -11.324219, 0.9991336, -0.82592773)
-
-[node name="Interaction Zone" type="Area3D" parent="PotionPuzzle" unique_id=1022340421]
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="PotionPuzzle/Interaction Zone" unique_id=209193467]
-transform = Transform3D(1, 0, 9.920953e-10, 0, 1.0000001, 0, -9.920953e-10, 0, 1, -11.912537, 4.7683716e-07, -0.25604248)
-shape = SubResource("SphereShape3D_u0ygc")
-
-[node name="PotionUI" parent="." unique_id=1510413657 instance=ExtResource("17_6jybn")]
+[node name="PotionPuzzle" parent="." unique_id=42462936 instance=ExtResource("15_2jcla")]
+transform = Transform3D(-4.371139e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.371139e-09, -601.5313, -7.3015, 638.9286)
 
 [editable path="labfacility"]
