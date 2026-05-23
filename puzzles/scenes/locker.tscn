@@ -1,0 +1,224 @@
+[gd_scene format=3 uid="uid://cpe1a448ffinv"]
+
+[ext_resource type="Script" uid="uid://g1jnp4sfk1ki" path="res://puzzles/scripts/locker_interaction.gd" id="1_bylnd"]
+[ext_resource type="PackedScene" uid="uid://xansdtbdcw3c" path="res://puzzles/models/locker.glb" id="2_jifbu"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_jifbu"]
+radius = 2.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jifbu"]
+size = Vector3(2.25, 4, 1.25)
+
+[node name="Locker" type="StaticBody3D" unique_id=316070413 node_paths=PackedStringArray("keypad_ui")]
+script = ExtResource("1_bylnd")
+keypad_ui = NodePath("LockerKeypadUI")
+
+[node name="LockerModel" type="Node3D" parent="." unique_id=419752887]
+
+[node name="locker" parent="LockerModel" unique_id=1921293556 instance=ExtResource("2_jifbu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.22427535, -0.43425846, 0.39325035)
+
+[node name="InteractionZone" type="Area3D" parent="." unique_id=2054882327]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.27462602, 1.1026341, 0.0032737255)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionZone" unique_id=1614186032]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.120482564, 0.854828, 0.5023576)
+shape = SubResource("SphereShape3D_jifbu")
+
+[node name="LockerKeypadUI" type="CanvasLayer" parent="." unique_id=49481305]
+visible = false
+
+[node name="Control" type="Control" parent="LockerKeypadUI" unique_id=372882235]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="LockerKeypadUI/Control" unique_id=1069445112]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.8)
+
+[node name="CenterContainer" type="CenterContainer" parent="LockerKeypadUI/Control" unique_id=1879436441]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainPanel" type="PanelContainer" parent="LockerKeypadUI/Control/CenterContainer" unique_id=2075578471]
+custom_minimum_size = Vector2(700, 460)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="LockerKeypadUI/Control/CenterContainer/MainPanel" unique_id=327797890]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer" unique_id=289992306]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="EmployeePanel" type="VBoxContainer" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer" unique_id=1346349723]
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="EmployeePhoto" type="TextureRect" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer/EmployeePanel" unique_id=400588387]
+custom_minimum_size = Vector2(220, 220)
+layout_mode = 2
+size_flags_horizontal = 4
+expand_mode = 1
+stretch_mode = 6
+
+[node name="EmployeeName" type="Label" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer/EmployeePanel" unique_id=2074438188]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "UNKNOWN"
+horizontal_alignment = 1
+
+[node name="EmployeeDescription" type="Label" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer/EmployeePanel" unique_id=894035364]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+horizontal_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer" unique_id=1723485527]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="KeypadPanel" type="VBoxContainer" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer" unique_id=199786604]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="CloseRow" type="HBoxContainer" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer/KeypadPanel" unique_id=1111263942]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer/KeypadPanel/CloseRow" unique_id=1129687887]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CloseButton" type="Button" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer/KeypadPanel/CloseRow" unique_id=370820112]
+custom_minimum_size = Vector2(90, 32)
+layout_mode = 2
+text = "✕  Close"
+
+[node name="Display" type="Label" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer/KeypadPanel" unique_id=979042957]
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "----"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ResultLabel" type="Label" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer/KeypadPanel" unique_id=1666123700]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer/KeypadPanel" unique_id=1045274148]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Btn1" type="Button" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer/KeypadPanel/HBoxContainer" unique_id=210091026]
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1"
+
+[node name="Btn2" type="Button" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer/KeypadPanel/HBoxContainer" unique_id=224264378]
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "2"
+
+[node name="Btn3" type="Button" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer/KeypadPanel/HBoxContainer" unique_id=903858106]
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "3"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer/KeypadPanel" unique_id=1574030053]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Btn4" type="Button" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer/KeypadPanel/HBoxContainer2" unique_id=374526309]
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "4"
+
+[node name="Btn5" type="Button" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer/KeypadPanel/HBoxContainer2" unique_id=697339431]
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "5"
+
+[node name="Btn6" type="Button" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer/KeypadPanel/HBoxContainer2" unique_id=986373753]
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "6"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer/KeypadPanel" unique_id=1459360280]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Btn7" type="Button" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer/KeypadPanel/HBoxContainer3" unique_id=1853256034]
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "7"
+
+[node name="Btn8" type="Button" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer/KeypadPanel/HBoxContainer3" unique_id=1550921917]
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "8"
+
+[node name="Btn9" type="Button" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer/KeypadPanel/HBoxContainer3" unique_id=2118818938]
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "9"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer/KeypadPanel" unique_id=52664762]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BtnBackspace" type="Button" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer/KeypadPanel/HBoxContainer4" unique_id=1146428133]
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "⌫"
+
+[node name="Btn0" type="Button" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer/KeypadPanel/HBoxContainer4" unique_id=2015792187]
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+
+[node name="BtnEnter" type="Button" parent="LockerKeypadUI/Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer/KeypadPanel/HBoxContainer4" unique_id=1412650084]
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "✓"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=744431074]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.30675173, 2.266546, 0.44065046)
+shape = SubResource("BoxShape3D_jifbu")

@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dbs1vg3mm2gks"
+path="res://.godot/imported/PSX Radio Receiver.obj-98cbbecb014af28da98e2478e3fcda8f.mesh"
+
+[deps]
+
+files=["res://.godot/imported/PSX Radio Receiver.obj-98cbbecb014af28da98e2478e3fcda8f.mesh"]
+
+source_file="res://puzzles/models/PSX Radio Receiver.obj"
+dest_files=["res://.godot/imported/PSX Radio Receiver.obj-98cbbecb014af28da98e2478e3fcda8f.mesh", "res://.godot/imported/PSX Radio Receiver.obj-98cbbecb014af28da98e2478e3fcda8f.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false
