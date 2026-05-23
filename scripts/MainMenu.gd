@@ -19,7 +19,7 @@ func _on_start_pressed() -> void:
 	start_game()
 
 func _on_settings_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/settings_menu.tscn")
+	get_tree().change_scene_to_file("res://menu/settings_menu.tscn")
 	print("Load settings menu")
 	#margin_container.visible = false
 	#settings_menu.set_process(false)
@@ -33,7 +33,7 @@ func _on_quit_pressed() -> void:
 	get_tree().quit()
 
 func _on_credits_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/credits.tscn")
+	get_tree().change_scene_to_file("res://menu/credits.tscn")
 
 func _on_back_button_pressed() -> void:
 	margin_container.visible = true
