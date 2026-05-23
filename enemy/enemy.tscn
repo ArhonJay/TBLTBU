@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://bkm3mv5pkwrw" path="res://enemy/enemy.gd" id="1_2mvqj"]
 [ext_resource type="PackedScene" uid="uid://c8leylp5chkjv" path="res://assets/Enemies/skeleton/skeleton/skeleton_mage.glb" id="2_ofsxj"]
-[ext_resource type="Animation" uid="uid://bx4hch36fvobd" path="res://animation/enemy_attack.res" id="3_pmsee"]
-[ext_resource type="Animation" uid="uid://bgt4wyc2h40e" path="res://animation/enemy_idle.res" id="4_1wwld"]
-[ext_resource type="Animation" uid="uid://b8d2ak2y2kqcw" path="res://animation/enemy_run.res" id="5_y5vj3"]
+[ext_resource type="Animation" uid="uid://b6eatlei2vfb5" path="res://animation/enemy_attack.res" id="3_pmsee"]
+[ext_resource type="Animation" uid="uid://fyacg0ypj3v8" path="res://animation/enemy_idle.res" id="4_1wwld"]
+[ext_resource type="Animation" uid="uid://cv6xyyy384whk" path="res://animation/enemy_run.res" id="5_y5vj3"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pmsee"]
 radius = 0.498
@@ -32,7 +32,7 @@ _data = {
 script = ExtResource("1_2mvqj")
 attack_range = 8.0
 
-[node name="skeleton_mage" parent="." unique_id=508422198 instance=ExtResource("2_ofsxj")]
+[node name="skeleton_mage" parent="." unique_id=780851308 instance=ExtResource("2_ofsxj")]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=39010731]
