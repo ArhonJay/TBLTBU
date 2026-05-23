@@ -2,7 +2,7 @@ extends CanvasLayer
 
 @export var max_health: float = 100.0
 
-var current_health: float = 50.0  # Start at 50%
+var current_health: float = 100.0  # Start at 50%
 
 @onready var health_bar: ProgressBar = $Control/PanelContainer/VBoxContainer/HealthBar
 @onready var health_label: Label = $Control/PanelContainer/VBoxContainer/HealthLabel

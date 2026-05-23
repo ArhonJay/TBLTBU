@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://60a03pxp2q8h" path="res://puzzles/scenes/simon_ui.tscn" id="13_w48qg"]
 [ext_resource type="PackedScene" uid="uid://cpe1a448ffinv" path="res://puzzles/scenes/locker.tscn" id="14_6o45r"]
 [ext_resource type="PackedScene" uid="uid://bxh8k4vpj6opk" path="res://puzzles/scenes/mushroom_patch.tscn" id="16_f3x2q"]
+[ext_resource type="PackedScene" uid="uid://biv2hrdjj52xa" path="res://puzzles/scenes/Potion_1.tscn" id="17_u3ugk"]
 [ext_resource type="PackedScene" uid="uid://bekf3v85w5hv1" path="res://puzzles/scenes/healthbar_ui.tscn" id="18_865ls"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_7mycd"]
@@ -101,3 +102,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.030752, 0.05000019, 6.69145
 
 [node name="MushroomPatch3" parent="." unique_id=595693445 instance=ExtResource("16_f3x2q")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.493903, 0.10000038, 6.471325)
+
+[node name="PotionPuzzle2" parent="." unique_id=42462936 instance=ExtResource("17_u3ugk")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -9.280317, 0.049999952, 2.0457356)

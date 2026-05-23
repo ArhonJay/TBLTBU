@@ -1,8 +1,23 @@
 [gd_scene format=3 uid="uid://biv2hrdjj52xa"]
 
+[ext_resource type="Script" uid="uid://16kovxm0gm7x" path="res://puzzles/scripts/potion_puzzle.gd" id="1_00t7r"]
 [ext_resource type="PackedScene" uid="uid://cq51p6x5lfxo" path="res://puzzles/models/Potion_1.fbx" id="1_1evmn"]
+[ext_resource type="PackedScene" uid="uid://do7kho3mo51lr" path="res://puzzles/scenes/potion_ui.tscn" id="3_s18an"]
 
-[node name="Node3D" type="Node3D" unique_id=42462936]
+[node name="PotionPuzzle" type="Node3D" unique_id=42462936 node_paths=PackedStringArray("potion_ui")]
+script = ExtResource("1_00t7r")
+potion_ui = NodePath("PotionUI")
 
 [node name="Potion_1" parent="." unique_id=1796286414 instance=ExtResource("1_1evmn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.60967743, -1.1920929e-07, -1.3421874)
+
+[node name="Potion_3" parent="." unique_id=2092479312 instance=ExtResource("1_1evmn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.60967743, -1.1920929e-07, -5.4560795)
+
+[node name="Potion_4" parent="." unique_id=1139905842 instance=ExtResource("1_1evmn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.60967743, -1.1920929e-07, -9.480173)
+
+[node name="Potion_2" parent="." unique_id=1908932598 instance=ExtResource("1_1evmn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.60967743, -1.1920929e-07, 2.703323)
+
+[node name="PotionUI" parent="." unique_id=1510413657 instance=ExtResource("3_s18an")]
