@@ -31,7 +31,7 @@ _data = {
 &"walk": ExtResource("7_4cje2")
 }
 
-[node name="Player" type="CharacterBody3D" unique_id=559825491 groups=["player"]]
+[node name="Player2" type="CharacterBody3D" unique_id=559825491 groups=["player"]]
 script = ExtResource("1_dkah4")
 
 [node name="Mage" parent="." unique_id=1274447443 instance=ExtResource("2_xuo6s")]
