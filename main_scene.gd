@@ -43,7 +43,7 @@ func spawn_player(peer_id):
 func spawn_enemies():
 	var my_spawn = get_node("SpawnPoints/ExplorerSpawn")
 	
-	for i in range(5):
+	for i in range(15):
 		var enemy = enemy_scene.instantiate()
 		
 		# THE FIX: Force a unique name so Godot doesn't auto-generate one!
