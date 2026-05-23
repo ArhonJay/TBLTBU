@@ -24,6 +24,18 @@ func _ready() -> void:
 	else:
 		# Lock Y to starting position so tornado never floats or falls
 		_locked_y = global_position.y
+		
+	# --- NEW: Connect the KillZone signal ---
+	var kill_zone = get_node_or_null("KillZone")
+	if kill_zone:
+		kill_zone.body_entered.connect(_on_kill_zone_body_entered)
+	else:
+		push_warning("Tornado: No 'KillZone' Area3D found! Tornado cannot kill.")
+
+func _on_kill_zone_body_entered(body: Node3D) -> void:
+	if body.is_in_group("explorer") or body.is_in_group("scientist"):
+		if body.has_method("catch_in_tornado"):
+			body.catch_in_tornado(self)
 
 
 func _process(delta: float) -> void:
