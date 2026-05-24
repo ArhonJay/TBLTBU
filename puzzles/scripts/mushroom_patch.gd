@@ -88,7 +88,6 @@ func _ready():
 	$InteractionZone.body_entered.connect(_on_body_entered)
 	$InteractionZone.body_exited.connect(_on_body_exited)
 
-	# Press E prompt
 	prompt_label = Label3D.new()
 	prompt_label.text = "Press E to interact"
 	prompt_label.position = Vector3(0, 1.5, 0)
@@ -98,7 +97,6 @@ func _ready():
 	prompt_label.visible = false
 	add_child(prompt_label)
 
-	# Cache UI node refs
 	var vbox = mushroom_ui.get_node("Control/PanelContainer/VBoxContainer")
 	appearance_label = vbox.get_node("AppearanceLabel")
 	smell_label      = vbox.get_node("SmellLabel")
@@ -145,8 +143,6 @@ func _open_ui():
 	smell_label.text = "🌿 Smells like: " + current_smell + "..."
 	result_label.text = ""
 
-	# Disconnect any previous mushroom's handlers before connecting this one.
-	# This ensures only THIS mushroom instance responds to button presses.
 	for c in btn_eat.pressed.get_connections():
 		btn_eat.pressed.disconnect(c.callable)
 	for c in btn_leave.pressed.get_connections():
@@ -174,15 +170,16 @@ func _on_eat_pressed():
 	if current_data.action == "EAT":
 		result_label.text = "✓ CORRECT! " + current_data.name + "\n" + current_data.effect
 		result_label.add_theme_color_override("font_color", Color.GREEN)
-		
-		# Call heal on the Explorer
+
 		if current_player and current_player.has_method("heal"):
 			current_player.heal(int(current_data.heal))
+
+		# ── Notify objective tracker ──────────────────────────────────────────
+		ObjectiveManager.register_mushroom_eaten()
 	else:
 		result_label.text = "✗ WRONG! " + current_data.name + "\n" + current_data.effect
 		result_label.add_theme_color_override("font_color", Color.RED)
-		
-		# Call damage on the Explorer
+
 		if current_player and current_player.has_method("take_damage"):
 			current_player.take_damage(int(current_data.damage))
 
@@ -200,8 +197,7 @@ func _on_leave_pressed():
 	else:
 		result_label.text = "✗ WRONG! You should have eaten it.\n" + current_data.name + " - " + current_data.effect
 		result_label.add_theme_color_override("font_color", Color.RED)
-		
-		# Call damage on the Explorer
+
 		if current_player and current_player.has_method("take_damage"):
 			current_player.take_damage(int(current_data.damage))
 
@@ -213,7 +209,6 @@ func _on_leave_pressed():
 	queue_free()
 
 func _on_body_entered(body: Node3D):
-	# Using "explorer" since your explorer adds itself to this group in its _ready() function
 	if body.is_in_group("explorer"):
 		player_nearby = true
 		current_player = body

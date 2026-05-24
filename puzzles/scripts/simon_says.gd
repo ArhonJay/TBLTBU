@@ -13,7 +13,6 @@ var player_sequence := []
 var accepting_input := false
 var playing_sequence := false
 
-# each button: word = text written on it, bg = background color name
 var button_data = {
 	"BtnRed":    {"word": "RED",    "bg": "YELLOW"},
 	"BtnBlue":   {"word": "BLUE",   "bg": "GREEN"},
@@ -21,9 +20,6 @@ var button_data = {
 	"BtnYellow": {"word": "YELLOW", "bg": "BLUE"},
 }
 
-# translation table from manual
-# type "bg" = press button whose BACKGROUND color matches
-# type "word" = press button whose WORD text matches
 const TRANSLATION_TABLE = {
 	"0_RED":    {"type": "bg",   "color": "BLUE"},
 	"0_BLUE":   {"type": "word", "color": "GREEN"},
@@ -54,13 +50,9 @@ var result_label: Label
 var play_button: Button
 var buttons = {}
 
-# for the "Press E to interact" prompt
 var prompt_label: Label3D
-
-# for the floating "+60 / -30 seconds" pop-up
 var popup_label: Label3D
 
-# true once the puzzle ends (win OR lose) — makes it one-time use
 var puzzle_used := false
 
 @onready var voice_player: AudioStreamPlayer = $VoicePlayer
@@ -68,8 +60,7 @@ var puzzle_used := false
 func _ready():
 	$InteractionZone.body_entered.connect(_on_body_entered)
 	$InteractionZone.body_exited.connect(_on_body_exited)
-	
-	# create the Press E prompt label
+
 	prompt_label = Label3D.new()
 	prompt_label.text = "Press E to interact"
 	prompt_label.position = Vector3(0, 1.2, 0.1)
@@ -81,7 +72,6 @@ func _ready():
 	prompt_label.visible = false
 	add_child(prompt_label)
 
-	# floating result pop-up label
 	popup_label = Label3D.new()
 	popup_label.text = ""
 	popup_label.position = Vector3(0, 2.2, 0.1)
@@ -91,32 +81,31 @@ func _ready():
 	popup_label.outline_size = 10
 	popup_label.visible = false
 	add_child(popup_label)
-	
-	# UI refs
+
 	if simon_ui == null:
-		push_error("simon_says.gd: 'simon_ui' is not assigned! Drag the SimonUI CanvasLayer into the 'Simon Ui' export slot in the Inspector.")
+		push_error("simon_says.gd: 'simon_ui' is not assigned!")
 		return
 	status_label = simon_ui.get_node("Control/PanelContainer/VBoxContainer/StatusLabel")
 	strike_label = simon_ui.get_node("Control/PanelContainer/VBoxContainer/StrikeLabel")
 	result_label = simon_ui.get_node("Control/PanelContainer/VBoxContainer/ResultLabel")
-	play_button = simon_ui.get_node("Control/PanelContainer/VBoxContainer/PlayButton")
-	
+	play_button  = simon_ui.get_node("Control/PanelContainer/VBoxContainer/PlayButton")
+
 	buttons = {
 		"BtnRed":    simon_ui.get_node("Control/PanelContainer/VBoxContainer/Row1/BtnRed"),
 		"BtnBlue":   simon_ui.get_node("Control/PanelContainer/VBoxContainer/Row1/BtnBlue"),
 		"BtnGreen":  simon_ui.get_node("Control/PanelContainer/VBoxContainer/Row2/BtnGreen"),
 		"BtnYellow": simon_ui.get_node("Control/PanelContainer/VBoxContainer/Row2/BtnYellow"),
 	}
-	
+
 	_style_buttons()
-	
+
 	buttons["BtnRed"].pressed.connect(func(): _on_button_pressed("BtnRed"))
 	buttons["BtnBlue"].pressed.connect(func(): _on_button_pressed("BtnBlue"))
 	buttons["BtnGreen"].pressed.connect(func(): _on_button_pressed("BtnGreen"))
 	buttons["BtnYellow"].pressed.connect(func(): _on_button_pressed("BtnYellow"))
 	play_button.pressed.connect(_on_play_pressed)
 	simon_ui.get_node("Control/CloseButton").pressed.connect(_close_ui)
-	
+
 	simon_ui.visible = false
 	_generate_sequence()
 
@@ -130,18 +119,15 @@ func _show_popup(msg: String, color: Color):
 	tween.parallel().tween_property(popup_label, "modulate:a", 0.0, 1.8)
 	await tween.finished
 	popup_label.visible = false
-	popup_label.modulate = color  # reset alpha for next use
+	popup_label.modulate = color
 
 func _style_buttons():
 	for btn_name in button_data:
 		var btn = buttons[btn_name]
 		var data = button_data[btn_name]
-		
-		# set the word text
+
 		btn.text = data.word
-		
-		# ink color = a color DIFFERENT from both the word and bg
-		# we pick the remaining color not used by word or bg
+
 		var all_colors = ["RED", "BLUE", "GREEN", "YELLOW"]
 		var remaining = []
 		for c in all_colors:
@@ -149,12 +135,11 @@ func _style_buttons():
 				remaining.append(c)
 		var ink_color_name = remaining[0]
 		var ink_color = _name_to_color(ink_color_name)
-		
+
 		btn.add_theme_color_override("font_color", ink_color)
 		btn.add_theme_color_override("font_color_hover", ink_color.lightened(0.3))
 		btn.add_theme_color_override("font_color_pressed", ink_color.darkened(0.2))
-		
-		# background = the bg color
+
 		var bg = StyleBoxFlat.new()
 		bg.bg_color = _name_to_color(data.bg).darkened(0.3)
 		bg.corner_radius_top_left = 8
@@ -162,7 +147,7 @@ func _style_buttons():
 		bg.corner_radius_bottom_left = 8
 		bg.corner_radius_bottom_right = 8
 		btn.add_theme_stylebox_override("normal", bg)
-		
+
 		var bg_hover = bg.duplicate()
 		bg_hover.bg_color = _name_to_color(data.bg).darkened(0.1)
 		btn.add_theme_stylebox_override("hover", bg_hover)
@@ -178,7 +163,7 @@ func _name_to_color(name: String) -> Color:
 func _get_correct_button_for(heard_color: String) -> String:
 	var strike_key = str(min(strikes, 2))
 	var rule = TRANSLATION_TABLE[strike_key + "_" + heard_color]
-	
+
 	for btn_name in button_data:
 		var data = button_data[btn_name]
 		if rule.type == "word" and data.word == rule.color:
@@ -217,13 +202,13 @@ func _play_sequence():
 	playing_sequence = true
 	status_label.text = "Listen to the sequence..."
 	_set_buttons_disabled(true)
-	
+
 	for i in range(current_round):
 		var color = sequence[i]
 		status_label.text = "Hearing: " + color + "..."
 		_speak_color(color)
 		await get_tree().create_timer(1.0).timeout
-	
+
 	playing_sequence = false
 	accepting_input = true
 	_set_buttons_disabled(false)
@@ -232,28 +217,28 @@ func _play_sequence():
 func _speak_color(color: String):
 	var freq = COLOR_FREQ[color]
 	var sample_rate = 44100
-	
+
 	var patterns = {
 		"RED":    [{"f": freq, "d": 0.15}, {"f": freq * 1.2, "d": 0.15}],
 		"BLUE":   [{"f": freq, "d": 0.1}, {"f": freq * 0.8, "d": 0.2}, {"f": freq * 1.1, "d": 0.1}],
 		"GREEN":  [{"f": freq * 1.1, "d": 0.1}, {"f": freq, "d": 0.15}, {"f": freq * 0.9, "d": 0.1}, {"f": freq * 1.2, "d": 0.1}],
 		"YELLOW": [{"f": freq * 0.9, "d": 0.1}, {"f": freq * 1.1, "d": 0.1}, {"f": freq, "d": 0.1}, {"f": freq * 1.2, "d": 0.1}, {"f": freq * 0.8, "d": 0.1}],
 	}
-	
+
 	var pattern = patterns[color]
 	var gap_samples = int(sample_rate * 0.05)
 	var total_samples = 0
 	for seg in pattern:
 		total_samples += int(sample_rate * seg.d) + gap_samples
-	
+
 	var stream = AudioStreamWAV.new()
 	stream.format = AudioStreamWAV.FORMAT_16_BITS
 	stream.stereo = false
 	stream.mix_rate = sample_rate
-	
+
 	var data = PackedByteArray()
 	data.resize(total_samples * 2)
-	
+
 	var pos = 0
 	for seg in pattern:
 		var seg_samples = int(sample_rate * seg.d)
@@ -274,7 +259,7 @@ func _speak_color(color: String):
 			data[(pos + i) * 2]     = 0
 			data[(pos + i) * 2 + 1] = 0
 		pos += gap_samples
-	
+
 	stream.data = data
 	voice_player.stream = stream
 	voice_player.play()
@@ -282,20 +267,20 @@ func _speak_color(color: String):
 func _on_button_pressed(btn_name: String):
 	if not accepting_input:
 		return
-	
+
 	var step = player_sequence.size()
 	var heard = sequence[step]
 	var correct_btn = _get_correct_button_for(heard)
-	
+
 	if btn_name == correct_btn:
 		player_sequence.append(btn_name)
 		result_label.text = "✓ Correct!"
 		result_label.add_theme_color_override("font_color", Color.GREEN)
-		
+
 		if player_sequence.size() == current_round:
 			accepting_input = false
 			await get_tree().create_timer(0.8).timeout
-			
+
 			if current_round >= 3:
 				result_label.text = "✓ MODULE DISARMED!"
 				result_label.add_theme_color_override("font_color", Color.GREEN)
@@ -308,6 +293,9 @@ func _on_button_pressed(btn_name: String):
 				NetworkManager.adjust_world_timer(60)
 				_close_ui()
 				_show_popup("+60 seconds", Color(0.1, 1.0, 0.1))
+
+				# ── Notify objective tracker ──────────────────────────────────
+				ObjectiveManager.register_simon_solved()
 			else:
 				current_round += 1
 				player_sequence.clear()
@@ -321,7 +309,7 @@ func _on_button_pressed(btn_name: String):
 		player_sequence.clear()
 		accepting_input = false
 		_update_strike_label()
-		
+
 		if strikes >= 3:
 			result_label.text = "✗ Too many strikes! Puzzle locked."
 			result_label.add_theme_color_override("font_color", Color.RED)
@@ -367,14 +355,12 @@ func _open_ui():
 	simon_ui.visible = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	_update_strike_label()
-	# If the player wasn't mid-input, reset cleanly so they can start fresh
 	if not accepting_input and not playing_sequence:
 		player_sequence.clear()
 		result_label.text = ""
 		play_button.disabled = false
 		_set_buttons_disabled(true)
 		status_label.text = "Press PLAY to hear the sequence"
-	# Otherwise leave everything as-is so they can continue where they left off
 
 func _close_ui():
 	ui_open = false
@@ -391,7 +377,6 @@ func _on_body_exited(body: Node3D):
 	if body.is_in_group("player"):
 		player_nearby = false
 		prompt_label.visible = false
-		# UI stays open so the player can return and continue the puzzle
 
 func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed("interact"):

@@ -1,0 +1,128 @@
+[gd_scene format=3 uid="uid://bkup4q4emqn3a"]
+
+[ext_resource type="Script" uid="uid://c6xc4sfb613ct" path="res://puzzles/scripts/ObjectiveList.gd" id="1_objlist"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+content_margin_left = 16.0
+content_margin_top = 14.0
+content_margin_right = 16.0
+content_margin_bottom = 14.0
+bg_color = Color(0.06, 0.06, 0.1, 0.82)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.55, 0.5, 0.25, 0.75)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sep"]
+
+[node name="ObjectiveList" type="CanvasLayer" unique_id=1655513521]
+layer = 10
+script = ExtResource("1_objlist")
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=90042086]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 356.0
+offset_bottom = 160.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="Panel" unique_id=252862569]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Header" type="Label" parent="Panel/VBox" unique_id=931170109]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.82, 0.35, 1)
+theme_override_font_sizes/font_size = 13
+text = "OBJECTIVES"
+
+[node name="Separator" type="HSeparator" parent="Panel/VBox" unique_id=428941320]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_sep")
+
+[node name="Phase1Container" type="VBoxContainer" parent="Panel/VBox" unique_id=669207088]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ChestRow" type="HBoxContainer" parent="Panel/VBox/Phase1Container" unique_id=1636994173]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ChestCheck" type="Label" parent="Panel/VBox/Phase1Container/ChestRow" unique_id=1471933583]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.93, 0.85, 1)
+theme_override_font_sizes/font_size = 15
+text = "☐"
+
+[node name="ChestLabel" type="Label" parent="Panel/VBox/Phase1Container/ChestRow" unique_id=1561707810]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.93, 0.85, 1)
+theme_override_font_sizes/font_size = 13
+text = "Picklock Chests 0/5"
+
+[node name="SimonRow" type="HBoxContainer" parent="Panel/VBox/Phase1Container" unique_id=256946711]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SimonCheck" type="Label" parent="Panel/VBox/Phase1Container/SimonRow" unique_id=1901207155]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.93, 0.85, 1)
+theme_override_font_sizes/font_size = 15
+text = "☐"
+
+[node name="SimonLabel" type="Label" parent="Panel/VBox/Phase1Container/SimonRow" unique_id=1261245725]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.93, 0.85, 1)
+theme_override_font_sizes/font_size = 13
+text = "Decode Simon Says 0/5"
+
+[node name="MushroomRow" type="HBoxContainer" parent="Panel/VBox/Phase1Container" unique_id=715590731]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="MushroomCheck" type="Label" parent="Panel/VBox/Phase1Container/MushroomRow" unique_id=1677408464]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.93, 0.85, 1)
+theme_override_font_sizes/font_size = 15
+text = "☐"
+
+[node name="MushroomLabel" type="Label" parent="Panel/VBox/Phase1Container/MushroomRow" unique_id=1471271332]
+custom_minimum_size = Vector2(280, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.93, 0.85, 1)
+theme_override_font_sizes/font_size = 13
+text = "Successfully Eat a Healthy Mushroom 0/10"
+autowrap_mode = 2
+
+[node name="Phase2Container" type="VBoxContainer" parent="Panel/VBox" unique_id=1740667946]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="LabRow" type="HBoxContainer" parent="Panel/VBox/Phase2Container" unique_id=229550190]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="LabCheck" type="Label" parent="Panel/VBox/Phase2Container/LabRow" unique_id=2077067254]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.93, 0.85, 1)
+theme_override_font_sizes/font_size = 15
+text = "☐"
+
+[node name="LabLabel" type="Label" parent="Panel/VBox/Phase2Container/LabRow" unique_id=226638173]
+custom_minimum_size = Vector2(280, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.93, 0.85, 1)
+theme_override_font_sizes/font_size = 13
+text = "Find the laboratory and acquire a
+keycard to open the facility."
+autowrap_mode = 2

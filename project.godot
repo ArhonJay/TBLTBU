@@ -24,6 +24,7 @@ driver/enable_input=true
 
 NetworkManager="*uid://dch88hcpraaxv"
 MusicManager="*uid://qkap8ctcs1g0"
+ObjectiveManager="*uid://b2udbkc21btqc"
 
 [input]
 
