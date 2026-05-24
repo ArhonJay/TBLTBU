@@ -1,7 +1,14 @@
 extends CharacterBody3D
 
-@export var safe_fall_speed: float = 100.0
-@export var fall_damage_multiplier: float = 2.0
+# --- TORNADO COMBO STATE ---
+var trapped_tornado: Node3D = null
+var is_thrown: bool = false
+var _tornado_angle: float = 0.0
+var _target_spins: int = 0
+var _current_spin_progress: float = 0.0
+var _pending_tornado_damage: int = 0
+@export var safe_fall_speed: float = 100.0 # Any speed below this deals no damage
+@export var fall_damage_multiplier: float = 2.0 # How much damage per extra unit of speed
 var _max_downward_speed: float = 0.0
 @export var move_speed: float = 20.0
 @export var climb_speed: float = 10.0
@@ -104,6 +111,35 @@ func heal(amount: int):
 	current_health = min(current_health, max_health)
 	_update_health_ui()
 	print("Explorer healed %d HP! HP: %d/%d" % [amount, current_health, max_health])
+
+func catch_in_tornado(tornado_node: Node3D):
+	if is_dead or trapped_tornado != null or is_thrown:
+		return 
+		
+	trapped_tornado = tornado_node
+	
+	# Randomize between 1 and 6 full spins
+	_target_spins = randi_range(1, 6)
+	_current_spin_progress = 0.0
+	
+	# Calculate how much damage they WILL take when they hit the floor
+	_pending_tornado_damage = _target_spins * 5 
+	
+	print("Explorer caught! Spinning ", _target_spins, " times. Pending Damage: ", _pending_tornado_damage)
+	
+	var offset = global_position - tornado_node.global_position
+	_tornado_angle = atan2(offset.z, offset.x)
+
+func _throw_from_tornado():
+	print("Explorer was spat out! Brace for impact...")
+	is_thrown = true
+	
+	var knockback_dir = (global_position - trapped_tornado.global_position).normalized()
+	trapped_tornado = null 
+	
+	velocity.x = knockback_dir.x * 60.0 
+	velocity.z = knockback_dir.z * 60.0 
+	velocity.y = 45.0
 
 func _trigger_hurt_flash():
 	_hurt_flash_timer = _hurt_flash_duration
@@ -210,7 +246,10 @@ func _process(delta):
 	window_activity()
 
 func _physics_process(delta):
+	# 1. DEAD PHYSICS
 	if is_dead:
+		trapped_tornado = null 
+		is_thrown = false
 		if not is_on_floor():
 			velocity.y -= gravity * delta
 		velocity.x = move_toward(velocity.x, 0, move_speed * delta)
@@ -218,6 +257,54 @@ func _physics_process(delta):
 		move_and_slide()
 		return
 
+	# 2. TRAPPED PHYSICS (Counting spins)
+	if trapped_tornado != null:
+		var spin_speed = 6.0 # How fast they spin per second
+		var angle_step = spin_speed * delta
+		
+		_tornado_angle += angle_step 
+		_current_spin_progress += angle_step # Track total distance spun
+		
+		# TAU is a math constant for one full circle.
+		# If our progress is greater than Target Spins * 1 Circle, throw them!
+		if _current_spin_progress >= (_target_spins * TAU):
+			_throw_from_tornado()
+			return 
+		
+		# Swirling math
+		var spin_radius = 2.0 
+		var target_x = trapped_tornado.global_position.x + cos(_tornado_angle) * spin_radius
+		var target_z = trapped_tornado.global_position.z + sin(_tornado_angle) * spin_radius
+		var target_y = trapped_tornado.global_position.y + 4.0 
+		
+		velocity = (Vector3(target_x, target_y, target_z) - global_position) * 8.0 
+		
+		$Barbarian.rotation.y += 15.0 * delta 
+		$AnimationPlayer.play("jump_start") 
+		move_and_slide()
+		return
+
+	# 3. THROWN PHYSICS (Helplessly flying)
+	if is_thrown:
+		velocity.y -= gravity * delta
+		$Barbarian.rotation.y += 20.0 * delta 
+		
+		if is_on_floor():
+			is_thrown = false
+			print("Explorer landed from the throw!")
+			
+			# APPLY THE TORNADO DAMAGE THE MOMENT THEY HIT THE GROUND!
+			if _pending_tornado_damage > 0:
+				take_damage(_pending_tornado_damage)
+				_pending_tornado_damage = 0
+			
+		# Keep Fall damage tracking so they take fall damage ON TOP of tornado damage!
+		if velocity.y < 0 and abs(velocity.y) > _max_downward_speed:
+			_max_downward_speed = abs(velocity.y)
+			
+		move_and_slide()
+		return
+	
 	var height_boost = target_zoom * 0.3
 	$SpringArm3D.spring_length = lerp($SpringArm3D.spring_length, target_zoom, 10.0 * delta)
 	camera.position.y = lerp(camera.position.y, base_camera_y + height_boost, 10.0 * delta)

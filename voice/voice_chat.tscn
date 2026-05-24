@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://b28dmj24drca1"]
+
+[ext_resource type="Script" uid="uid://dsatujr0xfwcv" path="res://voice/voice_chat.gd" id="1_wawsh"]
+
+[node name="VoiceChat" type="Node3D" unique_id=986979701]
+script = ExtResource("1_wawsh")

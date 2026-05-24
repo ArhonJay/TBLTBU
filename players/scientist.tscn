@@ -8,7 +8,8 @@
 [ext_resource type="Animation" uid="uid://drfntjfx6g246" path="res://animation/jump_start.res" id="6_4os2e"]
 [ext_resource type="Animation" uid="uid://b6cctiy0adq1o" path="res://animation/walk.res" id="7_4cje2"]
 [ext_resource type="Animation" uid="uid://fh6db7tmon7n" path="res://animation/running.res" id="7_mmr2p"]
-[ext_resource type="PackedScene" path="res://puzzles/scenes/stamina_ui.tscn" id="9_xur1e"]
+[ext_resource type="PackedScene" uid="uid://b28dmj24drca1" path="res://voice/voice_chat.tscn" id="9_xur1e"]
+[ext_resource type="PackedScene" path="res://puzzles/scenes/stamina_ui.tscn" id="10_4os2e"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_mmr2p"]
 radius = 0.2
@@ -61,4 +62,6 @@ replication_config = SubResource("SceneReplicationConfig_dkah4")
 root_node = NodePath("../Mage")
 libraries/ = SubResource("AnimationLibrary_hes6r")
 
-[node name="StaminaUI" parent="." unique_id=1023604984 instance=ExtResource("9_xur1e")]
+[node name="VoiceChat" parent="." unique_id=986979701 instance=ExtResource("9_xur1e")]
+
+[node name="StaminaUI" parent="." unique_id=1432251350 instance=ExtResource("10_4os2e")]

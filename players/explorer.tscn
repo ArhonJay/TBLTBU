@@ -11,8 +11,9 @@
 [ext_resource type="Animation" uid="uid://drfntjfx6g246" path="res://animation/jump_start.res" id="5_svd62"]
 [ext_resource type="Animation" uid="uid://fh6db7tmon7n" path="res://animation/running.res" id="7_sxsku"]
 [ext_resource type="PackedScene" uid="uid://bekf3v85w5hv1" path="res://puzzles/scenes/healthbar_ui.tscn" id="10_28q1p"]
-[ext_resource type="PackedScene" path="res://puzzles/scenes/stamina_ui.tscn" id="12_w2ps0"]
-[ext_resource type="PackedScene" uid="uid://bstlccajhyfv3" path="res://puzzles/scenes/inventory_ui.tscn" id="13_mue4t"]
+[ext_resource type="PackedScene" uid="uid://b28dmj24drca1" path="res://voice/voice_chat.tscn" id="12_w2ps0"]
+[ext_resource type="PackedScene" path="res://puzzles/scenes/stamina_ui.tscn" id="13_mue4t"]
+[ext_resource type="PackedScene" uid="uid://bstlccajhyfv3" path="res://puzzles/scenes/inventory_ui.tscn" id="14_b3n2t"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_83qqn"]
 radius = 0.2
@@ -73,6 +74,8 @@ libraries/ = SubResource("AnimationLibrary_o3kt3")
 
 [node name="HealthbarUI" parent="." unique_id=954062678 instance=ExtResource("10_28q1p")]
 
-[node name="StaminaUI" parent="." unique_id=1834635035 instance=ExtResource("12_w2ps0")]
+[node name="VoiceChat" parent="." unique_id=986979701 instance=ExtResource("12_w2ps0")]
 
-[node name="InventoryUI" parent="." unique_id=796086188 instance=ExtResource("13_mue4t")]
+[node name="StaminaUI" parent="." unique_id=1407861966 instance=ExtResource("13_mue4t")]
+
+[node name="InventoryUI" parent="." unique_id=898064298 instance=ExtResource("14_b3n2t")]

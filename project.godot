@@ -18,6 +18,7 @@ config/features=PackedStringArray("4.6", "Forward Plus")
 [audio]
 
 buses/default_bus_layout="uid://87g5ifnbnufn"
+driver/enable_input=true
 
 [autoload]
 
