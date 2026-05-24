@@ -59,7 +59,7 @@ keypad_ui = NodePath("../KeypadUI")
 [node name="KeypadUI" parent="." unique_id=2059832498 instance=ExtResource("5_lquwl")]
 
 [node name="Chest" parent="." unique_id=296176913 instance=ExtResource("6_7mycd")]
-transform = Transform3D(-0.49999997, 0, -4.3711385e-08, 0, 0.5, 0, 4.3711385e-08, 0, -0.49999997, 1.458714, 0.3937601, 9.485326)
+transform = Transform3D(-0.49999997, 0, -4.3711385e-08, 0, 0.5, 0, 4.3711385e-08, 0, -0.49999997, 1.458714, 0.3937601, 8.641046)
 
 [node name="PotionPuzzle" type="Node3D" parent="." unique_id=1240182408 node_paths=PackedStringArray("potion_ui")]
 script = ExtResource("7_272bh")
@@ -86,7 +86,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.179907, 1.7776308, 7.87740
 radio_ui = NodePath("../RadioUI")
 
 [node name="SimonSays" parent="." unique_id=968797320 node_paths=PackedStringArray("simon_ui") instance=ExtResource("12_ycdy4")]
-transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 8.163076, 0.9950986, 0)
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 7.9333353, 0.9950986, 0)
 simon_ui = NodePath("../SimonUI")
 
 [node name="SimonUI" parent="." unique_id=2092726446 instance=ExtResource("13_w48qg")]
@@ -104,4 +104,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.030752, 0.05000019, 6.69145
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.493903, 0.10000038, 6.471325)
 
 [node name="PotionPuzzle2" parent="." unique_id=42462936 instance=ExtResource("17_u3ugk")]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -9.280317, 0.049999952, 2.0457356)
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -9.280317, 0.049999952, 5.796277)

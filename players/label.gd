@@ -38,3 +38,7 @@ func _on_time_updated(time_left: int):
 func _on_match_timeout():
 	text = "00:00"
 	add_theme_color_override("font_color", Color(1, 0, 0))
+
+	var explorer = get_tree().get_first_node_in_group("explorer")
+	if explorer and explorer.has_method("_on_timeout_death"):
+		explorer._on_timeout_death()
