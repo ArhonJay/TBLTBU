@@ -2,17 +2,33 @@
 
 [ext_resource type="PackedScene" uid="uid://cfee88hk8pa53" path="res://menu/BackButton.tscn" id="1_0bpdh"]
 [ext_resource type="Script" uid="uid://csndqatbdvs3m" path="res://scripts/credits.gd" id="1_0ctdu"]
-[ext_resource type="Texture2D" uid="uid://ug2h478ipmu0" path="res://assets/background/bg_volcano_dark.svg" id="1_2ckv8"]
+[ext_resource type="Texture2D" uid="uid://toiq3xna3vlv" path="res://assets/c_assets/tutorial/Prev_1.svg" id="4_1qbs2"]
+[ext_resource type="Texture2D" uid="uid://iv7njxrloxpw" path="res://assets/c_assets/tutorial/Prev_2.svg" id="5_ruj7j"]
+[ext_resource type="Texture2D" uid="uid://b3x2oxrhrfgfk" path="res://assets/c_assets/tutorial/Prev_3.svg" id="6_ka8gs"]
+[ext_resource type="Texture2D" uid="uid://dlh1apbc0byev" path="res://assets/c_assets/tutorial/Next_1.svg" id="7_1hxky"]
+[ext_resource type="Texture2D" uid="uid://bbmf1ruu1ovdd" path="res://assets/c_assets/tutorial/Next_2.svg" id="8_ps6e7"]
+[ext_resource type="Texture2D" uid="uid://c78kvx7n26oh6" path="res://assets/c_assets/tutorial/Next_3.svg" id="9_n32vw"]
 
 [node name="Credits" type="Node2D" unique_id=817982952]
 script = ExtResource("1_0ctdu")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1377815714]
+visible = false
 offset_left = -13.0
 offset_top = -10.0
 offset_right = 1172.6875
 offset_bottom = 652.0
-texture = ExtResource("1_2ckv8")
+
+[node name="SlideImage" type="TextureRect" parent="." unique_id=133792944]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 2
+stretch_mode = 5
 
 [node name="ButtonManager" type="Control" parent="." unique_id=844274585]
 layout_mode = 3
@@ -26,3 +42,25 @@ offset_left = 26.0
 offset_top = 578.0
 offset_right = -998.32983
 offset_bottom = -27.0
+
+[node name="PrevButton" type="TextureButton" parent="ButtonManager" unique_id=878282853]
+layout_mode = 0
+offset_left = 783.0
+offset_top = 575.0
+offset_right = 2127.0
+offset_bottom = 961.0
+scale = Vector2(0.10223745, 0.10223745)
+texture_normal = ExtResource("4_1qbs2")
+texture_pressed = ExtResource("5_ruj7j")
+texture_hover = ExtResource("6_ka8gs")
+
+[node name="NextButton" type="TextureButton" parent="ButtonManager" unique_id=1318052264]
+layout_mode = 0
+offset_left = 949.0
+offset_top = 576.0
+offset_right = 2107.0
+offset_bottom = 962.0
+scale = Vector2(0.097562246, 0.097562246)
+texture_normal = ExtResource("7_1hxky")
+texture_pressed = ExtResource("8_ps6e7")
+texture_hover = ExtResource("9_n32vw")
