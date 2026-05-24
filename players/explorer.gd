@@ -33,9 +33,6 @@ var max_zoom: float = 4.0
 var zoom_step: float = 0.4
 var base_camera_y: float
 
-# --- DRONE ---
-var drone_battery_seconds: float = 0.0
-
 # --- HEALTH SYSTEM ---
 @export var max_health: int = 100
 var current_health: int = 100
@@ -55,8 +52,9 @@ var current_stamina: float = 100.0
 var _stamina_regen_timer: float = 0.0
 var _stamina_exhausted: bool = false
 
-# --- OBJECTIVE LIST ---
+# --- OBJECTIVE LIST & END SEQUENCE ---
 const OBJECTIVE_LIST_SCENE := preload("res://puzzles/scenes/ObjectiveList.tscn")
+const GAME_END_SEQUENCE_SCENE := preload("res://puzzles/scenes/GameEndSequence.tscn")
 
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
@@ -101,6 +99,15 @@ func _ready():
 	var obj_list = OBJECTIVE_LIST_SCENE.instantiate()
 	obj_list.name = "ObjectiveList"
 	add_child(obj_list)
+
+	# ── Spawn GameEndSequence on the scene root (shared by both peers) ───────
+	if get_tree().current_scene.get_node_or_null("GameEndSequence") == null:
+		var end_seq = GAME_END_SEQUENCE_SCENE.instantiate()
+		end_seq.name = "GameEndSequence"
+		get_tree().current_scene.add_child(end_seq)
+
+	# ── Start the mission timer ───────────────────────────────────────────────
+	ObjectiveManager.start_timer()
 
 # --- DAMAGE & DEATH ---
 func take_damage(amount: int):
@@ -410,7 +417,7 @@ func _physics_process(delta):
 	move_and_slide()
 
 @rpc("call_local", "any_peer", "reliable")
-func _go_to_main_menu_from_explorer():
+func _go_to_main_menu():
 	await get_tree().create_timer(0.2).timeout
 	var nm = get_node_or_null("/root/NetworkManager")
 	if nm:
@@ -500,37 +507,33 @@ func _show_use_popup(message: String, accent: Color) -> void:
 	tween.tween_property(panel, "modulate:a", 0.0, 0.4)
 	tween.tween_callback(layer.queue_free)
 
+
 # ── Manual reader modal ───────────────────────────────────────────────────────
 func _show_manual_reader(item_id: String, manual_name: String, tex) -> void:
 	var popup_name := "_ManualReader_" + item_id
-	# Toggle: if already open, close it
 	var old := get_node_or_null(popup_name)
 	if old:
 		old.queue_free()
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		return
 
-	# ── CanvasLayer ───────────────────────────────────────────────────────────
 	var layer := CanvasLayer.new()
 	layer.name  = popup_name
 	layer.layer = 15
 	layer.set_meta("manual_reader", true)
 	add_child(layer)
 
-	# Root control — full screen, catches all input
 	var root := Control.new()
 	root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	layer.add_child(root)
 
-	# Dark overlay (child of root, drawn first = behind card)
 	var overlay := ColorRect.new()
 	overlay.color = Color(0.0, 0.0, 0.0, 0.72)
 	overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	overlay.mouse_filter = Control.MOUSE_FILTER_PASS
 	root.add_child(overlay)
 
-	# Card — anchored to centre of root, sized with margins
 	var card := PanelContainer.new()
 	var ps   := StyleBoxFlat.new()
 	ps.bg_color              = Color(0.07, 0.06, 0.04, 0.98)
@@ -541,7 +544,6 @@ func _show_manual_reader(item_id: String, manual_name: String, tex) -> void:
 	ps.content_margin_top    = 20.0; ps.content_margin_bottom = 16.0
 	ps.content_margin_left   = 24.0; ps.content_margin_right  = 24.0
 	card.add_theme_stylebox_override("panel", ps)
-	# Anchor to centre, then push out with offsets to set the card size
 	card.anchor_left   = 0.5; card.anchor_right  = 0.5
 	card.anchor_top    = 0.5; card.anchor_bottom = 0.5
 	card.offset_left   = -340.0; card.offset_right  = 340.0
@@ -549,13 +551,11 @@ func _show_manual_reader(item_id: String, manual_name: String, tex) -> void:
 	card.mouse_filter  = Control.MOUSE_FILTER_STOP
 	root.add_child(card)
 
-	# ── Card contents ─────────────────────────────────────────────────────────
 	var vbox := VBoxContainer.new()
 	vbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	vbox.add_theme_constant_override("separation", 8)
 	card.add_child(vbox)
 
-	# Header row
 	var hdr := HBoxContainer.new()
 	vbox.add_child(hdr)
 
@@ -576,7 +576,6 @@ func _show_manual_reader(item_id: String, manual_name: String, tex) -> void:
 	title_lbl.add_theme_color_override("font_color", Color(0.96, 0.93, 0.82, 1.0))
 	title_col.add_child(title_lbl)
 
-	# ✕ close button
 	var close_btn := Button.new()
 	close_btn.text = " ✕ "
 	close_btn.add_theme_font_size_override("font_size", 16)
@@ -593,12 +592,10 @@ func _show_manual_reader(item_id: String, manual_name: String, tex) -> void:
 	)
 	hdr.add_child(close_btn)
 
-	# Divider
 	var sep := HSeparator.new()
 	sep.add_theme_color_override("separator_color", Color(0.75, 0.60, 0.15, 0.4))
 	vbox.add_child(sep)
 
-	# Manual image — fills remaining space, scrollable vertically
 	var scroll := ScrollContainer.new()
 	scroll.size_flags_vertical   = Control.SIZE_EXPAND_FILL
 	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -616,14 +613,12 @@ func _show_manual_reader(item_id: String, manual_name: String, tex) -> void:
 		scroll.add_child(img_rect)
 	else:
 		var missing := Label.new()
-		missing.text = "[Manual image not found]
-Expected: res://assets/manual/" + item_id + ".png"
+		missing.text = "[Manual image not found]\nExpected: res://assets/manual/" + item_id + ".png"
 		missing.add_theme_color_override("font_color", Color(0.80, 0.40, 0.30, 1.0))
 		missing.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		missing.autowrap_mode = TextServer.AUTOWRAP_WORD
 		scroll.add_child(missing)
 
-	# Hint
 	var hint := Label.new()
 	hint.text = "Press E or click ✕ to close"
 	hint.add_theme_font_size_override("font_size", 10)
@@ -631,18 +626,15 @@ Expected: res://assets/manual/" + item_id + ".png"
 	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(hint)
 
-	# Clicking the overlay (outside the card) closes too
 	root.gui_input.connect(func(ev: InputEvent):
 		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
 			layer.queue_free()
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	)
 
-	# Fade in the whole root (overlay + card together)
 	root.modulate.a = 0.0
 	var tween := create_tween()
 	tween.tween_property(root, "modulate:a", 1.0, 0.18)
-
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func window_activity():

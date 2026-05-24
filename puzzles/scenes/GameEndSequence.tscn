@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://game_end_sequence"]
+
+[ext_resource type="Script" path="res://puzzles/scripts/GameEndSequence.gd" id="1_ges"]
+
+[node name="GameEndSequence" type="CanvasLayer"]
+layer = 20
+script = ExtResource("1_ges")

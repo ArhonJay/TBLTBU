@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://dgsou2l5vyavg"]
+
+[ext_resource type="Script" uid="uid://b650euwt7jjlt" path="res://puzzles/scripts/MissionReport.gd" id="1_mr"]
+
+[node name="MissionReport" type="CanvasLayer" unique_id=997151153]
+layer = 30
+script = ExtResource("1_mr")
