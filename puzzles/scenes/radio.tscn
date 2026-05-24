@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cog2vrdvr5ila" path="res://puzzles/scripts/radio.gd" id="1_543sh"]
 [ext_resource type="ArrayMesh" uid="uid://dkx1fg6ld4xj8" path="res://puzzles/models/radio.obj" id="1_flxc7"]
+[ext_resource type="PackedScene" uid="uid://dwvff2oj4bqqj" path="res://puzzles/scenes/radio_ui.tscn" id="3_s1oex"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_543sh"]
 albedo_color = Color(0.29210573, 0.23743963, 0.18282843, 1)
@@ -17,8 +18,9 @@ buffer_length = 0.1
 [sub_resource type="SphereShape3D" id="SphereShape3D_nwvhb"]
 radius = 2.0
 
-[node name="Radio" type="StaticBody3D" unique_id=1899054232]
+[node name="Radio" type="StaticBody3D" unique_id=1899054232 node_paths=PackedStringArray("radio_ui")]
 script = ExtResource("1_543sh")
+radio_ui = NodePath("RadioUI")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=407979873]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
@@ -36,3 +38,5 @@ stream = SubResource("AudioStreamGenerator_kevmo")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionZone" unique_id=444211589]
 shape = SubResource("SphereShape3D_nwvhb")
+
+[node name="RadioUI" parent="." unique_id=1885248193 instance=ExtResource("3_s1oex")]

@@ -198,6 +198,15 @@ func _show_game_over_all():
 func _input(event):
 	if is_dead:
 		return
+
+	# Close any open manual reader with E / interact
+	if event.is_action_pressed("interact") or event.is_action_pressed("use_item"):
+		for child in get_children():
+			if child is CanvasLayer and child.get_meta("manual_reader", false):
+				child.queue_free()
+				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+				return  # consume the input — don't also open/use
+
 	if event is InputEventMouseMotion:
 		mouse_delta = event.relative
 
@@ -423,12 +432,25 @@ func use_item() -> void:
 			heal(amount)
 			inv.remove_selected_item()
 			print("Used Medkit — healed %d HP." % amount)
-		"battery":
-			var bonus : int = item.get("flight_bonus", 5)
-			drone_battery_seconds += float(bonus)
+			_show_use_popup("+%d HP" % amount, Color(0.20, 0.85, 0.35, 1.0))
+		"energy_drink":
+			var restore : float = item.get("stamina_restore", 50.0)
+			current_stamina = min(current_stamina + restore, max_stamina)
+			if current_stamina > 0.0:
+				_stamina_exhausted = false
+			_stamina_regen_timer = 0.0
+			_update_stamina_ui()
 			inv.remove_selected_item()
-			print("Used Drone Battery — +%ds flight time. Total bonus: %.0fs" % [bonus, drone_battery_seconds])
-			_show_use_popup("+%d seconds drone flight time" % bonus, Color(0.25, 0.85, 0.35, 1.0))
+			print("Used Energy Drink — restored %.0f stamina." % restore)
+			_show_use_popup("+%d STA" % int(restore), Color(0.25, 0.75, 1.0, 1.0))
+		"potion_manual", "radio_manual":
+			var manual_path := "res://assets/manual/" + item_id + ".png"
+			var manual_tex: Texture2D = null
+			if ResourceLoader.exists(manual_path):
+				manual_tex = load(manual_path)
+			else:
+				push_warning("Manual not found: " + manual_path)
+			_show_manual_reader(item_id, item.get("name", "Manual"), manual_tex)
 		_:
 			print("No use action defined for item: ", item_id)
 
@@ -477,6 +499,151 @@ func _show_use_popup(message: String, accent: Color) -> void:
 	tween.tween_interval(1.8)
 	tween.tween_property(panel, "modulate:a", 0.0, 0.4)
 	tween.tween_callback(layer.queue_free)
+
+# ── Manual reader modal ───────────────────────────────────────────────────────
+func _show_manual_reader(item_id: String, manual_name: String, tex) -> void:
+	var popup_name := "_ManualReader_" + item_id
+	# Toggle: if already open, close it
+	var old := get_node_or_null(popup_name)
+	if old:
+		old.queue_free()
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		return
+
+	# ── CanvasLayer ───────────────────────────────────────────────────────────
+	var layer := CanvasLayer.new()
+	layer.name  = popup_name
+	layer.layer = 15
+	layer.set_meta("manual_reader", true)
+	add_child(layer)
+
+	# Root control — full screen, catches all input
+	var root := Control.new()
+	root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	root.mouse_filter = Control.MOUSE_FILTER_STOP
+	layer.add_child(root)
+
+	# Dark overlay (child of root, drawn first = behind card)
+	var overlay := ColorRect.new()
+	overlay.color = Color(0.0, 0.0, 0.0, 0.72)
+	overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	overlay.mouse_filter = Control.MOUSE_FILTER_PASS
+	root.add_child(overlay)
+
+	# Card — anchored to centre of root, sized with margins
+	var card := PanelContainer.new()
+	var ps   := StyleBoxFlat.new()
+	ps.bg_color              = Color(0.07, 0.06, 0.04, 0.98)
+	ps.set_corner_radius_all(12)
+	ps.border_width_top    = 2; ps.border_width_bottom = 2
+	ps.border_width_left   = 2; ps.border_width_right  = 2
+	ps.border_color        = Color(0.75, 0.60, 0.15, 1.0)
+	ps.content_margin_top    = 20.0; ps.content_margin_bottom = 16.0
+	ps.content_margin_left   = 24.0; ps.content_margin_right  = 24.0
+	card.add_theme_stylebox_override("panel", ps)
+	# Anchor to centre, then push out with offsets to set the card size
+	card.anchor_left   = 0.5; card.anchor_right  = 0.5
+	card.anchor_top    = 0.5; card.anchor_bottom = 0.5
+	card.offset_left   = -340.0; card.offset_right  = 340.0
+	card.offset_top    = -420.0; card.offset_bottom = 420.0
+	card.mouse_filter  = Control.MOUSE_FILTER_STOP
+	root.add_child(card)
+
+	# ── Card contents ─────────────────────────────────────────────────────────
+	var vbox := VBoxContainer.new()
+	vbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	vbox.add_theme_constant_override("separation", 8)
+	card.add_child(vbox)
+
+	# Header row
+	var hdr := HBoxContainer.new()
+	vbox.add_child(hdr)
+
+	var title_col := VBoxContainer.new()
+	title_col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	title_col.add_theme_constant_override("separation", 1)
+	hdr.add_child(title_col)
+
+	var eyebrow := Label.new()
+	eyebrow.text = "REFERENCE MANUAL"
+	eyebrow.add_theme_font_size_override("font_size", 10)
+	eyebrow.add_theme_color_override("font_color", Color(0.75, 0.60, 0.15, 0.85))
+	title_col.add_child(eyebrow)
+
+	var title_lbl := Label.new()
+	title_lbl.text = manual_name
+	title_lbl.add_theme_font_size_override("font_size", 18)
+	title_lbl.add_theme_color_override("font_color", Color(0.96, 0.93, 0.82, 1.0))
+	title_col.add_child(title_lbl)
+
+	# ✕ close button
+	var close_btn := Button.new()
+	close_btn.text = " ✕ "
+	close_btn.add_theme_font_size_override("font_size", 16)
+	var cs := StyleBoxFlat.new()
+	cs.bg_color = Color(0.20, 0.10, 0.06, 1.0)
+	cs.set_corner_radius_all(6)
+	cs.border_width_top = 1; cs.border_width_bottom = 1
+	cs.border_width_left = 1; cs.border_width_right = 1
+	cs.border_color = Color(0.60, 0.45, 0.10, 0.8)
+	close_btn.add_theme_stylebox_override("normal", cs)
+	close_btn.pressed.connect(func():
+		layer.queue_free()
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	)
+	hdr.add_child(close_btn)
+
+	# Divider
+	var sep := HSeparator.new()
+	sep.add_theme_color_override("separator_color", Color(0.75, 0.60, 0.15, 0.4))
+	vbox.add_child(sep)
+
+	# Manual image — fills remaining space, scrollable vertically
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_vertical   = Control.SIZE_EXPAND_FILL
+	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.vertical_scroll_mode   = ScrollContainer.SCROLL_MODE_AUTO
+	vbox.add_child(scroll)
+
+	if tex != null:
+		var img_rect := TextureRect.new()
+		img_rect.texture      = tex
+		img_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		img_rect.expand_mode  = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
+		img_rect.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		img_rect.size_flags_vertical   = Control.SIZE_EXPAND_FILL
+		scroll.add_child(img_rect)
+	else:
+		var missing := Label.new()
+		missing.text = "[Manual image not found]
+Expected: res://assets/manual/" + item_id + ".png"
+		missing.add_theme_color_override("font_color", Color(0.80, 0.40, 0.30, 1.0))
+		missing.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		missing.autowrap_mode = TextServer.AUTOWRAP_WORD
+		scroll.add_child(missing)
+
+	# Hint
+	var hint := Label.new()
+	hint.text = "Press E or click ✕ to close"
+	hint.add_theme_font_size_override("font_size", 10)
+	hint.add_theme_color_override("font_color", Color(0.50, 0.48, 0.44, 0.65))
+	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(hint)
+
+	# Clicking the overlay (outside the card) closes too
+	root.gui_input.connect(func(ev: InputEvent):
+		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
+			layer.queue_free()
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	)
+
+	# Fade in the whole root (overlay + card together)
+	root.modulate.a = 0.0
+	var tween := create_tween()
+	tween.tween_property(root, "modulate:a", 1.0, 0.18)
+
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func window_activity():
 	if Input.is_action_just_pressed("ui_cancel"):

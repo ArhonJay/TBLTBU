@@ -153,11 +153,24 @@ func trigger_time_out_death():
 	# Your player scripts or main game manager should listen to this signal 
 	# to kill the players and show the Game Over screen.
 
-# Call this on the server to add or subtract time from the world timer.
-# Pass a positive value to add time (reward), negative to subtract (penalty).
+# Call this from anywhere (server OR client) to add/subtract time.
+# Clients will send an RPC request to the server; server applies it directly.
 func adjust_world_timer(delta: int):
+	if multiplayer.is_server():
+		_apply_timer_adjustment(delta)
+	else:
+		# Ask the server to apply the adjustment on our behalf
+		request_adjust_world_timer.rpc_id(1, delta)
+
+# RPC so clients can request a timer adjustment from the server
+@rpc("any_peer", "reliable")
+func request_adjust_world_timer(delta: int):
 	if not multiplayer.is_server():
 		return
+	_apply_timer_adjustment(delta)
+
+# Internal: actually adjusts the timer (server only)
+func _apply_timer_adjustment(delta: int):
 	if not is_timer_running:
 		return
 
