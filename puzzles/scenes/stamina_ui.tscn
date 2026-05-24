@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://stamina_ui_scene"]
+
+[ext_resource type="Script" path="res://puzzles/scripts/stamina_ui.gd" id="1_stmui"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.06, 0.06, 0.10, 0.88)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_left = 10
+corner_radius_bottom_right = 10
+border_width_top = 1
+border_width_bottom = 1
+border_width_left = 1
+border_width_right = 1
+border_color = Color(0.5, 0.4, 0.1, 0.6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_fill"]
+bg_color = Color(0.95, 0.75, 0.1, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_left = 6
+corner_radius_bottom_right = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_bg"]
+bg_color = Color(0.12, 0.12, 0.12, 0.85)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_left = 6
+corner_radius_bottom_right = 6
+
+[node name="StaminaUI" type="CanvasLayer"]
+layer = 5
+script = ExtResource("1_stmui")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="StaminaPanel" type="PanelContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -240.0
+offset_top = -140.0
+offset_right = -24.0
+offset_bottom = -88.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="Control/StaminaPanel"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="StaminaLabel" type="Label" parent="Control/StaminaPanel/VBox"]
+layout_mode = 2
+text = "STA: 100"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.95, 0.85, 0.4, 1)
+
+[node name="StaminaBar" type="ProgressBar" parent="Control/StaminaPanel/VBox"]
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_bar_fill")
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
+value = 100.0
+show_percentage = false

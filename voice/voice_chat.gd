@@ -36,7 +36,7 @@ func _setup_speaker():
 	output_player.stream = generator
 	
 	# FIX 2: Boost the volume so it is impossible to miss
-	output_player.volume_db = 60.0
+	output_player.volume_db = 20.0
 	output_player.play()
 	
 	playback = output_player.get_stream_playback()
