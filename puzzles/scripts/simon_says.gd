@@ -57,6 +57,12 @@ var buttons = {}
 # for the "Press E to interact" prompt
 var prompt_label: Label3D
 
+# for the floating "+60 / -30 seconds" pop-up
+var popup_label: Label3D
+
+# true once the puzzle ends (win OR lose) — makes it one-time use
+var puzzle_used := false
+
 @onready var voice_player: AudioStreamPlayer = $VoicePlayer
 
 func _ready():
@@ -74,8 +80,22 @@ func _ready():
 	prompt_label.outline_size = 8
 	prompt_label.visible = false
 	add_child(prompt_label)
+
+	# floating result pop-up label
+	popup_label = Label3D.new()
+	popup_label.text = ""
+	popup_label.position = Vector3(0, 2.2, 0.1)
+	popup_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	popup_label.font_size = 64
+	popup_label.outline_modulate = Color.BLACK
+	popup_label.outline_size = 10
+	popup_label.visible = false
+	add_child(popup_label)
 	
 	# UI refs
+	if simon_ui == null:
+		push_error("simon_says.gd: 'simon_ui' is not assigned! Drag the SimonUI CanvasLayer into the 'Simon Ui' export slot in the Inspector.")
+		return
 	status_label = simon_ui.get_node("Control/PanelContainer/VBoxContainer/StatusLabel")
 	strike_label = simon_ui.get_node("Control/PanelContainer/VBoxContainer/StrikeLabel")
 	result_label = simon_ui.get_node("Control/PanelContainer/VBoxContainer/ResultLabel")
@@ -99,6 +119,18 @@ func _ready():
 	
 	simon_ui.visible = false
 	_generate_sequence()
+
+func _show_popup(msg: String, color: Color):
+	popup_label.text = msg
+	popup_label.modulate = color
+	popup_label.position = Vector3(0, 2.2, 0.1)
+	popup_label.visible = true
+	var tween = create_tween()
+	tween.tween_property(popup_label, "position", Vector3(0, 3.2, 0.1), 1.8)
+	tween.parallel().tween_property(popup_label, "modulate:a", 0.0, 1.8)
+	await tween.finished
+	popup_label.visible = false
+	popup_label.modulate = color  # reset alpha for next use
 
 func _style_buttons():
 	for btn_name in button_data:
@@ -269,8 +301,13 @@ func _on_button_pressed(btn_name: String):
 				result_label.add_theme_color_override("font_color", Color.GREEN)
 				status_label.text = "Simon Says is disarmed!"
 				puzzle_solved = true
+				puzzle_used = true
+				prompt_label.visible = false
 				play_button.disabled = true
 				_set_buttons_disabled(true)
+				NetworkManager.adjust_world_timer(60)
+				_close_ui()
+				_show_popup("+60 seconds", Color(0.1, 1.0, 0.1))
 			else:
 				current_round += 1
 				player_sequence.clear()
@@ -286,10 +323,17 @@ func _on_button_pressed(btn_name: String):
 		_update_strike_label()
 		
 		if strikes >= 3:
-			result_label.text = "✗ Too many strikes! Resetting..."
+			result_label.text = "✗ Too many strikes! Puzzle locked."
 			result_label.add_theme_color_override("font_color", Color.RED)
-			await get_tree().create_timer(1.5).timeout
-			_reset_puzzle()
+			status_label.text = "Simon Says is locked out!"
+			accepting_input = false
+			puzzle_used = true
+			prompt_label.visible = false
+			play_button.disabled = true
+			_set_buttons_disabled(true)
+			NetworkManager.adjust_world_timer(-30)
+			_close_ui()
+			_show_popup("-30 seconds", Color(1.0, 0.2, 0.2))
 		else:
 			result_label.text = "✗ Wrong! Strike " + str(strikes) + ". Try again."
 			result_label.add_theme_color_override("font_color", Color.RED)
@@ -317,17 +361,20 @@ func _set_buttons_disabled(disabled: bool):
 		buttons[btn_name].disabled = disabled
 
 func _open_ui():
-	if puzzle_solved:
+	if puzzle_solved or puzzle_used:
 		return
 	ui_open = true
-	player_sequence.clear()
-	result_label.text = ""
-	_update_strike_label()
-	play_button.disabled = false
-	_set_buttons_disabled(true)
-	status_label.text = "Press PLAY to hear the sequence"
 	simon_ui.visible = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	_update_strike_label()
+	# If the player wasn't mid-input, reset cleanly so they can start fresh
+	if not accepting_input and not playing_sequence:
+		player_sequence.clear()
+		result_label.text = ""
+		play_button.disabled = false
+		_set_buttons_disabled(true)
+		status_label.text = "Press PLAY to hear the sequence"
+	# Otherwise leave everything as-is so they can continue where they left off
 
 func _close_ui():
 	ui_open = false
@@ -337,14 +384,14 @@ func _close_ui():
 func _on_body_entered(body: Node3D):
 	if body.is_in_group("player"):
 		player_nearby = true
-		prompt_label.visible = true
+		if not puzzle_used:
+			prompt_label.visible = true
 
 func _on_body_exited(body: Node3D):
 	if body.is_in_group("player"):
 		player_nearby = false
 		prompt_label.visible = false
-		if ui_open:
-			_close_ui()
+		# UI stays open so the player can return and continue the puzzle
 
 func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed("interact"):

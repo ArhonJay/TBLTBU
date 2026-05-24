@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://chc2gh0wcmkuh" path="res://puzzles/scripts/simon_says.gd" id="1_kfw04"]
 [ext_resource type="ArrayMesh" uid="uid://368gqnr87lj6" path="res://puzzles/models/simonsay.obj" id="2_tssl7"]
+[ext_resource type="PackedScene" uid="uid://60a03pxp2q8h" path="res://puzzles/scenes/simon_ui.tscn" id="3_xqv8f"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_76v6r"]
 albedo_color = Color(0.17254902, 0.02745098, 0, 1)
@@ -36,8 +37,9 @@ size = Vector3(1.5, 1.5, 1.5)
 [sub_resource type="SphereShape3D" id="SphereShape3D_amv67"]
 radius = 2.0
 
-[node name="SimonSays" type="StaticBody3D" unique_id=968797320]
+[node name="SimonSays" type="StaticBody3D" unique_id=968797320 node_paths=PackedStringArray("simon_ui")]
 script = ExtResource("1_kfw04")
+simon_ui = NodePath("SimonUI")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1663837731]
 transform = Transform3D(0.99999917, -0.00127409, 0, 0.00127409, 0.99999917, 0, 0, 0, 1, 0, 0, 0)
@@ -61,3 +63,5 @@ shape = SubResource("BoxShape3D_w47fg")
 shape = SubResource("SphereShape3D_amv67")
 
 [node name="VoicePlayer" type="AudioStreamPlayer" parent="." unique_id=165730152]
+
+[node name="SimonUI" parent="." unique_id=2092726446 instance=ExtResource("3_xqv8f")]
