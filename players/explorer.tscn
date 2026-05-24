@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://b28dmj24drca1" path="res://voice/voice_chat.tscn" id="12_w2ps0"]
 [ext_resource type="PackedScene" path="res://puzzles/scenes/stamina_ui.tscn" id="13_mue4t"]
 [ext_resource type="PackedScene" uid="uid://bstlccajhyfv3" path="res://puzzles/scenes/inventory_ui.tscn" id="14_b3n2t"]
+[ext_resource type="Script" uid="uid://dx025rpfxq8u1" path="res://players/label.gd" id="15_h3046"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_83qqn"]
 radius = 0.2
@@ -79,3 +80,15 @@ libraries/ = SubResource("AnimationLibrary_o3kt3")
 [node name="StaminaUI" parent="." unique_id=1407861966 instance=ExtResource("13_mue4t")]
 
 [node name="InventoryUI" parent="." unique_id=898064298 instance=ExtResource("14_b3n2t")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2026487268]
+
+[node name="TimerDisplay" type="Label" parent="CanvasLayer" unique_id=354395371]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -72.0
+offset_right = 72.0
+offset_bottom = 23.0
+grow_horizontal = 2
+script = ExtResource("15_h3046")

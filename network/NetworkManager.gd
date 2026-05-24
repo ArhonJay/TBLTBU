@@ -5,12 +5,21 @@ const DEFAULT_SERVER_IP = "127.0.0.1"
 const MAX_PLAYERS = 2
 
 var players = {}
-var local_role = "explorer"
+var local_role = "explorer"	
+
+# --- NEW TIMER VARIABLES ---
+var time_left: int = 0
+var is_timer_running: bool = false
+var server_timer: Timer
 
 signal player_connected(peer_id)
 signal player_disconnected(peer_id)
 signal server_disconnected
 signal player_registered(peer_id)
+
+# --- NEW SIGNALS ---
+signal time_updated(new_time)
+signal match_ended_time_out
 
 # --- RESET: Always call this before hosting or joining, and when returning to menu ---
 func reset():
@@ -90,3 +99,56 @@ func register_player(role):
 	players[new_player_id] = {"role": role}
 	if multiplayer.is_server():
 		player_registered.emit(new_player_id)
+		
+# ==========================================
+# TIMER LOGIC
+# ==========================================
+
+# Call this function ONLY on the server when the actual level loads/starts
+func start_world_timer(seconds: int):
+	print("SERVER IS ATTEMPTING TO START TIMER!") # <--- ADD THIS LINE
+	if not multiplayer.is_server(): 
+		return # Clients cannot start the timer
+
+	time_left = seconds
+	is_timer_running = true
+
+	# Create the timer node if it doesn't exist yet
+	if server_timer == null:
+		server_timer = Timer.new()
+		server_timer.wait_time = 1.0 # Tick every 1 second
+		server_timer.autostart = false
+		server_timer.timeout.connect(_on_server_timer_tick)
+		add_child(server_timer)
+
+	server_timer.start()
+	
+	# Force an immediate sync so clients see the starting time instantly
+	sync_time_to_clients.rpc(time_left) 
+
+func _on_server_timer_tick():
+	if not multiplayer.is_server(): return
+
+	time_left -= 1
+	sync_time_to_clients.rpc(time_left) # Broadcast new time every second
+
+	if time_left <= 0:
+		server_timer.stop()
+		is_timer_running = false
+		trigger_time_out_death.rpc() # Broadcast game over
+
+# --- RPCs (Remote Procedure Calls) ---
+
+# "authority" means only the server can call this on the clients.
+# "call_local" means the server also runs this locally on its own instance.
+@rpc("authority", "call_local", "reliable")
+func sync_time_to_clients(current_time: int):
+	time_left = current_time
+	time_updated.emit(time_left) # The UI will listen to this
+
+@rpc("authority", "call_local", "reliable")
+func trigger_time_out_death():
+	print("Time is up! Instant death.")
+	match_ended_time_out.emit()
+	# Your player scripts or main game manager should listen to this signal 
+	# to kill the players and show the Game Over screen.

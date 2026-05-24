@@ -90,6 +90,9 @@ func _ready():
 	current_stamina = max_stamina
 	_update_health_ui()
 	_update_stamina_ui()
+	# --- ADD THIS LINE ---
+	# Listen for the master clock hitting zero
+	NetworkManager.match_ended_time_out.connect(_on_timeout_death)
 
 # --- DAMAGE & DEATH ---
 func take_damage(amount: int):
@@ -170,6 +173,13 @@ func _die():
 	if inv and inv.has_method("clear_all"):
 		inv.clear_all()
 	_show_game_over_all.rpc()
+
+func _on_timeout_death():
+	if not is_dead:
+		print("Time is up! Explorer died to the timer.")
+		# Dealing 999 damage securely forces your take_damage() logic 
+		# to run, updating the UI and playing the death animation natively!
+		take_damage(999)
 
 @rpc("call_local", "any_peer", "reliable")
 func _show_game_over_all():
