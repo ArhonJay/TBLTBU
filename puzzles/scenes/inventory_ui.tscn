@@ -1,0 +1,583 @@
+[gd_scene format=3 uid="uid://bstlccajhyfv3"]
+
+[ext_resource type="Script" uid="uid://dloe6yfgyrjr8" path="res://puzzles/scripts/inventory_ui.gd" id="1_invui"]
+[ext_resource type="Texture2D" uid="uid://drqtxsng33t8a" path="res://assets/survival/texture_atlas.png" id="2_4oq3m"]
+[ext_resource type="ArrayMesh" uid="uid://cf8u03hlmv1d7" path="res://assets/survival/backpack.obj" id="2_bagmesh"]
+
+[sub_resource type="StyleBoxFlat" id="SF_bag_panel"]
+bg_color = Color(0.08, 0.06, 0.04, 0.97)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.65, 0.47, 0.12, 0.9)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+shadow_color = Color(0, 0, 0, 0.7)
+shadow_size = 16
+
+[sub_resource type="StyleBoxFlat" id="SF_divider"]
+bg_color = Color(0.65, 0.47, 0.12, 0.35)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="SF_item_row_normal"]
+bg_color = Color(0.11, 0.09, 0.06, 0)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="SF_item_row_pressed"]
+bg_color = Color(0.3, 0.22, 0.08, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.78, 0.2, 0.9)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="SF_item_row_hover"]
+bg_color = Color(0.22, 0.17, 0.08, 0.85)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.75, 0.55, 0.2, 0.6)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="SF_item_icon_bg"]
+bg_color = Color(0.05, 0.04, 0.03, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5, 0.38, 0.15, 0.6)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="SF_slot_selected"]
+bg_color = Color(0.85, 0.78, 0.3, 0.3)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.88, 0.3, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="SF_slot_normal"]
+bg_color = Color(0.07, 0.07, 0.09, 0.72)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5, 0.5, 0.55, 0.4)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="SF_bag_slot_btn"]
+bg_color = Color(0.12, 0.09, 0.04, 0.8)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.75, 0.55, 0.15, 0.7)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="Environment" id="ENV_transparent"]
+background_color = Color(0, 0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4oq3m"]
+albedo_texture = ExtResource("2_4oq3m")
+
+[node name="InventoryUI" type="CanvasLayer" unique_id=898064298]
+layer = 6
+script = ExtResource("1_invui")
+
+[node name="Control" type="Control" parent="." unique_id=256029789]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(161, 581)
+mouse_filter = 2
+
+[node name="BagPanel" type="PanelContainer" parent="Control" unique_id=1800089507]
+visible = false
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 24.0
+offset_top = -220.0
+offset_right = 380.0
+offset_bottom = 220.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("SF_bag_panel")
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/BagPanel" unique_id=11097818]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 14
+
+[node name="VBox" type="VBoxContainer" parent="Control/BagPanel/MarginContainer" unique_id=1482503291]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Header" type="HBoxContainer" parent="Control/BagPanel/MarginContainer/VBox" unique_id=69075342]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TitleLabel" type="Label" parent="Control/BagPanel/MarginContainer/VBox/Header" unique_id=1736334192]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.88, 0.5, 1)
+theme_override_font_sizes/font_size = 20
+text = "Bag"
+
+[node name="HintLabel" type="Label" parent="Control/BagPanel/MarginContainer/VBox/Header" unique_id=737732885]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.55, 0.55, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "[4] to close"
+vertical_alignment = 1
+
+[node name="Divider" type="PanelContainer" parent="Control/BagPanel/MarginContainer/VBox" unique_id=341344080]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+theme_override_styles/panel = SubResource("SF_divider")
+
+[node name="CapacityLabel" type="Label" parent="Control/BagPanel/MarginContainer/VBox" unique_id=1937887559]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 0.85)
+theme_override_font_sizes/font_size = 11
+text = "0 / 4 items"
+
+[node name="ItemList" type="VBoxContainer" parent="Control/BagPanel/MarginContainer/VBox" unique_id=1348755575]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="BagSlot1" type="Button" parent="Control/BagPanel/MarginContainer/VBox/ItemList" unique_id=485048838]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_styles/normal = SubResource("SF_item_row_normal")
+theme_override_styles/pressed = SubResource("SF_item_row_pressed")
+theme_override_styles/hover = SubResource("SF_item_row_hover")
+theme_override_styles/focus = SubResource("SF_item_row_normal")
+
+[node name="HBox" type="HBoxContainer" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot1" unique_id=136507551]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 6.0
+offset_right = -8.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="IconBG" type="PanelContainer" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot1/HBox" unique_id=1722494974]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("SF_item_icon_bg")
+
+[node name="Icon" type="TextureRect" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot1/HBox/IconBG" unique_id=1087019214]
+visible = false
+layout_mode = 2
+expand_mode = 3
+stretch_mode = 5
+
+[node name="EmptyIcon" type="Label" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot1/HBox/IconBG" unique_id=1035105611]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.3, 0.25, 0.6)
+theme_override_font_sizes/font_size = 18
+text = "—"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InfoVBox" type="VBoxContainer" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot1/HBox" unique_id=264201644]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+
+[node name="NameLabel" type="Label" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot1/HBox/InfoVBox" unique_id=512709620]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.52, 0.48, 0.6)
+theme_override_font_sizes/font_size = 14
+text = "Empty"
+
+[node name="SubLabel" type="Label" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot1/HBox/InfoVBox" unique_id=638178535]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.55, 0.4, 0.7)
+theme_override_font_sizes/font_size = 11
+
+[node name="Count" type="Label" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot1/HBox" unique_id=194702573]
+visible = false
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.9, 0.82, 0.5, 1)
+theme_override_font_sizes/font_size = 13
+
+[node name="BagSlot2" type="Button" parent="Control/BagPanel/MarginContainer/VBox/ItemList" unique_id=702794478]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_styles/normal = SubResource("SF_item_row_normal")
+theme_override_styles/pressed = SubResource("SF_item_row_pressed")
+theme_override_styles/hover = SubResource("SF_item_row_hover")
+theme_override_styles/focus = SubResource("SF_item_row_normal")
+
+[node name="HBox" type="HBoxContainer" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot2" unique_id=1980007884]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 6.0
+offset_right = -8.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="IconBG" type="PanelContainer" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot2/HBox" unique_id=960761967]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("SF_item_icon_bg")
+
+[node name="Icon" type="TextureRect" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot2/HBox/IconBG" unique_id=1772392298]
+visible = false
+layout_mode = 2
+expand_mode = 3
+stretch_mode = 5
+
+[node name="EmptyIcon" type="Label" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot2/HBox/IconBG" unique_id=1379795376]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.3, 0.25, 0.6)
+theme_override_font_sizes/font_size = 18
+text = "—"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InfoVBox" type="VBoxContainer" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot2/HBox" unique_id=1616212462]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+
+[node name="NameLabel" type="Label" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot2/HBox/InfoVBox" unique_id=466879462]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.52, 0.48, 0.6)
+theme_override_font_sizes/font_size = 14
+text = "Empty"
+
+[node name="SubLabel" type="Label" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot2/HBox/InfoVBox" unique_id=127775081]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.55, 0.4, 0.7)
+theme_override_font_sizes/font_size = 11
+
+[node name="Count" type="Label" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot2/HBox" unique_id=1480001271]
+visible = false
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.9, 0.82, 0.5, 1)
+theme_override_font_sizes/font_size = 13
+
+[node name="BagSlot3" type="Button" parent="Control/BagPanel/MarginContainer/VBox/ItemList" unique_id=1430763133]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_styles/normal = SubResource("SF_item_row_normal")
+theme_override_styles/pressed = SubResource("SF_item_row_pressed")
+theme_override_styles/hover = SubResource("SF_item_row_hover")
+theme_override_styles/focus = SubResource("SF_item_row_normal")
+
+[node name="HBox" type="HBoxContainer" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot3" unique_id=1131043251]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 6.0
+offset_right = -8.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="IconBG" type="PanelContainer" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot3/HBox" unique_id=603032672]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("SF_item_icon_bg")
+
+[node name="Icon" type="TextureRect" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot3/HBox/IconBG" unique_id=1314069883]
+visible = false
+layout_mode = 2
+expand_mode = 3
+stretch_mode = 5
+
+[node name="EmptyIcon" type="Label" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot3/HBox/IconBG" unique_id=1785094677]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.3, 0.25, 0.6)
+theme_override_font_sizes/font_size = 18
+text = "—"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InfoVBox" type="VBoxContainer" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot3/HBox" unique_id=556004540]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+
+[node name="NameLabel" type="Label" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot3/HBox/InfoVBox" unique_id=742263768]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.52, 0.48, 0.6)
+theme_override_font_sizes/font_size = 14
+text = "Empty"
+
+[node name="SubLabel" type="Label" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot3/HBox/InfoVBox" unique_id=394544652]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.55, 0.4, 0.7)
+theme_override_font_sizes/font_size = 11
+
+[node name="Count" type="Label" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot3/HBox" unique_id=1523630201]
+visible = false
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.9, 0.82, 0.5, 1)
+theme_override_font_sizes/font_size = 13
+
+[node name="BagSlot4" type="Button" parent="Control/BagPanel/MarginContainer/VBox/ItemList" unique_id=150574048]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_styles/normal = SubResource("SF_item_row_normal")
+theme_override_styles/pressed = SubResource("SF_item_row_pressed")
+theme_override_styles/hover = SubResource("SF_item_row_hover")
+theme_override_styles/focus = SubResource("SF_item_row_normal")
+
+[node name="HBox" type="HBoxContainer" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot4" unique_id=214194731]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 6.0
+offset_right = -8.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="IconBG" type="PanelContainer" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot4/HBox" unique_id=383513657]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("SF_item_icon_bg")
+
+[node name="Icon" type="TextureRect" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot4/HBox/IconBG" unique_id=455046655]
+visible = false
+layout_mode = 2
+expand_mode = 3
+stretch_mode = 5
+
+[node name="EmptyIcon" type="Label" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot4/HBox/IconBG" unique_id=495586536]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.3, 0.25, 0.6)
+theme_override_font_sizes/font_size = 18
+text = "—"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InfoVBox" type="VBoxContainer" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot4/HBox" unique_id=582960684]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+
+[node name="NameLabel" type="Label" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot4/HBox/InfoVBox" unique_id=1049844810]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.52, 0.48, 0.6)
+theme_override_font_sizes/font_size = 14
+text = "Empty"
+
+[node name="SubLabel" type="Label" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot4/HBox/InfoVBox" unique_id=1754902083]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.55, 0.4, 0.7)
+theme_override_font_sizes/font_size = 11
+
+[node name="Count" type="Label" parent="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot4/HBox" unique_id=1669944989]
+visible = false
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.9, 0.82, 0.5, 1)
+theme_override_font_sizes/font_size = 13
+
+[node name="HotbarAnchor" type="Control" parent="Control" unique_id=1035322168]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -90.0
+offset_right = 24.0
+offset_bottom = -24.0
+grow_vertical = 0
+
+[node name="Hotbar" type="HBoxContainer" parent="Control/HotbarAnchor" unique_id=1032209141]
+layout_mode = 1
+offset_right = 310.0
+offset_bottom = 66.0
+theme_override_constants/separation = 6
+
+[node name="Slot1" type="PanelContainer" parent="Control/HotbarAnchor/Hotbar" unique_id=1208620296]
+custom_minimum_size = Vector2(66, 66)
+layout_mode = 2
+theme_override_styles/panel = SubResource("SF_slot_selected")
+
+[node name="Icon" type="TextureRect" parent="Control/HotbarAnchor/Hotbar/Slot1" unique_id=2099993742]
+visible = false
+layout_mode = 2
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Count" type="Label" parent="Control/HotbarAnchor/Hotbar/Slot1" unique_id=863111836]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+
+[node name="KeyLabel" type="Label" parent="Control/HotbarAnchor/Hotbar/Slot1" unique_id=454000809]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 0.7)
+theme_override_font_sizes/font_size = 10
+text = "1"
+horizontal_alignment = 1
+
+[node name="Slot2" type="PanelContainer" parent="Control/HotbarAnchor/Hotbar" unique_id=1882718105]
+custom_minimum_size = Vector2(66, 66)
+layout_mode = 2
+theme_override_styles/panel = SubResource("SF_slot_normal")
+
+[node name="Icon" type="TextureRect" parent="Control/HotbarAnchor/Hotbar/Slot2" unique_id=1459878224]
+visible = false
+layout_mode = 2
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Count" type="Label" parent="Control/HotbarAnchor/Hotbar/Slot2" unique_id=978751674]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+
+[node name="KeyLabel" type="Label" parent="Control/HotbarAnchor/Hotbar/Slot2" unique_id=561305377]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 0.7)
+theme_override_font_sizes/font_size = 10
+text = "2"
+horizontal_alignment = 1
+
+[node name="Slot3" type="PanelContainer" parent="Control/HotbarAnchor/Hotbar" unique_id=523622813]
+custom_minimum_size = Vector2(66, 66)
+layout_mode = 2
+theme_override_styles/panel = SubResource("SF_slot_normal")
+
+[node name="Icon" type="TextureRect" parent="Control/HotbarAnchor/Hotbar/Slot3" unique_id=67656658]
+visible = false
+layout_mode = 2
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Count" type="Label" parent="Control/HotbarAnchor/Hotbar/Slot3" unique_id=1430198804]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+
+[node name="KeyLabel" type="Label" parent="Control/HotbarAnchor/Hotbar/Slot3" unique_id=459952329]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 0.7)
+theme_override_font_sizes/font_size = 10
+text = "3"
+horizontal_alignment = 1
+
+[node name="BagSlot" type="PanelContainer" parent="Control/HotbarAnchor/Hotbar" unique_id=1646153871]
+custom_minimum_size = Vector2(66, 66)
+layout_mode = 2
+theme_override_styles/panel = SubResource("SF_bag_slot_btn")
+
+[node name="ViewportContainer" type="SubViewportContainer" parent="Control/HotbarAnchor/Hotbar/BagSlot" unique_id=1132733993]
+layout_mode = 2
+mouse_filter = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Control/HotbarAnchor/Hotbar/BagSlot/ViewportContainer" unique_id=1569099786]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(62, 62)
+render_target_update_mode = 4
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Control/HotbarAnchor/Hotbar/BagSlot/ViewportContainer/SubViewport" unique_id=693813489]
+environment = SubResource("ENV_transparent")
+
+[node name="BagMeshInstance" type="MeshInstance3D" parent="Control/HotbarAnchor/Hotbar/BagSlot/ViewportContainer/SubViewport" unique_id=249402754]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -0.19158077, -0.00015354156)
+material_override = SubResource("StandardMaterial3D_4oq3m")
+mesh = ExtResource("2_bagmesh")
+
+[node name="Camera3D" type="Camera3D" parent="Control/HotbarAnchor/Hotbar/BagSlot/ViewportContainer/SubViewport" unique_id=1636385994]
+transform = Transform3D(1, 0, 0, 0, 0.9061065, 0.42304972, 0, -0.42304972, 0.9061065, 0, 0.35, 0.7837923)
+projection = 1
+size = 0.42
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Control/HotbarAnchor/Hotbar/BagSlot/ViewportContainer/SubViewport" unique_id=350225346]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0.4, 0.5)
+light_energy = 2.5
+omni_range = 4.0
+
+[connection signal="pressed" from="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot1" to="." method="_on_bag_slot_clicked" binds= [0]]
+[connection signal="pressed" from="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot2" to="." method="_on_bag_slot_clicked" binds= [1]]
+[connection signal="pressed" from="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot3" to="." method="_on_bag_slot_clicked" binds= [2]]
+[connection signal="pressed" from="Control/BagPanel/MarginContainer/VBox/ItemList/BagSlot4" to="." method="_on_bag_slot_clicked" binds= [3]]
