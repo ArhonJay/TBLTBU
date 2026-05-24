@@ -33,6 +33,9 @@ var max_zoom: float = 4.0
 var zoom_step: float = 0.4
 var base_camera_y: float
 
+# --- DRONE ---
+var drone_battery_seconds: float = 0.0   # extra flight time added by batteries
+
 # --- HEALTH SYSTEM ---
 @export var max_health: int = 100
 var current_health: int = 100
@@ -90,9 +93,6 @@ func _ready():
 	current_stamina = max_stamina
 	_update_health_ui()
 	_update_stamina_ui()
-	# --- ADD THIS LINE ---
-	# Listen for the master clock hitting zero
-	NetworkManager.match_ended_time_out.connect(_on_timeout_death)
 
 # --- DAMAGE & DEATH ---
 func take_damage(amount: int):
@@ -199,6 +199,9 @@ func _input(event):
 		return
 	if event is InputEventMouseMotion:
 		mouse_delta = event.relative
+
+	if event.is_action_pressed("use_item"):
+		use_item()
 
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
@@ -414,6 +417,76 @@ func _go_to_main_menu_from_explorer():
 	if nm:
 		nm.reset()
 	get_tree().change_scene_to_file("res://menu/MainMenu.tscn")
+
+# --- USE ITEM (hotbar) ---
+func use_item() -> void:
+	var inv := get_node_or_null("InventoryUI")
+	if inv == null:
+		return
+	var item = inv.get_selected_item()
+	if item == null:
+		return
+	var item_id : String = item.get("id", "")
+	match item_id:
+		"medkit":
+			var amount : int = item.get("heal_amount", 50)
+			heal(amount)
+			inv.remove_selected_item()
+			print("Used Medkit — healed %d HP." % amount)
+		"battery":
+			var bonus : int = item.get("flight_bonus", 5)
+			drone_battery_seconds += float(bonus)
+			inv.remove_selected_item()
+			print("Used Drone Battery — +%ds flight time. Total bonus: %.0fs" % [bonus, drone_battery_seconds])
+			_show_use_popup("+%d seconds drone flight time" % bonus, Color(0.25, 0.85, 0.35, 1.0))
+		_:
+			print("No use action defined for item: ", item_id)
+
+
+# ── Item-use feedback popup (bottom-centre, brief) ────────────────────────────
+func _show_use_popup(message: String, accent: Color) -> void:
+	var popup_name := "_UsePopup"
+	var old := get_node_or_null(popup_name)
+	if old:
+		old.queue_free()
+
+	var layer := CanvasLayer.new()
+	layer.name  = popup_name
+	layer.layer = 11
+	add_child(layer)
+
+	var panel := PanelContainer.new()
+	var ps    := StyleBoxFlat.new()
+	ps.bg_color           = Color(0.05, 0.05, 0.07, 0.85)
+	ps.set_corner_radius_all(8)
+	ps.border_width_top    = 0; ps.border_width_bottom = 2
+	ps.border_width_left   = 0; ps.border_width_right  = 0
+	ps.border_color        = accent
+	ps.content_margin_top    = 10.0; ps.content_margin_bottom = 10.0
+	ps.content_margin_left   = 20.0; ps.content_margin_right  = 20.0
+	panel.add_theme_stylebox_override("panel", ps)
+	panel.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
+	panel.anchor_top    = 0.82
+	panel.anchor_bottom = 0.82
+	panel.anchor_left   = 0.5
+	panel.anchor_right  = 0.5
+	panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	panel.grow_vertical   = Control.GROW_DIRECTION_BOTH
+	layer.add_child(panel)
+
+	var lbl := Label.new()
+	lbl.text = message
+	lbl.add_theme_font_size_override("font_size", 18)
+	lbl.add_theme_color_override("font_color", accent)
+	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	panel.add_child(lbl)
+
+	panel.modulate.a = 0.0
+	var tween := create_tween()
+	tween.tween_property(panel, "modulate:a", 1.0, 0.2)
+	tween.tween_interval(1.8)
+	tween.tween_property(panel, "modulate:a", 0.0, 0.4)
+	tween.tween_callback(layer.queue_free)
 
 func window_activity():
 	if Input.is_action_just_pressed("ui_cancel"):
