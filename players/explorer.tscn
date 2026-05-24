@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" path="res://puzzles/scenes/stamina_ui.tscn" id="13_mue4t"]
 [ext_resource type="PackedScene" uid="uid://bstlccajhyfv3" path="res://puzzles/scenes/inventory_ui.tscn" id="14_b3n2t"]
 [ext_resource type="Script" uid="uid://dx025rpfxq8u1" path="res://players/label.gd" id="15_h3046"]
+[ext_resource type="PackedScene" uid="uid://bkup4q4emqn3a" path="res://puzzles/scenes/ObjectiveList.tscn" id="16_x5m40"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_83qqn"]
 radius = 0.2
@@ -92,3 +93,5 @@ offset_right = 72.0
 offset_bottom = 23.0
 grow_horizontal = 2
 script = ExtResource("15_h3046")
+
+[node name="ObjectiveList" parent="." unique_id=1818268639 instance=ExtResource("16_x5m40")]

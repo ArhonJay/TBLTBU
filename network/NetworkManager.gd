@@ -152,3 +152,19 @@ func trigger_time_out_death():
 	match_ended_time_out.emit()
 	# Your player scripts or main game manager should listen to this signal 
 	# to kill the players and show the Game Over screen.
+
+# Call this on the server to add or subtract time from the world timer.
+# Pass a positive value to add time (reward), negative to subtract (penalty).
+func adjust_world_timer(delta: int):
+	if not multiplayer.is_server():
+		return
+	if not is_timer_running:
+		return
+
+	time_left = max(0, time_left + delta)
+	sync_time_to_clients.rpc(time_left)
+
+	if time_left <= 0:
+		server_timer.stop()
+		is_timer_running = false
+		trigger_time_out_death.rpc()

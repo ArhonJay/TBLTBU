@@ -101,6 +101,10 @@ func _on_lock_success() -> void:
 	is_solved = true
 	set_process_unhandled_input(false)
 	$InteractionZone.monitoring = false
+
+	# ── Notify objective tracker ──────────────────────────────────────────────
+	ObjectiveManager.register_chest_solved()
+
 	_on_chest_unlocked()
 
 
@@ -130,7 +134,6 @@ func _give_items_to_player() -> void:
 		push_warning("Chest: No node in group 'explorer' found.")
 		return
 
-	# Pick the closest explorer (safe for multiplayer)
 	var player : Node = players[0]
 	if players.size() > 1:
 		var min_dist := INF
@@ -145,11 +148,9 @@ func _give_items_to_player() -> void:
 		push_warning("Chest: Player has no 'InventoryUI' child.")
 		return
 
-	# ── Randomise loot: 1/3 medkit, 1/3 battery, 1/3 nothing ────────────────
 	var roll : int = randi() % 3   # 0 = medkit, 1 = battery, 2 = nothing
 
 	if roll == 2:
-		# Empty chest
 		print("Chest: No loot this time.")
 		_show_obtained_popup(player, "The chest was empty...", null, false, 0.0)
 		return
@@ -189,7 +190,6 @@ func _give_items_to_player() -> void:
 func _show_obtained_popup(player: Node, message: String, icon,
 		success: bool, delay: float = 0.0) -> void:
 
-	# Unique name per message so multiple popups can stack
 	var popup_name := "_ItemPopup_" + message.left(20).replace(" ", "_")
 	var old := player.get_node_or_null(popup_name)
 	if old:
@@ -200,7 +200,6 @@ func _show_obtained_popup(player: Node, message: String, icon,
 	layer.layer = 10
 	player.add_child(layer)
 
-	# Panel
 	var panel := PanelContainer.new()
 	var ps    := StyleBoxFlat.new()
 	ps.bg_color           = Color(0.06, 0.06, 0.08, 0.88)
@@ -220,7 +219,6 @@ func _show_obtained_popup(player: Node, message: String, icon,
 	panel.grow_vertical   = Control.GROW_DIRECTION_END
 	layer.add_child(panel)
 
-	# HBox: icon + text
 	var hbox := HBoxContainer.new()
 	hbox.add_theme_constant_override("separation", 14)
 	panel.add_child(hbox)
@@ -255,7 +253,6 @@ func _show_obtained_popup(player: Node, message: String, icon,
 	msg_lbl.add_theme_color_override("font_color", Color(0.96, 0.94, 0.88, 1.0))
 	vbox.add_child(msg_lbl)
 
-	# Fade in → hold → fade out — with optional delay for staggering
 	panel.modulate.a = 0.0
 	var tween := player.create_tween()
 	if delay > 0.0:
@@ -299,25 +296,22 @@ func _make_battery_icon() -> ImageTexture:
 	var img  := Image.create(size, size, false, Image.FORMAT_RGBA8)
 	img.fill(Color(0, 0, 0, 0))
 
-	var body_col := Color(0.20, 0.20, 0.22, 1.0)   # dark grey casing
-	var fill_col := Color(0.25, 0.85, 0.35, 1.0)   # green charge fill
-	var rim_col  := Color(0.65, 0.65, 0.70, 1.0)   # light grey rim
-	var nub_col  := Color(0.60, 0.60, 0.65, 1.0)   # positive terminal nub
+	var body_col := Color(0.20, 0.20, 0.22, 1.0)
+	var fill_col := Color(0.25, 0.85, 0.35, 1.0)
+	var rim_col  := Color(0.65, 0.65, 0.70, 1.0)
+	var nub_col  := Color(0.60, 0.60, 0.65, 1.0)
 
-	# Battery body rect
 	var bx1 := 8; var bx2 := 52
 	var by1 := 16; var by2 := 48
 	for y in range(by1, by2):
 		for x in range(bx1, bx2):
 			img.set_pixel(x, y, body_col)
 
-	# Green fill (left ~70% of interior)
 	var fill_x2 := bx1 + int((bx2 - bx1) * 0.68)
 	for y in range(by1 + 4, by2 - 4):
 		for x in range(bx1 + 4, fill_x2):
 			img.set_pixel(x, y, fill_col)
 
-	# Rim (border around body)
 	for x in range(bx1, bx2):
 		img.set_pixel(x, by1, rim_col)
 		img.set_pixel(x, by2 - 1, rim_col)
@@ -325,7 +319,6 @@ func _make_battery_icon() -> ImageTexture:
 		img.set_pixel(bx1, y, rim_col)
 		img.set_pixel(bx2 - 1, y, rim_col)
 
-	# Positive terminal nub (right side)
 	var nx1 := bx2; var nx2 := bx2 + 6
 	var ny1 := (by1 + by2) / 2 - 5
 	var ny2 := (by1 + by2) / 2 + 5
@@ -333,8 +326,6 @@ func _make_battery_icon() -> ImageTexture:
 		for x in range(nx1, nx2):
 			img.set_pixel(x, y, nub_col)
 
-	# Lightning bolt (white, centred)
-	# Draw a simple zigzag: top-right → mid-left → bottom-right
 	var bolt_pts : Array = [
 		[36, 20], [30, 32], [34, 32], [28, 44],
 	]

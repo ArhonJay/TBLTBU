@@ -29,7 +29,7 @@ const EMPLOYEES := [
 	},
 	{
 		"name":        "Dr. Cobb",
-		"description": "Research & Scienced",
+		"description": "Research & Science",
 		"pin":         "8008",
 		"photo_path":  "res://assets/employees/dr_cobb.png"
 	},
@@ -41,7 +41,6 @@ const EMPLOYEES := [
 	},
 ]
 
-# Animation name as it appears in the GLB
 const OPEN_ANIM := "Locker_Door_003Action"
 
 var correct_code := ""
@@ -56,7 +55,7 @@ var prompt_label: Label3D
 var employee_photo_node: TextureRect
 var employee_name_label: Label
 var employee_desc_label: Label
-var anim_player: AnimationPlayer  # resolved in _ready
+var anim_player: AnimationPlayer
 
 const _BASE := "Control/CenterContainer/MainPanel/MarginContainer/HBoxContainer"
 const _KP   := _BASE + "/KeypadPanel"
@@ -67,20 +66,12 @@ func _ready():
 	$InteractionZone.body_entered.connect(_on_body_entered)
 	$InteractionZone.body_exited.connect(_on_body_exited)
 
-	# ---------------------------------------------------------------
-	# Find the AnimationPlayer that Godot creates when importing the GLB.
-	# Godot nests it inside the instanced scene as:
-	#   LockerModel -> AnimationPlayer
-	# We search recursively so the exact sub-path doesn't matter.
-	# ---------------------------------------------------------------
 	anim_player = _find_animation_player($LockerModel)
 	if anim_player == null:
-		push_warning("Locker: AnimationPlayer not found inside LockerModel. Check GLB import.")
+		push_warning("Locker: AnimationPlayer not found inside LockerModel.")
 	else:
-		# Make sure it doesn't auto-play on scene load
 		anim_player.stop()
 
-	# 3D world-space prompt label
 	prompt_label = Label3D.new()
 	prompt_label.text = "Press E to interact"
 	prompt_label.position = Vector3(0, 1.5, 0.1)
@@ -90,7 +81,6 @@ func _ready():
 	prompt_label.visible = false
 	add_child(prompt_label)
 
-	# Cache UI node references
 	display      = keypad_ui.get_node(_KP + "/Display")
 	result_label = keypad_ui.get_node(_KP + "/ResultLabel")
 
@@ -98,7 +88,6 @@ func _ready():
 	employee_name_label = keypad_ui.get_node(_EP + "/EmployeeName")
 	employee_desc_label = keypad_ui.get_node(_EP + "/EmployeeDescription")
 
-	# Button connections
 	keypad_ui.get_node(_KP + "/HBoxContainer/Btn1").pressed.connect(func(): _on_number_pressed("1"))
 	keypad_ui.get_node(_KP + "/HBoxContainer/Btn2").pressed.connect(func(): _on_number_pressed("2"))
 	keypad_ui.get_node(_KP + "/HBoxContainer/Btn3").pressed.connect(func(): _on_number_pressed("3"))
@@ -117,7 +106,6 @@ func _ready():
 	_assign_random_employee()
 
 
-# Recursively searches a node subtree for the first AnimationPlayer found.
 func _find_animation_player(node: Node) -> AnimationPlayer:
 	if node is AnimationPlayer:
 		return node
@@ -143,11 +131,18 @@ func _assign_random_employee():
 func _on_body_entered(body: Node3D):
 	if body.is_in_group("player"):
 		player_nearby = true
+		if not is_unlocked:
+			if ObjectiveManager.get_phase() < 2:
+				prompt_label.text = "Complete all objectives first"
+			else:
+				prompt_label.text = "Press E to interact"
+			prompt_label.visible = true
 
 
 func _on_body_exited(body: Node3D):
 	if body.is_in_group("player"):
 		player_nearby = false
+		prompt_label.visible = false
 		if ui_open:
 			_close_keypad()
 
@@ -155,6 +150,8 @@ func _on_body_exited(body: Node3D):
 func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed("interact"):
 		if player_nearby and not ui_open and not is_unlocked:
+			if ObjectiveManager.get_phase() < 2:
+				return
 			_open_keypad()
 		elif ui_open:
 			_close_keypad()
@@ -179,7 +176,6 @@ func _on_enter():
 		is_unlocked = true
 		result_label.text = "✓ UNLOCKED"
 		result_label.add_theme_color_override("font_color", Color.GREEN)
-		# Wait briefly so the player sees the success message, then close and animate
 		await get_tree().create_timer(1.5).timeout
 		_close_keypad()
 		_on_locker_unlocked()
@@ -219,3 +215,6 @@ func _on_locker_unlocked():
 			OPEN_ANIM,
 			str(anim_player.get_animation_list()) if anim_player else "no AnimationPlayer"
 		])
+
+	# ── Notify objective tracker — this completes the game ────────────────────
+	ObjectiveManager.register_locker_solved()

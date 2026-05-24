@@ -7,8 +7,8 @@ var _tornado_angle: float = 0.0
 var _target_spins: int = 0
 var _current_spin_progress: float = 0.0
 var _pending_tornado_damage: int = 0
-@export var safe_fall_speed: float = 100.0 # Any speed below this deals no damage
-@export var fall_damage_multiplier: float = 2.0 # How much damage per extra unit of speed
+@export var safe_fall_speed: float = 100.0
+@export var fall_damage_multiplier: float = 2.0
 var _max_downward_speed: float = 0.0
 @export var move_speed: float = 20.0
 @export var climb_speed: float = 10.0
@@ -34,7 +34,7 @@ var zoom_step: float = 0.4
 var base_camera_y: float
 
 # --- DRONE ---
-var drone_battery_seconds: float = 0.0   # extra flight time added by batteries
+var drone_battery_seconds: float = 0.0
 
 # --- HEALTH SYSTEM ---
 @export var max_health: int = 100
@@ -48,12 +48,15 @@ var _hurt_flash_duration: float = 0.4
 
 # --- STAMINA ---
 @export var max_stamina: float = 100.0
-@export var stamina_drain_rate: float = 25.0   # per second while sprinting
-@export var stamina_regen_rate: float = 12.0   # per second while not sprinting
-@export var stamina_regen_delay: float = 1.5   # seconds before regen starts after stopping
+@export var stamina_drain_rate: float = 25.0
+@export var stamina_regen_rate: float = 12.0
+@export var stamina_regen_delay: float = 1.5
 var current_stamina: float = 100.0
 var _stamina_regen_timer: float = 0.0
-var _stamina_exhausted: bool = false           # true only when stamina hits exactly 0
+var _stamina_exhausted: bool = false
+
+# --- OBJECTIVE LIST ---
+const OBJECTIVE_LIST_SCENE := preload("res://puzzles/scenes/ObjectiveList.tscn")
 
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
@@ -94,6 +97,11 @@ func _ready():
 	_update_health_ui()
 	_update_stamina_ui()
 
+	# ── Spawn the ObjectiveList HUD as a child of this explorer ───────────────
+	var obj_list = OBJECTIVE_LIST_SCENE.instantiate()
+	obj_list.name = "ObjectiveList"
+	add_child(obj_list)
+
 # --- DAMAGE & DEATH ---
 func take_damage(amount: int):
 	if is_dead:
@@ -117,31 +125,27 @@ func heal(amount: int):
 
 func catch_in_tornado(tornado_node: Node3D):
 	if is_dead or trapped_tornado != null or is_thrown:
-		return 
-		
+		return
+
 	trapped_tornado = tornado_node
-	
-	# Randomize between 1 and 6 full spins
 	_target_spins = randi_range(1, 6)
 	_current_spin_progress = 0.0
-	
-	# Calculate how much damage they WILL take when they hit the floor
-	_pending_tornado_damage = _target_spins * 5 
-	
+	_pending_tornado_damage = _target_spins * 5
+
 	print("Explorer caught! Spinning ", _target_spins, " times. Pending Damage: ", _pending_tornado_damage)
-	
+
 	var offset = global_position - tornado_node.global_position
 	_tornado_angle = atan2(offset.z, offset.x)
 
 func _throw_from_tornado():
 	print("Explorer was spat out! Brace for impact...")
 	is_thrown = true
-	
+
 	var knockback_dir = (global_position - trapped_tornado.global_position).normalized()
-	trapped_tornado = null 
-	
-	velocity.x = knockback_dir.x * 60.0 
-	velocity.z = knockback_dir.z * 60.0 
+	trapped_tornado = null
+
+	velocity.x = knockback_dir.x * 60.0
+	velocity.z = knockback_dir.z * 60.0
 	velocity.y = 45.0
 
 func _trigger_hurt_flash():
@@ -168,7 +172,6 @@ func _die():
 
 	set_physics_process(false)
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	# Clear inventory on death so it starts fresh next game
 	var inv = get_node_or_null("InventoryUI")
 	if inv and inv.has_method("clear_all"):
 		inv.clear_all()
@@ -177,8 +180,6 @@ func _die():
 func _on_timeout_death():
 	if not is_dead:
 		print("Time is up! Explorer died to the timer.")
-		# Dealing 999 damage securely forces your take_damage() logic 
-		# to run, updating the UI and playing the death animation natively!
 		take_damage(999)
 
 @rpc("call_local", "any_peer", "reliable")
@@ -214,32 +215,27 @@ func _process(delta):
 	if is_dead:
 		return
 
-	# --- STAMINA TICK ---
 	var wants_sprint = Input.is_action_pressed("sprint")
 	var can_sprint = not _stamina_exhausted
 
 	if wants_sprint and can_sprint:
-		# Draining
 		current_stamina -= stamina_drain_rate * delta
 		_stamina_regen_timer = stamina_regen_delay
 		if current_stamina <= 0.0:
 			current_stamina = 0.0
-			_stamina_exhausted = true   # locked until any stamina regens in
+			_stamina_exhausted = true
 		_update_stamina_ui()
 	else:
-		# Regen after delay
 		if _stamina_regen_timer > 0.0:
 			_stamina_regen_timer -= delta
 		elif current_stamina < max_stamina:
 			current_stamina += stamina_regen_rate * delta
 			if current_stamina >= max_stamina:
 				current_stamina = max_stamina
-			# Unlock sprinting as soon as ANY stamina has regenerated (not full, just > 0)
 			if _stamina_exhausted and current_stamina > 0.0:
 				_stamina_exhausted = false
 			_update_stamina_ui()
 
-	# --- HURT FLASH ---
 	if _hurt_flash_timer > 0.0:
 		_hurt_flash_timer -= delta
 		hurt_overlay.modulate.a = (_hurt_flash_timer / _hurt_flash_duration) * 0.55
@@ -261,7 +257,7 @@ func _process(delta):
 func _physics_process(delta):
 	# 1. DEAD PHYSICS
 	if is_dead:
-		trapped_tornado = null 
+		trapped_tornado = null
 		is_thrown = false
 		if not is_on_floor():
 			velocity.y -= gravity * delta
@@ -270,54 +266,49 @@ func _physics_process(delta):
 		move_and_slide()
 		return
 
-	# 2. TRAPPED PHYSICS (Counting spins)
+	# 2. TRAPPED PHYSICS
 	if trapped_tornado != null:
-		var spin_speed = 6.0 # How fast they spin per second
+		var spin_speed = 6.0
 		var angle_step = spin_speed * delta
-		
-		_tornado_angle += angle_step 
-		_current_spin_progress += angle_step # Track total distance spun
-		
-		# TAU is a math constant for one full circle.
-		# If our progress is greater than Target Spins * 1 Circle, throw them!
+
+		_tornado_angle += angle_step
+		_current_spin_progress += angle_step
+
 		if _current_spin_progress >= (_target_spins * TAU):
 			_throw_from_tornado()
-			return 
-		
-		# Swirling math
-		var spin_radius = 2.0 
+			return
+
+		var spin_radius = 2.0
 		var target_x = trapped_tornado.global_position.x + cos(_tornado_angle) * spin_radius
 		var target_z = trapped_tornado.global_position.z + sin(_tornado_angle) * spin_radius
-		var target_y = trapped_tornado.global_position.y + 4.0 
-		
-		velocity = (Vector3(target_x, target_y, target_z) - global_position) * 8.0 
-		
-		$Barbarian.rotation.y += 15.0 * delta 
-		$AnimationPlayer.play("jump_start") 
+		var target_y = trapped_tornado.global_position.y + 4.0
+
+		velocity = (Vector3(target_x, target_y, target_z) - global_position) * 8.0
+
+		$Barbarian.rotation.y += 15.0 * delta
+		$AnimationPlayer.play("jump_start")
 		move_and_slide()
 		return
 
-	# 3. THROWN PHYSICS (Helplessly flying)
+	# 3. THROWN PHYSICS
 	if is_thrown:
 		velocity.y -= gravity * delta
-		$Barbarian.rotation.y += 20.0 * delta 
-		
+		$Barbarian.rotation.y += 20.0 * delta
+
 		if is_on_floor():
 			is_thrown = false
 			print("Explorer landed from the throw!")
-			
-			# APPLY THE TORNADO DAMAGE THE MOMENT THEY HIT THE GROUND!
+
 			if _pending_tornado_damage > 0:
 				take_damage(_pending_tornado_damage)
 				_pending_tornado_damage = 0
-			
-		# Keep Fall damage tracking so they take fall damage ON TOP of tornado damage!
+
 		if velocity.y < 0 and abs(velocity.y) > _max_downward_speed:
 			_max_downward_speed = abs(velocity.y)
-			
+
 		move_and_slide()
 		return
-	
+
 	var height_boost = target_zoom * 0.3
 	$SpringArm3D.spring_length = lerp($SpringArm3D.spring_length, target_zoom, 10.0 * delta)
 	camera.position.y = lerp(camera.position.y, base_camera_y + height_boost, 10.0 * delta)
@@ -328,7 +319,6 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = jump_force
 
-	# Sprint only allowed when stamina is not exhausted
 	var current_speed = move_speed
 	if Input.is_action_pressed("sprint") and not _stamina_exhausted:
 		current_speed = run_speed
@@ -443,7 +433,7 @@ func use_item() -> void:
 			print("No use action defined for item: ", item_id)
 
 
-# ── Item-use feedback popup (bottom-centre, brief) ────────────────────────────
+# ── Item-use feedback popup ────────────────────────────────────────────────────
 func _show_use_popup(message: String, accent: Color) -> void:
 	var popup_name := "_UsePopup"
 	var old := get_node_or_null(popup_name)
