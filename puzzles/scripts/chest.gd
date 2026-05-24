@@ -7,6 +7,10 @@ extends StaticBody3D
 const OPEN_ANIM  := "Cylinder_001Action"
 const WOOD_COLOR := Color(0.45, 0.28, 0.12)
 
+# ── One-time manual flags (persist for the lifetime of the scene) ─────────────
+static var _potion_manual_obtained  := false
+static var _radio_manual_obtained   := false
+
 # ── State ─────────────────────────────────────────────────────────────────────
 var player_nearby := false
 var ui_open       := false
@@ -148,35 +152,92 @@ func _give_items_to_player() -> void:
 		push_warning("Chest: Player has no 'InventoryUI' child.")
 		return
 
-	var roll : int = randi() % 3   # 0 = medkit, 1 = battery, 2 = nothing
+	# ── Build weighted loot pool ──────────────────────────────────────────────
+	# Pool entries: [id, weight]
+	# Manuals are only added if not yet obtained.
+	var pool : Array = [
+		["medkit",        3],
+		["energy_drink",  3],
+		["empty",         2],
+	]
+	if not _potion_manual_obtained:
+		pool.append(["potion_manual", 1])
+	if not _radio_manual_obtained:
+		pool.append(["radio_manual",  1])
 
-	if roll == 2:
-		print("Chest: No loot this time.")
-		_show_obtained_popup(player, "The chest was empty...", null, false, 0.0)
-		return
+	var total_weight : int = 0
+	for entry in pool:
+		total_weight += entry[1]
 
-	var item : Dictionary
-	if roll == 0:
-		item = {
-			"id":          "medkit",
-			"name":        "Medkit",
-			"description": "Restores 50 HP when used.",
-			"type":        "consumable",
-			"heal_amount": 50,
-			"count":       1,
-			"icon":        _make_medkit_icon(),
-		}
-	else:
-		item = {
-			"id":           "battery",
-			"name":         "Drone Battery",
-			"description":  "+5s drone flight time.",
-			"type":         "consumable",
-			"flight_bonus": 5,
-			"count":        1,
-			"icon":         _make_battery_icon(),
-		}
+	var roll : int = randi() % total_weight
+	var chosen := "empty"
+	var acc    := 0
+	for entry in pool:
+		acc += entry[1]
+		if roll < acc:
+			chosen = entry[0]
+			break
 
+	# ── Resolve chosen loot ───────────────────────────────────────────────────
+	match chosen:
+		"empty":
+			print("Chest: No loot this time.")
+			_show_obtained_popup(player, "The chest was empty...", null, false, 0.0)
+			return
+
+		"medkit":
+			var item := {
+				"id":          "medkit",
+				"name":        "Medkit",
+				"description": "Restores 50 HP when used.",
+				"type":        "consumable",
+				"heal_amount": 50,
+				"count":       1,
+				"icon":        _make_medkit_icon(),
+			}
+			_try_add_item(player, inventory, item)
+
+		"energy_drink":
+			var item := {
+				"id":           "energy_drink",
+				"name":         "Energy Drink",
+				"description":  "Restores 50 stamina when used.",
+				"type":         "consumable",
+				"stamina_restore": 50.0,
+				"count":        1,
+				"icon":         _make_energy_drink_icon(),
+			}
+			_try_add_item(player, inventory, item)
+
+		"potion_manual":
+			_potion_manual_obtained = true
+			var tex : Texture2D = _load_manual_texture("res://assets/manual/potion_manual.png")
+			var item := {
+				"id":          "potion_manual",
+				"name":        "Potion Puzzle Manual",
+				"description": "A manual for the potion puzzle.",
+				"type":        "manual",
+				"count":       1,
+				"icon":        tex,
+			}
+			_try_add_manual(player, inventory, item, "Potion Puzzle Manual", tex)
+
+		"radio_manual":
+			_radio_manual_obtained = true
+			var tex : Texture2D = _load_manual_texture("res://assets/manual/radio_manual.png")
+			var item := {
+				"id":          "radio_manual",
+				"name":        "Radio Puzzle Manual",
+				"description": "A manual for the radio puzzle.",
+				"type":        "manual",
+				"count":       1,
+				"icon":        tex,
+			}
+			_try_add_manual(player, inventory, item, "Radio Puzzle Manual", tex)
+
+
+# ── Add a regular consumable item ─────────────────────────────────────────────
+func _try_add_item(player: Node, inventory: Node, item: Dictionary) -> void:
 	var added : bool = inventory.add_item(item)
 	if added:
 		print("Chest: '%s' placed in player inventory." % item["name"])
@@ -184,6 +245,129 @@ func _give_items_to_player() -> void:
 	else:
 		push_warning("Chest: Inventory full — '%s' could not be added." % item["name"])
 		_show_obtained_popup(player, "Inventory full! No room for %s." % item["name"], item["icon"], false, 0.0)
+
+
+# ── Add a manual item with its special full-screen popup ──────────────────────
+func _try_add_manual(player: Node, inventory: Node, item: Dictionary,
+		display_name: String, tex: Texture2D) -> void:
+	var added : bool = inventory.add_item(item)
+	if added:
+		print("Chest: '%s' added to inventory." % display_name)
+		_show_manual_popup(player, display_name, tex)
+	else:
+		push_warning("Chest: Inventory full — '%s' could not be added." % display_name)
+		_show_obtained_popup(player, "Inventory full! Can't store %s." % display_name, tex, false, 0.0)
+
+
+# ── Load a PNG texture from res:// path safely ───────────────────────────────
+func _load_manual_texture(path: String) -> Texture2D:
+	if ResourceLoader.exists(path):
+		return load(path) as Texture2D
+	push_warning("Chest: Manual texture not found at '%s'." % path)
+	return null
+
+
+# ── Manual obtained — full-screen modal popup ─────────────────────────────────
+func _show_manual_popup(player: Node, manual_name: String, tex: Texture2D) -> void:
+	var popup_name := "_ManualPopup_" + manual_name.replace(" ", "_")
+	var old := player.get_node_or_null(popup_name)
+	if old:
+		old.queue_free()
+
+	var layer := CanvasLayer.new()
+	layer.name  = popup_name
+	layer.layer = 12
+	player.add_child(layer)
+
+	# Dark overlay
+	var overlay := ColorRect.new()
+	overlay.color = Color(0.0, 0.0, 0.0, 0.65)
+	overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
+	layer.add_child(overlay)
+
+	# Centred card
+	var panel := PanelContainer.new()
+	var ps    := StyleBoxFlat.new()
+	ps.bg_color           = Color(0.08, 0.07, 0.05, 0.97)
+	ps.set_corner_radius_all(14)
+	ps.border_width_top    = 2; ps.border_width_bottom = 2
+	ps.border_width_left   = 2; ps.border_width_right  = 2
+	ps.border_color        = Color(0.85, 0.70, 0.20, 1.0)
+	ps.content_margin_top    = 28.0; ps.content_margin_bottom = 28.0
+	ps.content_margin_left   = 36.0; ps.content_margin_right  = 36.0
+	panel.add_theme_stylebox_override("panel", ps)
+	panel.set_anchors_preset(Control.PRESET_CENTER)
+	panel.offset_left   = -260.0
+	panel.offset_right  =  260.0
+	panel.offset_top    = -300.0
+	panel.offset_bottom =  300.0
+	layer.add_child(panel)
+
+	var vbox := VBoxContainer.new()
+	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	vbox.add_theme_constant_override("separation", 16)
+	panel.add_child(vbox)
+
+	# Header label
+	var header := Label.new()
+	header.text = "MANUAL OBTAINED"
+	header.add_theme_font_size_override("font_size", 13)
+	header.add_theme_color_override("font_color", Color(0.85, 0.70, 0.20, 1.0))
+	header.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(header)
+
+	# Manual image preview
+	if tex != null:
+		var img_rect := TextureRect.new()
+		img_rect.texture              = tex
+		img_rect.custom_minimum_size  = Vector2(380, 280)
+		img_rect.stretch_mode         = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		img_rect.expand_mode          = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
+		vbox.add_child(img_rect)
+	else:
+		var placeholder := Label.new()
+		placeholder.text = "[image not found]"
+		placeholder.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
+		placeholder.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		vbox.add_child(placeholder)
+
+	# Manual name
+	var name_lbl := Label.new()
+	name_lbl.text = manual_name
+	name_lbl.add_theme_font_size_override("font_size", 20)
+	name_lbl.add_theme_color_override("font_color", Color(0.96, 0.94, 0.88, 1.0))
+	name_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(name_lbl)
+
+	# Sub-label
+	var sub_lbl := Label.new()
+	sub_lbl.text = "Added to your inventory."
+	sub_lbl.add_theme_font_size_override("font_size", 13)
+	sub_lbl.add_theme_color_override("font_color", Color(0.65, 0.63, 0.58, 1.0))
+	sub_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(sub_lbl)
+
+	# Dismiss button
+	var btn := Button.new()
+	btn.text = "  OK  "
+	btn.add_theme_font_size_override("font_size", 15)
+	var btn_style := StyleBoxFlat.new()
+	btn_style.bg_color = Color(0.22, 0.18, 0.06, 1.0)
+	btn_style.set_corner_radius_all(8)
+	btn_style.border_width_top = 2; btn_style.border_width_bottom = 2
+	btn_style.border_width_left = 2; btn_style.border_width_right = 2
+	btn_style.border_color = Color(0.85, 0.70, 0.20, 0.9)
+	btn.add_theme_stylebox_override("normal", btn_style)
+	btn.pressed.connect(func():
+		layer.queue_free()
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	)
+	vbox.add_child(btn)
+
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	panel.modulate.a = 0.0
+	var tween := player.create_tween()
+	tween.tween_property(panel, "modulate:a", 1.0, 0.2)
 
 
 # ── Item obtained popup ───────────────────────────────────────────────────────
@@ -291,47 +475,58 @@ func _make_medkit_icon() -> ImageTexture:
 	return ImageTexture.create_from_image(img)
 
 
-func _make_battery_icon() -> ImageTexture:
+func _make_energy_drink_icon() -> ImageTexture:
 	var size := 64
 	var img  := Image.create(size, size, false, Image.FORMAT_RGBA8)
 	img.fill(Color(0, 0, 0, 0))
 
-	var body_col := Color(0.20, 0.20, 0.22, 1.0)
-	var fill_col := Color(0.25, 0.85, 0.35, 1.0)
-	var rim_col  := Color(0.65, 0.65, 0.70, 1.0)
-	var nub_col  := Color(0.60, 0.60, 0.65, 1.0)
+	var can_col    := Color(0.10, 0.10, 0.12, 1.0)
+	var accent_col := Color(0.15, 0.90, 0.40, 1.0)  # bright green
+	var rim_col    := Color(0.70, 0.70, 0.75, 1.0)
+	var shine_col  := Color(0.85, 1.00, 0.88, 0.55)
 
-	var bx1 := 8; var bx2 := 52
-	var by1 := 16; var by2 := 48
-	for y in range(by1, by2):
-		for x in range(bx1, bx2):
-			img.set_pixel(x, y, body_col)
+	# Can body — rounded rectangle centred
+	var cx1 := 18; var cx2 := 46
+	var cy1 := 8;  var cy2 := 58
+	var cr  := 6
+	for y in range(cy1, cy2):
+		for x in range(cx1, cx2):
+			var in_corner := (
+				(x < cx1+cr and y < cy1+cr and Vector2(x-cx1-cr, y-cy1-cr).length() > cr) or
+				(x > cx2-cr-1 and y < cy1+cr and Vector2(x-(cx2-cr-1), y-cy1-cr).length() > cr) or
+				(x < cx1+cr and y > cy2-cr-1 and Vector2(x-cx1-cr, y-(cy2-cr-1)).length() > cr) or
+				(x > cx2-cr-1 and y > cy2-cr-1 and Vector2(x-(cx2-cr-1), y-(cy2-cr-1)).length() > cr)
+			)
+			if not in_corner:
+				img.set_pixel(x, y, can_col)
 
-	var fill_x2 := bx1 + int((bx2 - bx1) * 0.68)
-	for y in range(by1 + 4, by2 - 4):
-		for x in range(bx1 + 4, fill_x2):
-			img.set_pixel(x, y, fill_col)
+	# Accent stripe (top third of can)
+	for y in range(cy1 + 4, cy1 + 18):
+		for x in range(cx1 + 2, cx2 - 2):
+			if img.get_pixel(x, y).a > 0.0:
+				img.set_pixel(x, y, accent_col)
 
-	for x in range(bx1, bx2):
-		img.set_pixel(x, by1, rim_col)
-		img.set_pixel(x, by2 - 1, rim_col)
-	for y in range(by1, by2):
-		img.set_pixel(bx1, y, rim_col)
-		img.set_pixel(bx2 - 1, y, rim_col)
+	# Rim lines top & bottom
+	for x in range(cx1 + 2, cx2 - 2):
+		img.set_pixel(x, cy1,     rim_col)
+		img.set_pixel(x, cy1 + 1, rim_col)
+		img.set_pixel(x, cy2 - 1, rim_col)
+		img.set_pixel(x, cy2 - 2, rim_col)
 
-	var nx1 := bx2; var nx2 := bx2 + 6
-	var ny1 := (by1 + by2) / 2 - 5
-	var ny2 := (by1 + by2) / 2 + 5
-	for y in range(ny1, ny2):
-		for x in range(nx1, nx2):
-			img.set_pixel(x, y, nub_col)
+	# Shine highlight
+	for y in range(cy1 + 5, cy2 - 5):
+		for x in range(cx1 + 3, cx1 + 8):
+			if img.get_pixel(x, y).a > 0.0:
+				img.set_pixel(x, y, shine_col)
 
-	var bolt_pts : Array = [
-		[36, 20], [30, 32], [34, 32], [28, 44],
+	# Lightning bolt (stamina symbol) in white
+	var bolt : Array = [
+		[35, 18], [29, 33], [33, 33], [27, 48],
 	]
-	for i in range(bolt_pts.size() - 1):
-		var p0 := Vector2(bolt_pts[i][0], bolt_pts[i][1])
-		var p1 := Vector2(bolt_pts[i+1][0], bolt_pts[i+1][1])
+	var bolt_col := Color(1.0, 1.0, 1.0, 1.0)
+	for i in range(bolt.size() - 1):
+		var p0 := Vector2(bolt[i][0],   bolt[i][1])
+		var p1 := Vector2(bolt[i+1][0], bolt[i+1][1])
 		var steps := int(p0.distance_to(p1)) * 2
 		for s in range(steps + 1):
 			var t := float(s) / float(steps)
@@ -341,7 +536,8 @@ func _make_battery_icon() -> ImageTexture:
 				for dy in range(-1, 2):
 					var fx := px + dx; var fy := py + dy
 					if fx >= 0 and fx < size and fy >= 0 and fy < size:
-						img.set_pixel(fx, fy, Color(1, 1, 1, 1))
+						if img.get_pixel(fx, fy).a > 0.0:
+							img.set_pixel(fx, fy, bolt_col)
 
 	return ImageTexture.create_from_image(img)
 

@@ -11,7 +11,7 @@ extends Node
 # ── Targets ───────────────────────────────────────────────────────────────────
 const TARGET_CHESTS    : int = 1
 const TARGET_SIMON     : int = 1
-const TARGET_MUSHROOMS : int = 1
+const TARGET_MUSHROOMS : int = 0
 
 # ── Progress ──────────────────────────────────────────────────────────────────
 var chests_done    : int = 0
@@ -19,7 +19,9 @@ var simon_done     : int = 0
 var mushrooms_done : int = 0
 var locker_solved  : bool = false
 
-var _phase : int = 1   # 1 = main objectives, 2 = lab/locker objective
+var _phase      : int   = 1
+var _timer_running : bool  = false
+var elapsed_time   : float = 0.0   # seconds – read by MissionReport
 
 # ── Signals ───────────────────────────────────────────────────────────────────
 signal objectives_updated
@@ -31,6 +33,25 @@ signal game_complete
 
 func get_phase() -> int:
 	return _phase
+
+
+func start_timer() -> void:
+	elapsed_time   = 0.0
+	_timer_running = true
+
+
+func stop_timer() -> void:
+	_timer_running = false
+
+
+func get_elapsed_formatted() -> String:
+	var t   := int(elapsed_time)
+	var hrs := t / 3600
+	var mn  := (t % 3600) / 60
+	var sec := t % 60
+	if hrs > 0:
+		return "%d:%02d:%02d" % [hrs, mn, sec]
+	return "%02d:%02d" % [mn, sec]
 
 
 func register_chest_solved() -> void:
@@ -60,12 +81,18 @@ func register_mushroom_eaten() -> void:
 func register_locker_solved() -> void:
 	if _phase != 2:
 		return
+	stop_timer()
 	locker_solved = true
 	objectives_updated.emit()
 	game_complete.emit()
 
 
 # ── Internal ──────────────────────────────────────────────────────────────────
+
+func _process(delta: float) -> void:
+	if _timer_running:
+		elapsed_time += delta
+
 
 func _check_phase1_complete() -> void:
 	if chests_done    >= TARGET_CHESTS    and \

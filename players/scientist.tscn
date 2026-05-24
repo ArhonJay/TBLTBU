@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://b28dmj24drca1" path="res://voice/voice_chat.tscn" id="9_xur1e"]
 [ext_resource type="PackedScene" path="res://puzzles/scenes/stamina_ui.tscn" id="10_4os2e"]
 [ext_resource type="Script" uid="uid://dx025rpfxq8u1" path="res://players/label.gd" id="11_4cje2"]
+[ext_resource type="PackedScene" uid="uid://j1ee7oyf5ud3" path="res://puzzles/scenes/map_ui.tscn" id="12_qt3we"]
+[ext_resource type="Script" uid="uid://bkxk7eoy5gxgl" path="res://puzzles/scripts/map_ui.gd" id="13_rmoqj"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_mmr2p"]
 radius = 0.2
@@ -34,7 +36,7 @@ _data = {
 &"walk": ExtResource("7_4cje2")
 }
 
-[node name="Player2" type="CharacterBody3D" unique_id=559825491 groups=["player"]]
+[node name="Player2" type="CharacterBody3D" unique_id=559825491 groups=["scientist"]]
 script = ExtResource("1_dkah4")
 
 [node name="Mage" parent="." unique_id=1274447443 instance=ExtResource("2_xuo6s")]
@@ -52,7 +54,7 @@ near = 0.01
 [node name="Hand" type="Marker3D" parent="SpringArm3D/Camera" unique_id=1351194563]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.90786123)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=871925756 groups=["player"]]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=871925756 groups=["scientist"]]
 transform = Transform3D(3.5, 0, 0, 0, 3.5, 0, 0, 0, 3.5, 0, 1.6900418, 0.26759923)
 shape = SubResource("CapsuleShape3D_mmr2p")
 
@@ -78,3 +80,6 @@ offset_right = 72.0
 offset_bottom = 23.0
 grow_horizontal = 2
 script = ExtResource("11_4cje2")
+
+[node name="MapUI" parent="." unique_id=921360253 instance=ExtResource("12_qt3we")]
+script = ExtResource("13_rmoqj")

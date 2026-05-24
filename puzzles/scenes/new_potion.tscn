@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://ddchp3q1c5jv3"]
+
+[ext_resource type="Script" uid="uid://bnqn3odmjlbav" path="res://puzzles/scripts/new_potion.gd" id="1_07608"]
+[ext_resource type="PackedScene" uid="uid://cmmwfvsq734it" path="res://puzzles/models/potion_new.glb" id="2_srsfy"]
+[ext_resource type="PackedScene" uid="uid://do7kho3mo51lr" path="res://puzzles/scenes/potion_ui.tscn" id="3_srsfy"]
+[ext_resource type="PackedScene" uid="uid://j1ee7oyf5ud3" path="res://puzzles/scenes/map_ui.tscn" id="4_07608"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_07608"]
+size = Vector3(7.008789, 1.8220869, 1.423835)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_t14hi"]
+radius = 4.0
+
+[node name="NewPotion" type="StaticBody3D" unique_id=1479819080 node_paths=PackedStringArray("potion_ui", "map_ui")]
+script = ExtResource("1_07608")
+potion_ui = NodePath("PotionUI")
+map_ui = NodePath("MapUI")
+
+[node name="potion_new" parent="." unique_id=511253853 instance=ExtResource("2_srsfy")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -2.0976062, 0, 0.30779648)
+
+[node name="potion_new2" parent="." unique_id=936587013 instance=ExtResource("2_srsfy")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 1.3043771, 0.02105546, 0.17845058)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=931904009]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9811859, 0.05812663, 0.20993543)
+shape = SubResource("BoxShape3D_07608")
+
+[node name="InteractionZone" type="Area3D" parent="." unique_id=3895840]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionZone" unique_id=808623416]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0641173, 0, 0)
+shape = SubResource("SphereShape3D_t14hi")
+
+[node name="PotionUI" parent="." unique_id=1510413657 instance=ExtResource("3_srsfy")]
+
+[node name="MapUI" parent="." unique_id=921360253 instance=ExtResource("4_07608")]
