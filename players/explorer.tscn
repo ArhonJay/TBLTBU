@@ -63,6 +63,11 @@ near = 0.01
 [node name="Hand" type="Marker3D" parent="SpringArm3D/Camera" unique_id=1351194563]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5509622, -0.48367321)
 
+[node name="Flashlight" type="OmniLight3D" parent="SpringArm3D/Camera" unique_id=1013414807]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.881499, 0)
+light_energy = 10.016
+omni_range = 52.088
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=871925756]
 transform = Transform3D(1.5, 0, 0, 0, -6.556708e-08, -1.5, 0, 1.5, -6.556708e-08, 0, 1.8047266, 0.23812354)
 shape = SubResource("CapsuleShape3D_onrkg")

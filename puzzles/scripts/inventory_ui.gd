@@ -33,6 +33,15 @@ func _ready():
 	bag_panel.visible = false
 	_build_slot_refs()
 	_build_bag_styles()
+	# ─── STARTING INVENTORY ──────────────────────────────────────────
+		# Force the flashlight dictionary directly into Slot 1 (index 0)
+	hotbar_items[0] = {
+		"id": "lamp",
+		"name": "Flashlight",
+		"type": "tool",
+		"icon": preload("res://assets/survival/flashlight.png") # <--- MAKE SURE THIS PATH MATCHES YOUR PNG!
+	}
+		# ─────────────────────────────────────────────────────────────────
 	_refresh_hotbar()
 	_refresh_bag()
 	_update_selection()
