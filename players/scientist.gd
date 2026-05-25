@@ -22,6 +22,10 @@ var current_stamina: float = 100.0
 var _stamina_regen_timer: float = 0.0
 var _stamina_exhausted: bool = false
 
+# --- INTERACTION ---
+const INTERACT_KEY := KEY_E
+var _nearby_interactable: Node3D = null
+
 var target_zoom: float = 0.0
 var min_zoom: float = 0.0
 var max_zoom: float = 4.0
@@ -49,6 +53,7 @@ func _ready():
 		return
 
 	add_to_group("scientist")
+	add_to_group("player")   # lets interactables detect this body
 	camera.current = true
 	$SpringArm3D.add_excluded_object(get_rid())
 
@@ -205,6 +210,23 @@ func _input(event):
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			target_zoom += zoom_step
 		target_zoom = clamp(target_zoom, min_zoom, max_zoom)
+
+	# Interact
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == INTERACT_KEY and _nearby_interactable != null:
+			if _nearby_interactable.has_method("interact"):
+				_nearby_interactable.interact()
+				get_viewport().set_input_as_handled()
+
+
+# Called by an interactable's Area3D when this body enters/exits
+func set_nearby_interactable(node: Node3D) -> void:
+	_nearby_interactable = node
+
+
+func clear_nearby_interactable(node: Node3D) -> void:
+	if _nearby_interactable == node:
+		_nearby_interactable = null
 
 
 func _process(delta):

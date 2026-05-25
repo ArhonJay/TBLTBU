@@ -10,7 +10,7 @@ extends Node
 
 # ── Targets ───────────────────────────────────────────────────────────────────
 const TARGET_CHESTS    : int = 1
-const TARGET_SIMON     : int = 1
+const TARGET_SIMON     : int = 0
 const TARGET_MUSHROOMS : int = 0
 
 # ── Progress ──────────────────────────────────────────────────────────────────
