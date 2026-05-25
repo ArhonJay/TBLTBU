@@ -4,31 +4,26 @@ extends StaticBody3D
 
 const EMPLOYEES := [
 	{
-		"name":        "Officer Vance",
 		"description": "Security Dept.",
 		"pin":         "8192",
 		"photo_path":  "res://assets/employees/officer_vance.png"
 	},
 	{
-		"name":        "Officer Miller",
 		"description": "Security Dept.",
 		"pin":         "0451",
 		"photo_path":  "res://assets/employees/officer_miller.png"
 	},
 	{
-		"name":        "Officer Briggs",
 		"description": "Security Dept.",
 		"pin":         "7734",
 		"photo_path":  "res://assets/employees/officer_briggs.png"
 	},
 	{
-		"name":        "Dr. Aris",
 		"description": "Research & Science",
 		"pin":         "3141",
 		"photo_path":  "res://assets/employees/dr_aris.png"
 	},
 	{
-		"name":        "Dr. Cobb",
 		"description": "Research & Science",
 		"pin":         "8008",
 		"photo_path":  "res://assets/employees/dr_cobb.png"
@@ -85,7 +80,6 @@ func _ready():
 	result_label = keypad_ui.get_node(_KP + "/ResultLabel")
 
 	employee_photo_node = keypad_ui.get_node(_EP + "/EmployeePhoto")
-	employee_name_label = keypad_ui.get_node(_EP + "/EmployeeName")
 	employee_desc_label = keypad_ui.get_node(_EP + "/EmployeeDescription")
 
 	keypad_ui.get_node(_KP + "/HBoxContainer/Btn1").pressed.connect(func(): _on_number_pressed("1"))
@@ -119,7 +113,6 @@ func _find_animation_player(node: Node) -> AnimationPlayer:
 func _assign_random_employee():
 	var employee: Dictionary = EMPLOYEES[randi() % EMPLOYEES.size()]
 	correct_code = employee["pin"]
-	employee_name_label.text = employee["name"]
 	employee_desc_label.text = employee["description"]
 	var path: String = employee["photo_path"]
 	if path != "" and ResourceLoader.exists(path):

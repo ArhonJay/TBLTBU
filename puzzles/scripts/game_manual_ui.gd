@@ -9,8 +9,6 @@ signal manual_closed
 const PAGES: Array[String] = [
 	"res://assets/manual/1.png",
 	"res://assets/manual/2.png",
-	"res://assets/manual/3.png",
-	"res://assets/manual/4.png",
 	"res://assets/manual/6.png",
 	"res://assets/manual/8.png",
 	"res://assets/manual/9.png",

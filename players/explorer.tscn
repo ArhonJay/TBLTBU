@@ -43,6 +43,8 @@ _data = {
 
 [node name="Player" type="CharacterBody3D" unique_id=559825491 groups=["player"]]
 script = ExtResource("1_4flbx")
+move_speed = 15.0
+jump_force = 45.0
 
 [node name="Barbarian" parent="." unique_id=627308010 instance=ExtResource("2_fp526")]
 transform = Transform3D(-0.49996763, 0, 0.005689636, 0, 0.5, 0, -0.005689636, 0, -0.49996763, 0, 1.104782, 0.30153865)
