@@ -23,6 +23,7 @@ var max_look_angle: float = 90.0
 var mouse_delta: Vector2 = Vector2()
 @onready var camera = $SpringArm3D/Camera
 @onready var hand = get_node("SpringArm3D/Camera/Hand")
+@onready var flashlight = $SpringArm3D/Camera/Flashlight
 
 var picked_object: RigidBody3D = null
 var pull_power: float = 4.0
@@ -433,6 +434,7 @@ func use_item() -> void:
 	if item == null:
 		return
 	var item_id : String = item.get("id", "")
+	
 	match item_id:
 		"medkit":
 			var amount : int = item.get("heal_amount", 50)
@@ -440,6 +442,7 @@ func use_item() -> void:
 			inv.remove_selected_item()
 			print("Used Medkit — healed %d HP." % amount)
 			_show_use_popup("+%d HP" % amount, Color(0.20, 0.85, 0.35, 1.0))
+			
 		"energy_drink":
 			var restore : float = item.get("stamina_restore", 50.0)
 			current_stamina = min(current_stamina + restore, max_stamina)
@@ -450,6 +453,7 @@ func use_item() -> void:
 			inv.remove_selected_item()
 			print("Used Energy Drink — restored %.0f stamina." % restore)
 			_show_use_popup("+%d STA" % int(restore), Color(0.25, 0.75, 1.0, 1.0))
+			
 		"potion_manual", "radio_manual":
 			var manual_path := "res://assets/manual/" + item_id + ".png"
 			var manual_tex: Texture2D = null
@@ -458,6 +462,24 @@ func use_item() -> void:
 			else:
 				push_warning("Manual not found: " + manual_path)
 			_show_manual_reader(item_id, item.get("name", "Manual"), manual_tex)
+			
+		# ── FLASHLIGHT LOGIC ──────────────────────────────────────
+		"lamp":
+			if flashlight != null:
+				# Toggle the light on or off
+				flashlight.visible = not flashlight.visible
+				
+				# Create a nice UI popup matching your style
+				var state_text = "ON" if flashlight.visible else "OFF"
+				var accent_color = Color(0.9, 0.9, 0.5, 1.0) if flashlight.visible else Color(0.5, 0.5, 0.5, 1.0)
+				
+				_show_use_popup("Flashlight " + state_text, accent_color)
+				print("Toggled Flashlight ", state_text)
+			else:
+				print("ERROR: Flashlight node not found! Check your @onready var.")
+		# ──────────────────────────────────────────────────────────
+
+		# The catch-all must be at the very bottom!
 		_:
 			print("No use action defined for item: ", item_id)
 
