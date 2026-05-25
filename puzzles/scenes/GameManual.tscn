@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://bbsqmtersvirt"]
+
+[ext_resource type="Script" uid="uid://b7se1c4bjdarx" path="res://puzzles/scripts/game_manual.gd" id="1_jsivm"]
+[ext_resource type="Script" uid="uid://dy5bqghyaserg" path="res://puzzles/scripts/game_manual_ui.gd" id="2_48hht"]
+[ext_resource type="Texture2D" uid="uid://qbcssuacyfsy" path="res://assets/manual/1.png" id="2_ue1no"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_interact"]
+radius = 3.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_book"]
+size = Vector3(1, 1.5, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jb5mx"]
+albedo_texture = ExtResource("2_ue1no")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_body"]
+size = Vector3(1, 1.5, 0.2)
+
+[node name="GameManual" type="StaticBody3D" unique_id=1798048823]
+script = ExtResource("1_jsivm")
+
+[node name="InteractionZone" type="Area3D" parent="." unique_id=1285830765]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionZone" unique_id=795146959]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+shape = SubResource("SphereShape3D_interact")
+
+[node name="Label3D" type="Label3D" parent="." unique_id=1949105806]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+billboard = 1
+text = "[E] Read Manual"
+font_size = 64
+
+[node name="BookMesh" type="MeshInstance3D" parent="." unique_id=1917295798]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -0.25, 0, 1, -1.0927847e-08, 0, 0.75, 0)
+mesh = SubResource("BoxMesh_book")
+surface_material_override/0 = SubResource("StandardMaterial3D_jb5mx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1542261815]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+shape = SubResource("BoxShape3D_body")
+
+[node name="GameManualUI" type="CanvasLayer" parent="." unique_id=1047037643]
+script = ExtResource("2_48hht")

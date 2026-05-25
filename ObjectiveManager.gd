@@ -9,9 +9,9 @@ extends Node
 # ─────────────────────────────────────────────────────────────────────────────
 
 # ── Targets ───────────────────────────────────────────────────────────────────
-const TARGET_CHESTS    : int = 1
-const TARGET_SIMON     : int = 1
-const TARGET_MUSHROOMS : int = 0
+const TARGET_CHESTS    : int = 5
+const TARGET_SIMON     : int = 3
+const TARGET_MUSHROOMS : int = 10
 
 # ── Progress ──────────────────────────────────────────────────────────────────
 var chests_done    : int = 0

@@ -10,7 +10,7 @@ func _ready():
 		spawn_player(1)
 		spawn_enemies()
 		# 2. The Host listens for any clients that arrive later
-		NetworkManager.start_world_timer(360)
+		NetworkManager.start_world_timer(600)
 		NetworkManager.player_registered.connect(spawn_player)
 	else:
 		# 3. The Client has finally finished loading the 3D map!
